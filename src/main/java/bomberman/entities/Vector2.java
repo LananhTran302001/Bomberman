@@ -44,4 +44,28 @@ public class Vector2 {
     public void setY(int y) {
         this.y = y;
     }
+
+    public Vector2 add(Vector2 other) {
+        if (other != null) {
+            this.x += other.x;
+            this.y += other.y;
+        }
+        return this;
+    }
+
+    public Vector2 multiple(int num) {
+        this.x *= num;
+        this.y *= num;
+        return this;
+    }
+
+    public Vector2 multiple(Vector2 other) {
+        if (other != null) {
+            this.x *= other.x;
+            this.y *= other.y;
+        }
+        return this;
+    }
+
+
 }
