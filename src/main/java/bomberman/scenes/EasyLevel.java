@@ -36,6 +36,9 @@ public class EasyLevel {
     private static List<Entity> entities = new ArrayList<Entity>();
     private static List<Grass> grassTiles = new ArrayList<Grass>();
 
+    public static GraphicsContext getGraphicsContext() {
+        return graphicsContext;
+    }
 
     private static void initScene() {
         root = new Group();

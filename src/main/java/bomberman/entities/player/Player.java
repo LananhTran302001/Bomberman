@@ -1,23 +1,37 @@
 package bomberman.entities.player;
 
+import bomberman.animation.PlayerAnimation;
 import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
-import bomberman.entities.AnimatedImage;
+import bomberman.animation.AnimatedImage;
 import bomberman.entities.AnimatedSprite;
 import bomberman.entities.Vector2;
 
 public class Player extends AnimatedSprite {
 
-    public AnimatedImage animationLeft;
-    public AnimatedImage animationRight;
-    public AnimatedImage animationUp;
-    public AnimatedImage animationDown;
+    private Direction direction;
+    private int health = 100;
 
-    public void setAnimationImages() {
+    public AnimatedImage animation;
 
+    public Player() {
+        health = 100;
+        this.setLayer(0);
+    }
+
+    public Player(Vector2 position) {
+        this.setPosition(position);
+        this.setLayer(0);
+    }
+
+    public void setAnimation(AnimatedImage animatedImage) {
+        if (animatedImage != null) {
+            this.animation = animatedImage;
+        }
     }
 
     public void init() {
+
     }
 
     public void draw() {
@@ -35,22 +49,26 @@ public class Player extends AnimatedSprite {
         switch (direction) {
             case UP:
                 directionVector = new Vector2(0, -1);
-                animationUp.play();
+                direction = Direction.UP;
+                setAnimation(PlayerAnimation.getGoUpAnim());
                 break;
 
             case DOWN:
                 directionVector = new Vector2(0, 1);
-                animationDown.play();
+                direction = Direction.DOWN;
+                setAnimation(PlayerAnimation.getGoDownAnim());
                 break;
 
             case LEFT:
                 directionVector = new Vector2(-1, 0);
-                animationLeft.play();
+                direction = Direction.LEFT;
+                setAnimation(PlayerAnimation.getGoLeftAnim());
                 break;
 
             case RIGHT:
                 directionVector = new Vector2(1, 0);
-                animationRight.play();
+                direction = Direction.RIGHT;
+                setAnimation(PlayerAnimation.getGoRightAnim());
                 break;
         }
 
@@ -60,6 +78,11 @@ public class Player extends AnimatedSprite {
     public void move(Direction direction) {
         move(1, direction);
     }
+
+    public void move(int step) {
+        move (step, direction);
+    }
+
 
 
     public void die() {

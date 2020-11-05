@@ -1,5 +1,6 @@
 package bomberman.entities.tiles;
 
+import bomberman.Renderer;
 import bomberman.constants.GameConstants;
 import bomberman.entities.Vector2;
 import javafx.scene.canvas.GraphicsContext;
@@ -27,5 +28,7 @@ public class Grass {
         this(new Vector2(x, y));
     }
 
-
+    public void draw() {
+        Renderer.renderImage(image, position, size);
+    }
 }

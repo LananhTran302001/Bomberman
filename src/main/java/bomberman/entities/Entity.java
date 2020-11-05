@@ -56,6 +56,10 @@ public abstract class Entity extends BoundedRect {
         this.image = image;
     }
 
+    public void setImage(String pth) {
+        this.image = new Image(pth);
+    }
+
     public int getLayer() {
         return layer;
     }
