@@ -7,7 +7,6 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameLoop {
@@ -17,7 +16,7 @@ public class GameLoop {
     private static double deltaGameTime;
     private final static long startNanoTime = System.nanoTime();
 
-    private static List<Entity> entities = new ArrayList<Entity>();
+    private static List<Entity> entities;
 
 
     public static double getCurrentGameTime() {
@@ -28,7 +27,9 @@ public class GameLoop {
         return deltaGameTime;
     }
 
-    public static void start(final GraphicsContext gc) {
+    public static void start(final GraphicsContext gc, List<Entity> e) {
+        entities = e;
+
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {

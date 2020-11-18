@@ -9,16 +9,17 @@ public class Wall extends Entity {
 
     public Wall() {
         super();
+        init();
     }
 
     public Wall(Vector2 position) {
         super(position);
+        init();
     }
 
     public void init() {
         setImage(GameImages.WALL_IMG);
         setLayer(2);
-        draw();
     }
 
     public void draw() {

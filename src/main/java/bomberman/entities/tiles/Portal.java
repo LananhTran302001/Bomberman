@@ -10,16 +10,17 @@ public class Portal extends Entity {
 
     public Portal() {
         super();
+        init();
     }
 
     public Portal(Vector2 position) {
         super(position);
+        init();
     }
 
     public void init() {
         setImage(GameImages.PORTAL_IMG);
         setLayer(1);
-        draw();
     }
 
     public void draw() {

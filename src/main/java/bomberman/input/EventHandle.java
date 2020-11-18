@@ -1,4 +1,4 @@
-package bomberman.controller;
+package bomberman.input;
 
 import javafx.scene.input.KeyCode;
 

@@ -39,15 +39,19 @@ public class EasyLevel {
     private static List<Entity> entities = new ArrayList<Entity>();
 
     private static void initScene() {
-        GamesFactory.createGame(10, 10, 16, 5, 2);
+        //GamesFactory.createGame(16, 16, 26, 45, 2);
+
         root = new Group();
         scene = new Scene(root, GameConstants.SCENE_WIDTH, GameConstants.SCENE_HEIGHT);
         canvas = new Canvas(GameConstants.CANVAS_WIDTH, GameConstants.CANVAS_HEIGHT);
+
         root.getChildren().add(canvas);
         graphicsContext = canvas.getGraphicsContext2D();
         Renderer.init(graphicsContext);
-        //GameLoop.start(graphicsContext);
+        //GameLoop.start(graphicsContext, entities);
+        addEntity(new Player(100, 100));
         loadMap();
+
         started = true;
     }
 
@@ -58,7 +62,7 @@ public class EasyLevel {
             started = true;
         }
         for (Entity e : entities) {
-            e.init();
+            e.draw();
         }
     }
 

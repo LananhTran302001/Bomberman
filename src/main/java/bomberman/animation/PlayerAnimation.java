@@ -10,7 +10,7 @@ public class PlayerAnimation {
     Image[] moveDown = new Image[2];
     Image[] moveUp = new Image[2];
 
-    public PlayerAnimation() {
+    public void setUpImages() {
         moveRight[0] = new Image(GameImages.PLAYER_IMG + "R1.png");
         moveRight[1] = new Image(GameImages.PLAYER_IMG + "R2.png");
 

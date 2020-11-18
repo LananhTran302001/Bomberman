@@ -11,16 +11,17 @@ public class Brick extends Entity implements Breakable {
 
     public Brick(int x, int y) {
         super(x, y);
+        init();
     }
 
     public Brick(Vector2 position) {
         super( position);
+        init();
     }
 
     public void init() {
         setImage(GameImages.BRICK_IMG);
         setLayer(2);
-        draw();
     }
 
     public void draw() {

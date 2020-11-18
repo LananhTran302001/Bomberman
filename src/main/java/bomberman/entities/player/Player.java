@@ -1,6 +1,7 @@
 package bomberman.entities.player;
 
 import bomberman.Renderer;
+import bomberman.animation.PlayerAnimation;
 import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
 import bomberman.entities.Sprite;
@@ -8,27 +9,32 @@ import bomberman.entities.Vector2;
 
 public class Player extends Sprite {
 
+    private PlayerAnimation playerAnimation = new PlayerAnimation();
     private Direction direction;
-    private int health = 100;
+    private int health;
 
 
     public Player() {
-        health = 100;
-        this.setLayer(0);
+        init();
     }
 
     public Player(Vector2 position) {
         this.setPosition(position);
-        this.setLayer(0);
+        init();
     }
 
+    public Player(int x, int y) {
+        this(new Vector2(x, y));
+    }
 
     public void init() {
-
+        health = 100;
+        layer = 2;
+        playerAnimation.setUpImages();
     }
 
     public void draw() {
-        Renderer.renderImage(position, size, image);
+        Renderer.playAnimation(playerAnimation.getMoveDown(), 2, position, size);
     }
 
     public void update() {
