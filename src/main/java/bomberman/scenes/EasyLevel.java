@@ -22,6 +22,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class EasyLevel {
@@ -73,9 +75,16 @@ public class EasyLevel {
         return grassTiles;
     }
 
+    static Comparator<Entity> layerCompare = new Comparator<Entity>() {
+        public int compare(Entity o1, Entity o2) {
+            return o1.getLayer() - o2.getLayer();
+        }
+    };
+
     public static void addEntity(Entity entity) {
         if (!entities.contains(entity)) {
             entities.add(entity);
+            Collections.sort(entities, layerCompare);
         }
     }
 

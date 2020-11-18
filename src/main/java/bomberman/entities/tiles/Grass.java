@@ -3,7 +3,6 @@ package bomberman.entities.tiles;
 import bomberman.Renderer;
 import bomberman.constants.GameConstants;
 import bomberman.entities.Vector2;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 
