@@ -1,31 +1,46 @@
 package bomberman.animation;
 
+import bomberman.constants.GameImages;
+import javafx.scene.image.Image;
+
 public class PlayerAnimation {
 
-    static AnimatedImage goUp;
-    static AnimatedImage goDown;
-    static AnimatedImage goRight;
-    static AnimatedImage goLeft;
-    static AnimatedImage die;
+    Image[] moveRight = new Image[2];
+    Image[] moveLeft = new Image[2];
+    Image[] moveDown = new Image[2];
+    Image[] moveUp = new Image[2];
 
-    public static AnimatedImage getGoUpAnim() {
-        return goUp;
+    public PlayerAnimation() {
+        moveRight[0] = new Image(GameImages.PLAYER_IMG + "R1.png");
+        moveRight[1] = new Image(GameImages.PLAYER_IMG + "R2.png");
+
+        moveLeft[0] = new Image(GameImages.PLAYER_IMG + "L1.png");
+        moveLeft[1] = new Image(GameImages.PLAYER_IMG + "L2.png");
+
+        moveDown[0] = new Image(GameImages.PLAYER_IMG + "D1.png");
+        moveDown[1] = new Image(GameImages.PLAYER_IMG + "D2.png");
+
+        moveUp[0] = new Image(GameImages.PLAYER_IMG + "U1.png");
+        moveUp[1] = new Image(GameImages.PLAYER_IMG + "U2.png");
     }
 
-    public static AnimatedImage getGoDownAnim() {
-        return goDown;
+    public Image[] getMoveRight() {
+        return moveRight;
     }
 
-    public static AnimatedImage getGoLeftAnim() {
-        return goLeft;
+    public Image[] getMoveLeft() {
+        return moveLeft;
     }
 
-    public static AnimatedImage getGoRightAnim() {
-        return goRight;
+    public Image[] getMoveDown() {
+        return moveDown;
     }
 
+    public Image[] getMoveUp() {
+        return moveUp;
+    }
 
-    public static AnimatedImage getDieAnim() {
-        return die;
+    public Image getDie() {
+        return new Image(GameImages.PLAYER_IMG + "_lose.png");
     }
 }

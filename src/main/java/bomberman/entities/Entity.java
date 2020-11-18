@@ -1,5 +1,6 @@
 package bomberman.entities;
 
+import bomberman.constants.GameConstants;
 import javafx.scene.image.Image;
 
 public abstract class Entity extends BoundedRect {
@@ -9,44 +10,24 @@ public abstract class Entity extends BoundedRect {
 
     public Entity() {
         super();
-        layer = 0;
     }
 
     public Entity(Vector2 pos, Vector2 size) {
         super(pos, size);
     }
 
-    public Entity(Vector2 size, String imgPath, int layer) {
-        super(new Vector2(0, 0), size);
-        this.image = new Image(imgPath);
-        this.layer = layer;
+    public Entity(Vector2 position) {
+        super(position, new Vector2(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE));
     }
 
-    public Entity(int width, int height, String imgPath, int layer) {
-        super(0, 0, width, height);
-        this.image = new Image(imgPath);
-        this.layer = layer;
+    public Entity(int x, int y) {
+        this(new Vector2(x, y));
     }
 
-    public Entity(Vector2 pos, Vector2 size, String imgPath, int layer) {
-        super(pos, size);
-        this.image = new Image(imgPath);
-        this.layer = layer;
+    public Entity(int x, int y, int width, int height) {
+        this(new Vector2(x, y), new Vector2(width, height));
     }
 
-    public Entity(int x, int y, int width, int height, String imgPath, int layer) {
-        this(new Vector2(x, y), new Vector2(width, height), imgPath, layer);
-    }
-
-
-    public void loadImage(String pth) {
-        try {
-            image = new Image(pth);
-
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-    }
 
     public Image getImage() {
         return image;
@@ -57,7 +38,11 @@ public abstract class Entity extends BoundedRect {
     }
 
     public void setImage(String pth) {
-        this.image = new Image(pth);
+        try {
+            this.image = new Image(pth);
+        } catch (NullPointerException e) {
+            System.out.println("Can not load entity's image");
+        }
     }
 
     public int getLayer() {

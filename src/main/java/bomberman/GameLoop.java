@@ -45,6 +45,7 @@ public class GameLoop {
         timer.start();
     }
 
+
     public static void update() {
         for (Entity entity : entities) {
             entity.update();

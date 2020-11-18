@@ -2,32 +2,37 @@ package bomberman.entities.tiles;
 
 import bomberman.Renderer;
 import bomberman.constants.GameConstants;
+import bomberman.constants.GameImages;
+import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import javafx.scene.image.Image;
 
 
-public class Grass {
-
-    private Vector2 position;
-    private Vector2 size;
-    private Image image;
+public class Grass extends Entity {
 
     public Grass() {
-        position = new Vector2();
-        size = new Vector2(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
-        image = new Image(GameConstants.GRASS_IMG + "01");
+        super();
     }
 
-    public Grass(Vector2 position) {
-        size = new Vector2(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
-        image = new Image(GameConstants.GRASS_IMG + "01");
+    public Grass(Vector2 pos) {
+        super(pos);
     }
 
     public Grass(int x, int y) {
-        this(new Vector2(x, y));
+        super(x, y);
+    }
+
+    public void init() {
+        setImage(GameImages.GRASS_IMG);
+        setLayer(0);
+        draw();
     }
 
     public void draw() {
-        Renderer.renderImage(image, position, size);
+        Renderer.renderTileImage(position, image);
+    }
+
+    public void update() {
+
     }
 }

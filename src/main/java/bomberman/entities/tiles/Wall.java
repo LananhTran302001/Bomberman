@@ -1,34 +1,28 @@
 package bomberman.entities.tiles;
 
-import bomberman.constants.GameConstants;
+import bomberman.Renderer;
+import bomberman.constants.GameImages;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 
 public class Wall extends Entity {
 
     public Wall() {
-        super(new Vector2(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE), GameConstants.WALL_IMG, 1);
-    }
-
-    public Wall(int x, int y) {
-        super(  new Vector2(x, y),
-                new Vector2(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE),
-                GameConstants.WALL_IMG, 1);
+        super();
     }
 
     public Wall(Vector2 position) {
-        super(  position,
-                new Vector2(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE),
-                GameConstants.WALL_IMG, 1);
+        super(position);
     }
 
     public void init() {
-
-        this.loadImage(GameConstants.WALL_IMG);
+        setImage(GameImages.WALL_IMG);
+        setLayer(2);
+        draw();
     }
 
     public void draw() {
-
+        Renderer.renderTileImage(position, image);
     }
 
     public void update() {

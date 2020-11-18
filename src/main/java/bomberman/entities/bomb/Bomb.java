@@ -1,6 +1,5 @@
 package bomberman.entities.bomb;
 
-import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 
 import java.util.ArrayList;
@@ -20,13 +19,15 @@ public abstract class Bomb extends Entity {
         DEAD
     }
 
-    public Bomb(int x, int y) {
+    public Bomb() {
         startDate = new Date();
         state = STATE.ACTIVE;
     }
 
-    public Bomb() {
-        super(50, 50, GameConstants.BOMB_IMG, 1);
+    public Bomb(int x, int y) {
+        super(x, y);
+        startDate = new Date();
+        state = STATE.ACTIVE;
     }
 
 

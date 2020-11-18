@@ -2,6 +2,7 @@ package bomberman.scenes;
 
 import bomberman.GameLoop;
 import bomberman.Renderer;
+import bomberman.builder.GamesFactory;
 import bomberman.constants.GameConstants;
 
 import bomberman.entities.Entity;
@@ -36,23 +37,18 @@ public class EasyLevel {
     private static boolean started = false;
 
     private static List<Entity> entities = new ArrayList<Entity>();
-    private static List<Grass> grassTiles = new ArrayList<Grass>();
-
-    public static GraphicsContext getGraphicsContext() {
-        return graphicsContext;
-    }
 
     private static void initScene() {
+        GamesFactory.createGame(10, 10, 16, 5, 2);
         root = new Group();
         scene = new Scene(root, GameConstants.SCENE_WIDTH, GameConstants.SCENE_HEIGHT);
         canvas = new Canvas(GameConstants.CANVAS_WIDTH, GameConstants.CANVAS_HEIGHT);
         root.getChildren().add(canvas);
         graphicsContext = canvas.getGraphicsContext2D();
-        graphicsContext.setStroke(Color.AQUAMARINE);
-        graphicsContext.setFill(Color.CORAL);
-        Renderer.init();
-        GameLoop.start(graphicsContext);
+        Renderer.init(graphicsContext);
+        //GameLoop.start(graphicsContext);
         loadMap();
+        started = true;
     }
 
 
@@ -61,6 +57,13 @@ public class EasyLevel {
             initScene();
             started = true;
         }
+        for (Entity e : entities) {
+            e.init();
+        }
+    }
+
+    public static GraphicsContext getGraphicsContext() {
+        return graphicsContext;
     }
 
     public static Scene getScene() {
@@ -69,10 +72,6 @@ public class EasyLevel {
 
     public static List<Entity> getEntities() {
         return entities;
-    }
-
-    public static List<Grass> getGrassTiles() {
-        return grassTiles;
     }
 
     static Comparator<Entity> layerCompare = new Comparator<Entity>() {
@@ -84,6 +83,7 @@ public class EasyLevel {
     public static void addEntity(Entity entity) {
         if (!entities.contains(entity)) {
             entities.add(entity);
+            System.out.println("Add entity");
             Collections.sort(entities, layerCompare);
         }
     }
@@ -106,7 +106,7 @@ public class EasyLevel {
 
                 for (int i = 0; i < column; i++) {
                     Vector2 position = new Vector2(
-                            column * GameConstants.TILE_SIZE,
+                            i * GameConstants.TILE_SIZE,
                             row * GameConstants.TILE_SIZE);
 
                     switch (inputLine.charAt(i)) {
@@ -120,13 +120,12 @@ public class EasyLevel {
                             break;
 
                         case 'x':
+                            addEntity(new Grass(position));
                             addEntity(new Portal(position));
                             break;
 
                         default:
-                            grassTiles.add(new Grass(position));
-
-
+                            addEntity(new Grass(position));
                     }
                 }
                 inputLine = reader.readLine();

@@ -1,5 +1,6 @@
 package bomberman.entities;
 
+import bomberman.constants.GameConstants;
 import javafx.geometry.Rectangle2D;
 
 public class BoundedRect {
@@ -10,7 +11,7 @@ public class BoundedRect {
 
     public BoundedRect() {
         position = new Vector2();
-        size = new Vector2();
+        size = new Vector2(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
         bound = new Rectangle2D(position.x, position.y, size.x, size.y);
     }
 
@@ -19,19 +20,7 @@ public class BoundedRect {
         size = new Vector2(width, height);
         bound = new Rectangle2D(x, y, width, height);
     }
-
-    public BoundedRect(Vector2 pos, int width, int height) {
-        position = new Vector2(pos);
-        size = new Vector2(width, height);
-        bound = new Rectangle2D(pos.x, pos.y, width, height);
-    }
-
-    public BoundedRect(int x, int y, Vector2 size) {
-        position = new Vector2(x, y);
-        size = new Vector2(size);
-        bound = new Rectangle2D(position.x, position.y, size.x, size.y);
-    }
-
+    
     public BoundedRect(Vector2 pos, Vector2 size) {
         this.position = new Vector2(pos);
         this.size = new Vector2(size);

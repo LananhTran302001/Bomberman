@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class GamesFactory {
 
-    private void writeToFile(String pathFile, String line) {
+    private static void writeToFile(String pathFile, String line) {
         try {
             FileWriter writer = new FileWriter(pathFile);
             writer.write(line);
@@ -19,7 +19,7 @@ public class GamesFactory {
     }
 
 
-    public void createGame(int row, int column, int wall, int brick, int portal) {
+    public static void createGame(int row, int column, int wall, int brick, int portal) {
 
         // Init by a 2d array
         char[][] array = new char[row][column];
@@ -88,14 +88,14 @@ public class GamesFactory {
 
 
         // Write string to file, then you can edit that file or whatever
-        this.writeToFile("src/main/resources/data/map.txt", bound);
+        writeToFile("src/main/resources/data/map.txt", bound);
 
     }
 
 
 
     public void createGame(int row, int column) {
-        this.createGame(row, column, 0, 0, 0);
+        createGame(row, column, 0, 0, 0);
     }
 
 }

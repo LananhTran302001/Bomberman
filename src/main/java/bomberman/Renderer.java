@@ -1,22 +1,30 @@
 package bomberman;
 
-import bomberman.animation.AnimatedImage;
+import bomberman.constants.GameConstants;
 import bomberman.entities.Vector2;
-import bomberman.scenes.EasyLevel;
+
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
+
 public class Renderer {
 
-    public static void renderImage(Image image, Vector2 position, Vector2 size) {
-        GraphicsContext gc = EasyLevel.getGraphicsContext();
+    private static GraphicsContext gc;
+
+    public static void init(GraphicsContext graphicsContext) {
+        gc = graphicsContext;
+    }
+
+    public static void renderImage(Vector2 position, Vector2 size, Image image) {
         gc.drawImage(image, position.getX(), position.getY(), size.getX(), size.getY());
     }
 
-    public static void showAnimation(AnimatedImage frames, int speed, Vector2 pos, Vector2 size) {
-        GraphicsContext gc = EasyLevel.getGraphicsContext();
+    public static void renderTileImage(Vector2 position, Image image) {
+        renderImage(position, new Vector2(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE), image);
     }
 
-    public static void init() {
+    public static void playAnimation(Image[] frames, int speed, Vector2 pos, Vector2 size) {
+        int index = (int) ((GameLoop.getCurrentGameTime() % (frames.length / speed)) * speed);
+        renderImage(pos, size, frames[index]);
     }
 }
