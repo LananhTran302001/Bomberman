@@ -58,4 +58,6 @@ public abstract class Entity extends BoundedRect {
     public abstract void draw();
 
     public abstract void update();
+
+    public abstract boolean isPlayerCollideFriendly();
 }

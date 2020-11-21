@@ -34,4 +34,8 @@ public class Oneal extends AISprite {
         return null;
     }
 
+    public boolean isPlayerCollideFriendly() {
+        return false;
+    }
+
 }

@@ -14,6 +14,6 @@ public class GameConstants {
 
     public static final String GAME_NAME = "Bomberman";
 
-    public static final int STEP_LENGTH = 20;
+    public static final int STEP_LENGTH = 2;
 
 }

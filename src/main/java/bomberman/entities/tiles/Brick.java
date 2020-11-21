@@ -31,4 +31,8 @@ public class Brick extends Entity implements Breakable {
     public void update() {
 
     }
+
+    public boolean isPlayerCollideFriendly() {
+        return false;
+    }
 }

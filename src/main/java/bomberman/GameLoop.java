@@ -3,6 +3,7 @@ package bomberman;
 import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.bomb.Bomb;
+import bomberman.input.InputManager;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -17,7 +18,6 @@ public class GameLoop {
     private final static long startNanoTime = System.nanoTime();
 
     private static List<Entity> entities;
-
 
     public static double getCurrentGameTime() {
         return currentGameTime;
@@ -48,10 +48,7 @@ public class GameLoop {
 
 
     public static void update() {
-        for (Entity entity : entities) {
-            entity.update();
-        }
-
+        InputManager.handlePlayerInput();
     }
 
     public static void render() {

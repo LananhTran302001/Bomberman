@@ -6,12 +6,15 @@ import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
+import javafx.scene.image.Image;
+
 
 public class Player extends Sprite {
 
     private PlayerAnimation playerAnimation = new PlayerAnimation();
-    private Direction direction;
+    private Direction direction = Direction.DOWN;
     private int health;
+    private Image[] currentFrames = playerAnimation.getMoveDown();
 
 
     public Player() {
@@ -29,16 +32,19 @@ public class Player extends Sprite {
 
     public void init() {
         health = 100;
-        layer = 2;
-        playerAnimation.setUpImages();
+        layer = 3;
     }
 
     public void draw() {
-        Renderer.playAnimation(playerAnimation.getMoveDown(), 2, position, size);
+        Renderer.playAnimation(currentFrames, 2, position, size);
     }
 
     public void update() {
 
+    }
+
+    public boolean isPlayerCollideFriendly() {
+        return true;
     }
 
 
@@ -48,18 +54,22 @@ public class Player extends Sprite {
         switch (direction) {
             case UP:
                 directionVector = new Vector2(0, -1);
+                currentFrames = playerAnimation.getMoveUp();
                 break;
 
             case DOWN:
                 directionVector = new Vector2(0, 1);
+                currentFrames = playerAnimation.getMoveDown();
                 break;
 
             case LEFT:
                 directionVector = new Vector2(-1, 0);
+                currentFrames = playerAnimation.getMoveLeft();
                 break;
 
             case RIGHT:
                 directionVector = new Vector2(1, 0);
+                currentFrames = playerAnimation.getMoveRight();
                 break;
         }
 

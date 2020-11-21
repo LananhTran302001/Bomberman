@@ -24,4 +24,8 @@ public class Balloom extends Sprite {
     public void move(int step, Direction direction) {
 
     }
+
+    public boolean isPlayerCollideFriendly() {
+        return false;
+    }
 }

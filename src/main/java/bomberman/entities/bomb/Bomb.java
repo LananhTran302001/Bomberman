@@ -1,6 +1,7 @@
 package bomberman.entities.bomb;
 
 import bomberman.entities.Entity;
+import bomberman.entities.Vector2;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,12 +25,20 @@ public abstract class Bomb extends Entity {
         state = STATE.ACTIVE;
     }
 
+    public Bomb(Vector2 position) {
+        super(position);
+    }
+
     public Bomb(int x, int y) {
         super(x, y);
         startDate = new Date();
         state = STATE.ACTIVE;
     }
 
+    @Override
+    public boolean isPlayerCollideFriendly() {
+        return false;
+    }
 
     public STATE checkBombState() {
         if (new Date().getTime() > 2000 + startDate.getTime()) {

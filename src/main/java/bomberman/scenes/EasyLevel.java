@@ -12,11 +12,11 @@ import bomberman.entities.tiles.Brick;
 import bomberman.entities.tiles.Grass;
 import bomberman.entities.tiles.Portal;
 import bomberman.entities.tiles.Wall;
+import bomberman.input.GameEventHandle;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -29,11 +29,11 @@ import java.util.List;
 
 public class EasyLevel {
 
-    static Scene scene;
-    static Group root;
-    static Canvas canvas;
-    static GraphicsContext graphicsContext;
-    static Player player;
+    private static Scene scene;
+    private static Group root;
+    private static Canvas canvas;
+    private static GraphicsContext graphicsContext;
+    private static Player player = new Player(0, 0);
     private static boolean started = false;
 
     private static List<Entity> entities = new ArrayList<Entity>();
@@ -48,11 +48,12 @@ public class EasyLevel {
         root.getChildren().add(canvas);
         graphicsContext = canvas.getGraphicsContext2D();
         Renderer.init(graphicsContext);
-        //GameLoop.start(graphicsContext, entities);
-        addEntity(new Player(100, 100));
+        addEntity(player);
+        GameLoop.start(graphicsContext, entities);
         loadMap();
 
         started = true;
+        GameEventHandle.attachEventHandle(scene);
     }
 
 
@@ -72,6 +73,10 @@ public class EasyLevel {
 
     public static Scene getScene() {
         return scene;
+    }
+
+    public static Player getPlayer() {
+        return player;
     }
 
     public static List<Entity> getEntities() {
