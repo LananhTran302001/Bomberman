@@ -5,31 +5,31 @@ import javafx.scene.image.Image;
 
 public class PlayerAnimation {
 
-    Image[] moveRight = new Image[2];
-    Image[] moveLeft = new Image[2];
-    Image[] moveDown = new Image[2];
-    Image[] moveUp = new Image[2];
-    Image staticDown;
-    Image staticUp;
-    Image staticLeft;
-    Image staticRight;
+    Image[] moveRight = new Image[4];
+    Image[] moveLeft = new Image[4];
+    Image[] moveDown = new Image[4];
+    Image[] moveUp = new Image[4];
 
     public PlayerAnimation() {
-        moveRight[0] = new Image(GameImages.PLAYER_IMG + "R1.png");
-        moveRight[1] = new Image(GameImages.PLAYER_IMG + "R2.png");
-        staticRight = moveRight[0];
+        moveRight[0] = new Image(GameImages.PLAYER_IMG + "_right.png");
+        moveRight[1] = new Image(GameImages.PLAYER_IMG + "_right_01.png");
+        moveRight[2] = new Image(GameImages.PLAYER_IMG + "_right_02.png");
+        moveRight[3] = new Image(GameImages.PLAYER_IMG + "_right_03.png");
 
-        moveLeft[0] = new Image(GameImages.PLAYER_IMG + "L1.png");
-        moveLeft[1] = new Image(GameImages.PLAYER_IMG + "L2.png");
-        staticLeft = moveLeft[0];
+        moveLeft[0] = new Image(GameImages.PLAYER_IMG + "_left.png");
+        moveLeft[1] = new Image(GameImages.PLAYER_IMG + "_left_01.png");
+        moveLeft[2] = new Image(GameImages.PLAYER_IMG + "_left_02.png");
+        moveLeft[3] = new Image(GameImages.PLAYER_IMG + "_left_03.png");
 
-        moveDown[0] = new Image(GameImages.PLAYER_IMG + "D1.png");
-        moveDown[1] = new Image(GameImages.PLAYER_IMG + "D2.png");
-        staticDown = moveDown[0];
+        moveDown[0] = new Image(GameImages.PLAYER_IMG + "_down.png");
+        moveDown[1] = new Image(GameImages.PLAYER_IMG + "_down_01.png");
+        moveDown[2] = new Image(GameImages.PLAYER_IMG + "_down_02.png");
+        moveDown[3] = new Image(GameImages.PLAYER_IMG + "_down_03.png");
 
-        moveUp[0] = new Image(GameImages.PLAYER_IMG + "U1.png");
-        moveUp[1] = new Image(GameImages.PLAYER_IMG + "U2.png");
-        staticUp = moveUp[0];
+        moveUp[0] = new Image(GameImages.PLAYER_IMG + "_up.png");
+        moveUp[1] = new Image(GameImages.PLAYER_IMG + "_up_01.png");
+        moveUp[2] = new Image(GameImages.PLAYER_IMG + "_up_02.png");
+        moveUp[3] = new Image(GameImages.PLAYER_IMG + "_up_03.png");
     }
 
     public Image[] getMoveRight() {
@@ -49,22 +49,22 @@ public class PlayerAnimation {
     }
 
     public Image getDie() {
-        return new Image(GameImages.PLAYER_IMG + "_lose.png");
+        return new Image(GameImages.PLAYER_IMG + "_died.png");
     }
 
     public Image getStaticDown() {
-        return staticDown;
+        return moveDown[0];
     }
 
     public Image getStaticUp() {
-        return staticUp;
+        return moveUp[0];
     }
 
     public Image getStaticLeft() {
-        return staticLeft;
+        return moveLeft[0];
     }
 
     public Image getStaticRight() {
-        return staticRight;
+        return moveRight[0];
     }
 }

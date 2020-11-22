@@ -39,7 +39,7 @@ public class EasyLevel {
     private static List<Entity> entities = new ArrayList<Entity>();
 
     private static void initScene() {
-        //GamesFactory.createGame(16, 16, 26, 45, 2);
+        //GamesFactory.createGame(20, 20, 26, 45, 2);
 
         root = new Group();
         scene = new Scene(root, GameConstants.SCENE_WIDTH, GameConstants.SCENE_HEIGHT);

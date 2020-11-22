@@ -1,10 +1,12 @@
 package bomberman.entities.bomb;
 
 import bomberman.Renderer;
-import bomberman.constants.GameImages;
+import bomberman.animation.BlackBombAnimation;
 import bomberman.entities.Vector2;
 
 public class BlackBomb extends Bomb {
+
+    private BlackBombAnimation bombAnimation = new BlackBombAnimation();
 
     public BlackBomb(int x, int y) {
         super(x, y);
@@ -17,12 +19,11 @@ public class BlackBomb extends Bomb {
     }
 
     public void init() {
-        setImage(GameImages.BOMB_IMG);
         setLayer(2);
     }
 
     public void draw() {
-        Renderer.renderImage(position, size, image);
+        Renderer.playAnimation(bombAnimation.getBlackBombAnimation(), 3, position, size);
     }
 
     public void update() {

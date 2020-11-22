@@ -16,11 +16,6 @@ public class Player extends Sprite {
     private int health;
     private Image[] currentFrames = playerAnimation.getMoveDown();
 
-
-    public Player() {
-        init();
-    }
-
     public Player(Vector2 position) {
         this.setPosition(position);
         init();
@@ -31,12 +26,13 @@ public class Player extends Sprite {
     }
 
     public void init() {
+        this.setSize(32, 32);
         health = 100;
         layer = 3;
     }
 
     public void draw() {
-        Renderer.playAnimation(currentFrames, 2, position, size);
+        Renderer.playAnimation(currentFrames, 3, position, size);
     }
 
     public void update() {
