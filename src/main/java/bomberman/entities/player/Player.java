@@ -34,7 +34,7 @@ public class Player extends Sprite {
     }
 
     public void init() {
-        this.setSize(26, 32);
+        this.setSize(30, 38);
         health = 100;
         layer = 3;
     }
@@ -48,9 +48,9 @@ public class Player extends Sprite {
     }
 
     public boolean checkCollision(Vector2 p) {
-        setBound(new Rectangle2D(p.getX() + 2, p.getY() + 3, size.getX() - 5, size.getY() - 5));
-        for (Entity e : EasyLevel.getEntities()) {
-            if (e != this && collideWith(e) && !e.isPlayerCollideFriendly()) {
+        setBound(new Rectangle2D(p.getX() + 5, p.getY() + 10, size.getX() - 10, size.getY() - 12));
+        for (Entity e : GameLoop.getEntities()) {
+            if (!e.isPlayerCollideFriendly() && e != this && collideWith(e)) {
                 System.out.println("Collide with " + e.getName());
                 return true;
             }

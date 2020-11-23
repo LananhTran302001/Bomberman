@@ -16,7 +16,6 @@ public class BalloomAnimation {
         moveRight[0] = new Image(GameImages.BALLOOM_IMG + "_right_01.png");
         moveRight[1] = new Image(GameImages.BALLOOM_IMG + "_right_02.png");
         moveRight[2] = new Image(GameImages.BALLOOM_IMG + "_right_03.png");
-        moveRight[3] = new Image(GameImages.BALLOOM_IMG + "_right_04.png");
 
         dead[0] = new Image(GameImages.BALLOOM_IMG + "_dead.png");
         dead[1] = new Image(GameImages.BALLOOM_IMG + "_dead_01.png");
@@ -30,5 +29,9 @@ public class BalloomAnimation {
 
     public Image[] getMoveRight() {
         return moveRight;
+    }
+
+    public Image[] getDead() {
+        return dead;
     }
 }

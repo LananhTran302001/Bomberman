@@ -34,7 +34,7 @@ public class EasyLevel {
     private static Group root;
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
-    private static Player player = new Player(32, 64);
+    private static Player player = new Player(32, 160);
     private static boolean started = false;
 
     private static List<Entity> entities = new ArrayList<Entity>();
