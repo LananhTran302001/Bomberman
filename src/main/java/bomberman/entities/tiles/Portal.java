@@ -17,6 +17,10 @@ public class Portal extends Entity {
         init();
     }
 
+    public String getName() {
+        return "Portal";
+    }
+
     public void init() {
         setImage(GameImages.PORTAL_IMG);
         setLayer(1);

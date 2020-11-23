@@ -35,9 +35,13 @@ public abstract class Bomb extends Entity {
         state = STATE.ACTIVE;
     }
 
+    public String getName() {
+        return "Bomb";
+    }
+
     @Override
     public boolean isPlayerCollideFriendly() {
-        return false;
+        return true;
     }
 
     public STATE checkBombState() {

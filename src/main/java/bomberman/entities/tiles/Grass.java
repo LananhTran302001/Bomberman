@@ -23,6 +23,10 @@ public class Grass extends Entity {
         init();
     }
 
+    public String getName() {
+        return "Grass";
+    }
+
     public void init() {
         setImage(GameImages.GRASS_IMG);
         setLayer(0);

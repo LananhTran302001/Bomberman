@@ -14,6 +14,10 @@ public class Brick extends Entity implements Breakable {
         init();
     }
 
+    public String getName() {
+        return "Brick";
+    }
+
     public Brick(Vector2 position) {
         super( position);
         init();

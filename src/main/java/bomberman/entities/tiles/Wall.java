@@ -17,6 +17,10 @@ public class Wall extends Entity {
         init();
     }
 
+    public String getName() {
+        return "Wall";
+    }
+
     public void init() {
         setImage(GameImages.WALL_IMG);
         setLayer(2);

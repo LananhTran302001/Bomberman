@@ -7,6 +7,7 @@ import bomberman.constants.GameConstants;
 
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
+import bomberman.entities.enermies.Balloom;
 import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Brick;
 import bomberman.entities.tiles.Grass;
@@ -33,7 +34,7 @@ public class EasyLevel {
     private static Group root;
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
-    private static Player player = new Player(0, 0);
+    private static Player player = new Player(32, 64);
     private static boolean started = false;
 
     private static List<Entity> entities = new ArrayList<Entity>();
@@ -49,6 +50,7 @@ public class EasyLevel {
         graphicsContext = canvas.getGraphicsContext2D();
         Renderer.init(graphicsContext);
         addEntity(player);
+        addEntity(new Balloom(32, 96));
         GameLoop.start(graphicsContext, entities);
         loadMap();
 

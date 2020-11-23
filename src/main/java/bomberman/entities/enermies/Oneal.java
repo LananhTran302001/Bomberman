@@ -6,6 +6,10 @@ import bomberman.entities.Vector2;
 
 
 public class Oneal extends AISprite {
+    public String getName() {
+        return "Oneal";
+    }
+
     public void init() {
 
     }

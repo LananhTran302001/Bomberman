@@ -53,6 +53,8 @@ public abstract class Entity extends BoundedRect {
         this.layer = layer;
     }
 
+    public abstract String getName();
+
     public abstract void init();
 
     public abstract void draw();

@@ -1,11 +1,15 @@
 package bomberman.entities.player;
 
+import bomberman.GameLoop;
 import bomberman.Renderer;
 import bomberman.animation.PlayerAnimation;
 import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
+import bomberman.entities.Entity;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
+import bomberman.scenes.EasyLevel;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
 
@@ -25,18 +29,33 @@ public class Player extends Sprite {
         this(new Vector2(x, y));
     }
 
+    public String getName() {
+        return "Player";
+    }
+
     public void init() {
-        this.setSize(32, 32);
+        this.setSize(26, 32);
         health = 100;
         layer = 3;
     }
 
     public void draw() {
-        Renderer.playAnimation(currentFrames, 3, position, size);
+        Renderer.playAnimation(currentFrames, 2, position, size);
     }
 
     public void update() {
 
+    }
+
+    public boolean checkCollision(Vector2 p) {
+        setBound(new Rectangle2D(p.getX() + 2, p.getY() + 3, size.getX() - 5, size.getY() - 5));
+        for (Entity e : EasyLevel.getEntities()) {
+            if (e != this && collideWith(e) && !e.isPlayerCollideFriendly()) {
+                System.out.println("Collide with " + e.getName());
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isPlayerCollideFriendly() {
@@ -69,7 +88,11 @@ public class Player extends Sprite {
                 break;
         }
 
-        this.setPosition(this.getPosition().add(directionVector.multiple(step * GameConstants.STEP_LENGTH)));
+
+        Vector2 newPosition = new Vector2(position).add(directionVector.multiple(step * GameConstants.STEP_LENGTH));
+        if (!checkCollision(newPosition)) {
+            this.setPosition(newPosition);
+        }
     }
 
     public void move(Direction d) {

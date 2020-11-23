@@ -24,6 +24,7 @@ public class BoundedRect {
     public BoundedRect(Vector2 pos, Vector2 size) {
         this.position = new Vector2(pos);
         this.size = new Vector2(size);
+        bound = new Rectangle2D(pos.x, pos.y, size.x, size.y);
     }
 
     public Vector2 getPosition() {
@@ -48,9 +49,11 @@ public class BoundedRect {
 
     public void setSize(int width, int height) {
         size = new Vector2(width, height);
+        bound = new Rectangle2D(position.x, position.y, size.x, size.y);
     }
 
     public Rectangle2D getBound() {
+        bound = new Rectangle2D(position.x, position.y, size.x, size.y);
         return bound;
     }
 

@@ -46,6 +46,9 @@ public class GameLoop {
         timer.start();
     }
 
+    public static List<Entity> getEntities() {
+        return entities;
+    }
 
     public static void update() {
         InputManager.handlePlayerInput();
