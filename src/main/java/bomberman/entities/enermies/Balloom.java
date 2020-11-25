@@ -4,9 +4,11 @@ import bomberman.GameLoop;
 import bomberman.Renderer;
 import bomberman.animation.BalloomAnimation;
 import bomberman.constants.Direction;
+import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
+import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Grass;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
@@ -16,11 +18,12 @@ import java.util.Random;
 public class Balloom extends Sprite {
 
     Vector2 directionVector;
-    BalloomAnimation balloomAnimation = new BalloomAnimation();
     Image[] currentAnimation;
+    //int row;
 
     public Balloom(Vector2 position) {
         this.setPosition(position);
+        //row = position.getY() / GameConstants.TILE_SIZE;
         init();
     }
 
@@ -38,35 +41,30 @@ public class Balloom extends Sprite {
         if (randomNum == 0) {
             // init right direction
             directionVector = new Vector2(1, 0);
-            currentAnimation = balloomAnimation.getMoveRight();
+            currentAnimation = BalloomAnimation.getMoveRight();
         } else {
             // init left direction
             directionVector = new Vector2(-1, 0);
-            currentAnimation = balloomAnimation.getMoveLeft();
+            currentAnimation = BalloomAnimation.getMoveLeft();
         }
     }
 
     public void draw() {
-        move();
         Renderer.playAnimation(currentAnimation, 2, position, size);
     }
 
     public void update() {
-
+        move();
     }
 
     public void die() {
-
+        currentAnimation = BalloomAnimation.getDead();
     }
 
     private boolean checkCollision(Vector2 p) {
         setBound(new Rectangle2D(p.getX(), p.getY(), size.getX(), size.getY()));
         for (Entity e : GameLoop.getEntities()) {
-            if (e != this && !(e instanceof Grass) && collideWith(e)) {
-                /*if (e.getClass().isInstance(Brick.class) || e.getClass().isInstance(Wall.class)) {
-                    return true;
-                }*/
-                System.out.println("Balloom collides with" + e.getName());
+            if (e != this && !(e instanceof Grass) && !(e instanceof Player) && collideWith(e)) {
                 return true;
             }
         }
@@ -88,9 +86,9 @@ public class Balloom extends Sprite {
     private void changeDirection() {
         directionVector = directionVector.multiple(-1);
         if (directionVector.getX() > 0) {
-            currentAnimation = balloomAnimation.getMoveRight();
+            currentAnimation = BalloomAnimation.getMoveRight();
         } else {
-            currentAnimation = balloomAnimation.getMoveLeft();
+            currentAnimation = BalloomAnimation.getMoveLeft();
         }
     }
 

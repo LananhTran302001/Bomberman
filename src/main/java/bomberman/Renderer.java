@@ -23,8 +23,8 @@ public class Renderer {
         renderImage(position, new Vector2(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE), image);
     }
 
-    public static void playAnimation(Image[] frames, int speed, Vector2 pos, Vector2 size) {
-        int index = (int) ((GameLoop.getCurrentGameTime() % (frames.length / speed)) * speed);
+    public static void playAnimation(Image[] frames, int fps, Vector2 pos, Vector2 size) {
+        int index =  ((int)(GameLoop.getCurrentGameTime() * fps) % (frames.length));
         renderImage(pos, size, frames[index]);
     }
 }

@@ -1,6 +1,7 @@
 package bomberman.input;
 
 import bomberman.constants.Direction;
+import bomberman.constants.GameConstants;
 import bomberman.entities.bomb.BlackBomb;
 import bomberman.entities.player.Player;
 import bomberman.scenes.EasyLevel;
@@ -28,7 +29,14 @@ public class InputManager {
         }
 
         if (keyboardInput.contains(KeyCode.SPACE)) {
-            EasyLevel.addEntity(new BlackBomb(player.getPosition()));
+            int x = player.getPosition().getX();
+            int y = player.getPosition().getY();
+            x = Math.round(x / (float)GameConstants.TILE_SIZE) * GameConstants.TILE_SIZE;
+            y = Math.round(y / (float)GameConstants.TILE_SIZE) * GameConstants.TILE_SIZE;
+            EasyLevel.addEntity(new BlackBomb(x, y));
+        }
+        if (keyboardInput.size() < 1) {
+            player.stopAnimation();
         }
     }
 }

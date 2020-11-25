@@ -8,17 +8,15 @@ import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
-import bomberman.scenes.EasyLevel;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
 
 public class Player extends Sprite {
 
-    private PlayerAnimation playerAnimation = new PlayerAnimation();
     private Direction direction = Direction.DOWN;
     private int health;
-    private Image[] currentFrames = playerAnimation.getMoveDown();
+    private Image[] currentFrames = PlayerAnimation.getMoveDown();
 
     public Player(Vector2 position) {
         this.setPosition(position);
@@ -40,7 +38,11 @@ public class Player extends Sprite {
     }
 
     public void draw() {
-        Renderer.playAnimation(currentFrames, 2, position, size);
+        if (currentFrames.length > 1) {
+            Renderer.playAnimation(currentFrames, 4, position, size);
+        } else {
+            Renderer.renderImage(position, size, currentFrames[0]);
+        }
     }
 
     public void update() {
@@ -69,22 +71,22 @@ public class Player extends Sprite {
         switch (direction) {
             case UP:
                 directionVector = new Vector2(0, -1);
-                currentFrames = playerAnimation.getMoveUp();
+                currentFrames = PlayerAnimation.getMoveUp();
                 break;
 
             case DOWN:
                 directionVector = new Vector2(0, 1);
-                currentFrames = playerAnimation.getMoveDown();
+                currentFrames = PlayerAnimation.getMoveDown();
                 break;
 
             case LEFT:
                 directionVector = new Vector2(-1, 0);
-                currentFrames = playerAnimation.getMoveLeft();
+                currentFrames = PlayerAnimation.getMoveLeft();
                 break;
 
             case RIGHT:
                 directionVector = new Vector2(1, 0);
-                currentFrames = playerAnimation.getMoveRight();
+                currentFrames = PlayerAnimation.getMoveRight();
                 break;
         }
 
@@ -97,6 +99,12 @@ public class Player extends Sprite {
 
     public void move(Direction d) {
         move(1, d);
+    }
+
+    public void stopAnimation() {
+        Image temp = currentFrames[0];
+        currentFrames = new Image[1];
+        currentFrames[0] = temp;
     }
 
     public void die() {

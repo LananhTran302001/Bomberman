@@ -50,7 +50,6 @@ public class EasyLevel {
         graphicsContext = canvas.getGraphicsContext2D();
         Renderer.init(graphicsContext);
         addEntity(player);
-        addEntity(new Balloom(32, 96));
         GameLoop.start(graphicsContext, entities);
         loadMap();
 
@@ -85,6 +84,7 @@ public class EasyLevel {
         return entities;
     }
 
+
     static Comparator<Entity> layerCompare = new Comparator<Entity>() {
         public int compare(Entity o1, Entity o2) {
             return o1.getLayer() - o2.getLayer();
@@ -111,6 +111,7 @@ public class EasyLevel {
             String inputLine = reader.readLine();
 
             System.out.println("Start loading map...");
+
             int row = 0;
             while (inputLine != null) {
                 int column = inputLine.length();
@@ -131,17 +132,26 @@ public class EasyLevel {
                             break;
 
                         case 'x':
-                            addEntity(new Grass(position));
                             addEntity(new Portal(position));
+                            break;
+
+                        case 'U':
+                            addEntity(new Grass(position));
+                            addEntity(new Balloom(position));
                             break;
 
                         default:
                             addEntity(new Grass(position));
                     }
                 }
+                GameConstants.NUM_OF_COLUMNS = column;
                 inputLine = reader.readLine();
                 row++;
             }
+
+            reader.close();
+            GameConstants.NUM_OF_ROWS = row;
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

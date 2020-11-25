@@ -16,4 +16,7 @@ public class GameConstants {
 
     public static final int STEP_LENGTH = 1;
 
+    public static int NUM_OF_COLUMNS = 0;
+    public static int NUM_OF_ROWS = 0;
+
 }

@@ -6,8 +6,6 @@ import bomberman.entities.Vector2;
 
 public class BlackBomb extends Bomb {
 
-    private BlackBombAnimation bombAnimation = new BlackBombAnimation();
-
     public BlackBomb(int x, int y) {
         super(x, y);
         init();
@@ -23,10 +21,14 @@ public class BlackBomb extends Bomb {
     }
 
     public void draw() {
-        Renderer.playAnimation(bombAnimation.getBlackBombAnimation(), 3, position, size);
+        Renderer.playAnimation(BlackBombAnimation.getBlackBombAnimation(), 3, position, size);
     }
 
     public void update() {
+
+    }
+
+    public void explode() {
 
     }
 }

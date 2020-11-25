@@ -19,6 +19,9 @@ public class GameLoop {
 
     private static List<Entity> entities;
 
+    /**
+     * @return currentTime by second.
+     */
     public static double getCurrentGameTime() {
         return currentGameTime;
     }
@@ -52,6 +55,9 @@ public class GameLoop {
 
     public static void update() {
         InputManager.handlePlayerInput();
+        for (Entity entity : entities) {
+            entity.update();
+        }
     }
 
     public static void render() {

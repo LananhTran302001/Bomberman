@@ -9,4 +9,5 @@ public class GameImages {
     public static final String BOMB_IMG = "/image/bomb/bomb";
     public static final String PLAYER_IMG = "/image/player/player";
     public static final String BALLOOM_IMG = "/image/balloom/balloom";
+    public static final String FLAME_IMG = "/image/bomb/explosion";
 }

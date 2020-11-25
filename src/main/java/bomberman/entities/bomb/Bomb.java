@@ -14,19 +14,15 @@ public abstract class Bomb extends Entity {
     protected static List<Bomb> bombsList = new ArrayList<Bomb>();
 
     private enum STATE {
-        INACTIVE,
         ACTIVE,
         EXPLODING,
         DEAD
     }
 
-    public Bomb() {
-        startDate = new Date();
-        state = STATE.ACTIVE;
-    }
-
     public Bomb(Vector2 position) {
         super(position);
+        startDate = new Date();
+        state = STATE.ACTIVE;
     }
 
     public Bomb(int x, int y) {
@@ -54,5 +50,7 @@ public abstract class Bomb extends Entity {
     public boolean isAlive() {
         return state != STATE.DEAD;
     }
+
+    public abstract void explode();
 
 }
