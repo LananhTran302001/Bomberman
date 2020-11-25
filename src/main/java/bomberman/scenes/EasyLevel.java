@@ -7,6 +7,7 @@ import bomberman.constants.GameConstants;
 
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
+import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Balloom;
 import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Brick;
@@ -38,6 +39,7 @@ public class EasyLevel {
     private static boolean started = false;
 
     private static List<Entity> entities = new ArrayList<Entity>();
+    private static char[][] staticMap = new char[30][50];
 
     private static void initScene() {
         //GamesFactory.createGame(20, 20, 26, 45, 2);
@@ -84,6 +86,9 @@ public class EasyLevel {
         return entities;
     }
 
+    public static char getStaticMapAt(int row, int column) {
+        return staticMap[row][column];
+    }
 
     static Comparator<Entity> layerCompare = new Comparator<Entity>() {
         public int compare(Entity o1, Entity o2) {
@@ -95,6 +100,21 @@ public class EasyLevel {
         if (!entities.contains(entity)) {
             entities.add(entity);
             System.out.println("Add entity");
+
+            int i = entity.getPosition().getY() / GameConstants.TILE_SIZE;
+            int j = entity.getPosition().getX() / GameConstants.TILE_SIZE;
+            if (entity instanceof Brick) {
+                staticMap[i][j] = '*';
+            } else if (entity instanceof Wall) {
+                staticMap[i][j] = '#';
+            } else if (entity instanceof Portal) {
+                staticMap[i][j] = 'x';
+            } else if (entity instanceof Bomb) {
+                staticMap[i][j] = 'B';
+            } else {
+                staticMap[i][j] = ' ';
+            }
+
             Collections.sort(entities, layerCompare);
         }
     }
@@ -102,6 +122,11 @@ public class EasyLevel {
 
     public static void removeEntity(Entity entity) {
         entities.remove(entity);
+        if (entity instanceof Wall || entity instanceof Brick || entity instanceof Portal || entity instanceof Bomb) {
+            int i = entity.getPosition().getY() / GameConstants.TILE_SIZE;
+            int j = entity.getPosition().getX() / GameConstants.TILE_SIZE;
+            staticMap[i][j] = ' ';
+        }
     }
 
     public static void loadMap() {
@@ -151,7 +176,6 @@ public class EasyLevel {
 
             reader.close();
             GameConstants.NUM_OF_ROWS = row;
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

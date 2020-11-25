@@ -9,9 +9,10 @@ import java.util.List;
 
 public abstract class Bomb extends Entity {
 
-    protected Date startDate;
-    protected STATE state;
-    protected static List<Bomb> bombsList = new ArrayList<Bomb>();
+    Date startDate;
+    STATE state;
+    int range;
+    //static List<Bomb> bombsList = new ArrayList<Bomb>();
 
     private enum STATE {
         ACTIVE,
@@ -35,17 +36,16 @@ public abstract class Bomb extends Entity {
         return "Bomb";
     }
 
+    public void setRange(int a) {
+        range = a;
+    }
+
     @Override
     public boolean isPlayerCollideFriendly() {
         return true;
     }
 
-    public STATE checkBombState() {
-        if (new Date().getTime() > 2000 + startDate.getTime()) {
-            return STATE.DEAD;
-        }
-        return STATE.ACTIVE;
-    }
+
 
     public boolean isAlive() {
         return state != STATE.DEAD;

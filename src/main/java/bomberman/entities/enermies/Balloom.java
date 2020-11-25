@@ -10,6 +10,7 @@ import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
 import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Grass;
+import bomberman.scenes.EasyLevel;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
@@ -19,11 +20,11 @@ public class Balloom extends Sprite {
 
     Vector2 directionVector;
     Image[] currentAnimation;
-    //int row;
+    int row;
 
     public Balloom(Vector2 position) {
         this.setPosition(position);
-        //row = position.getY() / GameConstants.TILE_SIZE;
+        row = position.getY() / GameConstants.TILE_SIZE;
         init();
     }
 
@@ -62,13 +63,12 @@ public class Balloom extends Sprite {
     }
 
     private boolean checkCollision(Vector2 p) {
-        setBound(new Rectangle2D(p.getX(), p.getY(), size.getX(), size.getY()));
-        for (Entity e : GameLoop.getEntities()) {
-            if (e != this && !(e instanceof Grass) && !(e instanceof Player) && collideWith(e)) {
-                return true;
-            }
+        int i = p.getY() / GameConstants.TILE_SIZE;
+        int j = p.getX() / GameConstants.TILE_SIZE;
+        if (directionVector.getX() > 0) {
+            j++;
         }
-        return false;
+        return EasyLevel.getStaticMapAt(i, j) != ' ';
     }
 
     public void move(int step, Direction direction) {

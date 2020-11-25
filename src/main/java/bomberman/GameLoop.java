@@ -49,6 +49,7 @@ public class GameLoop {
         timer.start();
     }
 
+
     public static List<Entity> getEntities() {
         return entities;
     }
