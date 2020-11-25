@@ -23,7 +23,7 @@ public class Wall extends Entity {
 
     public void init() {
         setImage(GameImages.WALL_IMG);
-        setLayer(2);
+        setLayer(1);
     }
 
     public void draw() {

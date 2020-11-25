@@ -11,7 +11,7 @@ public class Oneal extends AISprite {
     }
 
     public void init() {
-
+        setLayer(3);
     }
 
     public void draw() {

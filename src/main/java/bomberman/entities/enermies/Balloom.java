@@ -37,7 +37,7 @@ public class Balloom extends Sprite {
     }
 
     public void init() {
-        layer = 2;
+        setLayer(3);
         int randomNum = new Random().nextInt() % 2;
         if (randomNum == 0) {
             // init right direction

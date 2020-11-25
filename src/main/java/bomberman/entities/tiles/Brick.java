@@ -25,7 +25,7 @@ public class Brick extends Entity implements Breakable {
 
     public void init() {
         setImage(GameImages.BRICK_IMG);
-        setLayer(2);
+        setLayer(1);
     }
 
     public void draw() {

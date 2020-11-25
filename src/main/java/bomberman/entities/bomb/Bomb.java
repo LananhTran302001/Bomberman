@@ -10,11 +10,10 @@ import java.util.List;
 public abstract class Bomb extends Entity {
 
     Date startDate;
-    STATE state;
     int range;
     //static List<Bomb> bombsList = new ArrayList<Bomb>();
 
-    private enum STATE {
+    protected enum STATE {
         ACTIVE,
         EXPLODING,
         DEAD
@@ -23,13 +22,11 @@ public abstract class Bomb extends Entity {
     public Bomb(Vector2 position) {
         super(position);
         startDate = new Date();
-        state = STATE.ACTIVE;
     }
 
     public Bomb(int x, int y) {
         super(x, y);
         startDate = new Date();
-        state = STATE.ACTIVE;
     }
 
     public String getName() {
@@ -45,10 +42,23 @@ public abstract class Bomb extends Entity {
         return true;
     }
 
+    public void initFlame() {
 
+    }
 
-    public boolean isAlive() {
-        return state != STATE.DEAD;
+    public STATE getState() {
+        long lifeTime = new Date().getTime() - startDate.getTime();
+        if (lifeTime > 3000) {
+            return STATE.DEAD;
+        } else if (lifeTime > 2000) {
+            return STATE.EXPLODING;
+        } else {
+            return STATE.ACTIVE;
+        }
+    }
+
+    public boolean dead() {
+        return getState() == STATE.DEAD;
     }
 
     public abstract void explode();

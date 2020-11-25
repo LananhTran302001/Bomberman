@@ -1,7 +1,9 @@
 package bomberman.entities.bomb;
 
+import bomberman.GameLoop;
 import bomberman.Renderer;
 import bomberman.animation.BlackBombAnimation;
+import bomberman.animation.FlameAnimation;
 import bomberman.entities.Vector2;
 
 public class BlackBomb extends Bomb {
@@ -22,7 +24,11 @@ public class BlackBomb extends Bomb {
     }
 
     public void draw() {
-        Renderer.playAnimation(BlackBombAnimation.getBlackBombAnimation(), 3, position, size);
+        if (getState() == STATE.ACTIVE) {
+            Renderer.playAnimation(BlackBombAnimation.getBlackBombAnimation(), 3, position, size);
+        } else if (getState() == STATE.EXPLODING) {
+            Renderer.playAnimation(FlameAnimation.getCenterFlame(), 3, position, size);
+        }
     }
 
     public void update() {

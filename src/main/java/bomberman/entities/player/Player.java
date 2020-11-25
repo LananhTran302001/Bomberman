@@ -34,7 +34,7 @@ public class Player extends Sprite {
     public void init() {
         this.setSize(30, 38);
         health = 100;
-        layer = 3;
+        setLayer(4);
     }
 
     public void draw() {

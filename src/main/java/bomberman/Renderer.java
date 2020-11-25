@@ -27,4 +27,5 @@ public class Renderer {
         int index =  ((int)(GameLoop.getCurrentGameTime() * fps) % (frames.length));
         renderImage(pos, size, frames[index]);
     }
+
 }

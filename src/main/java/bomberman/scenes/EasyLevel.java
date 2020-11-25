@@ -39,6 +39,8 @@ public class EasyLevel {
     private static boolean started = false;
 
     private static List<Entity> entities = new ArrayList<Entity>();
+    private static List<Bomb> bombList = new ArrayList<Bomb>();
+
     private static char[][] staticMap = new char[30][50];
 
     private static void initScene() {
@@ -110,6 +112,7 @@ public class EasyLevel {
             } else if (entity instanceof Portal) {
                 staticMap[i][j] = 'x';
             } else if (entity instanceof Bomb) {
+                bombList.add((Bomb)entity);
                 staticMap[i][j] = 'B';
             } else {
                 staticMap[i][j] = ' ';
@@ -122,10 +125,15 @@ public class EasyLevel {
 
     public static void removeEntity(Entity entity) {
         entities.remove(entity);
+        System.out.println("Removed bomb from entities");
         if (entity instanceof Wall || entity instanceof Brick || entity instanceof Portal || entity instanceof Bomb) {
             int i = entity.getPosition().getY() / GameConstants.TILE_SIZE;
             int j = entity.getPosition().getX() / GameConstants.TILE_SIZE;
             staticMap[i][j] = ' ';
+            if (entity instanceof Bomb) {
+                bombList.remove(entity);
+                System.out.println("Removed bomb from bombList");
+            }
         }
     }
 
