@@ -1,8 +1,8 @@
 package bomberman.entities;
 
+import bomberman.constants.Direction;
+
 public interface Perceptive {
 
-    public int observe(int radiusArea);
-
-    public Vector2 findDirection();
+    public Vector2 findDirection(int radiusArea);
 }

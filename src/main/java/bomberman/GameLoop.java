@@ -4,6 +4,7 @@ import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Balloom;
+import bomberman.entities.enermies.Enemy;
 import bomberman.input.InputManager;
 import bomberman.scenes.EasyLevel;
 import javafx.animation.AnimationTimer;
@@ -69,7 +70,7 @@ public class GameLoop {
                 iterator.remove();
                 System.out.println("Removed");
 
-            } else if (e instanceof Balloom && ((Balloom)e).dead()){
+            } else if (e instanceof Enemy && ((Enemy)e).dead()){
                 EasyLevel.removeStaticEntityInMap(e);
                 iterator.remove();
                 System.out.println("Removed");

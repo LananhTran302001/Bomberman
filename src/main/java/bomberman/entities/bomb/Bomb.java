@@ -53,63 +53,65 @@ public abstract class Bomb extends Entity {
             int j = position.getX() / GameConstants.TILE_SIZE;
 
             // CENTER FLAME
+
             bombFlame.add(new Flame(FlameAnimation.getCenterFlame(), position));
-            //Renderer.playAnimation(FlameAnimation.getCenterFlame(), 4, position, size);
+
+
+            int k;
+
 
             // RIGHT FLAME
-            int k = 1;
-            while (k < range && (j + k + 1 < GameConstants.NUM_OF_COLUMNS) && EasyLevel.getStaticMapAt(i, j + k + 1) != '#') {
-                bombFlame.add(new Flame(FlameAnimation.getHorizontalFlame(), new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
-            /*Renderer.playAnimation(FlameAnimation.getHorizontalFlame(), 4,
-                    new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE), size);*/
-                k++;
-            }
-            if (EasyLevel.getStaticMapAt(i, j + k) != '#') {
-                bombFlame.add(new Flame(FlameAnimation.getRightFlame(), new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
-            /*Renderer.playAnimation(FlameAnimation.getRightFlame(), 4,
-                    new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE), size);*/
+
+            if (EasyLevel.getStaticMapAt(i, j + 1) != '#') {
+                k = 1;
+                while (k < range && (j + k + 1 < GameConstants.NUM_OF_COLUMNS) && EasyLevel.getStaticMapAt(i, j + k + 1) != '#') {
+                    bombFlame.add(new Flame(FlameAnimation.getHorizontalFlame(), new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
+                    k++;
+                }
+                if (EasyLevel.getStaticMapAt(i, j + k) != '#') {
+                    bombFlame.add(new Flame(FlameAnimation.getRightFlame(), new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
+                }
             }
 
             // LEFT FLAME
-            k = 1;
-            while (k < range && (j - k > 1) && EasyLevel.getStaticMapAt(i, j - k - 1) != '#') {
-                bombFlame.add(new Flame(FlameAnimation.getHorizontalFlame(), new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
-            /*Renderer.playAnimation(FlameAnimation.getHorizontalFlame(), 4,
-                    new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE), size);*/
-                k++;
+
+            if (EasyLevel.getStaticMapAt(i, j - 1) != '#') {
+                k = 1;
+                while (k < range && (j - k > 1) && EasyLevel.getStaticMapAt(i, j - k - 1) != '#') {
+                    bombFlame.add(new Flame(FlameAnimation.getHorizontalFlame(), new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
+                    k++;
+                }
+                if (EasyLevel.getStaticMapAt(i, j - k) != '#') {
+                    bombFlame.add(new Flame(FlameAnimation.getLeftFlame(), new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
+                }
             }
-            if (EasyLevel.getStaticMapAt(i, j - k) != '#') {
-                bombFlame.add(new Flame(FlameAnimation.getLeftFlame(), new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
-            /*Renderer.playAnimation(FlameAnimation.getLeftFlame(), 4,
-                    new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE), size);*/
-            }
+
 
             // BOTTOM FLAME
-            k = 1;
-            while (k < range && (j + k + 1 < GameConstants.NUM_OF_ROWS) && EasyLevel.getStaticMapAt(i + k + 1, j) != '#') {
-                bombFlame.add(new Flame(FlameAnimation.getVerticalFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE)));
-            /*Renderer.playAnimation(FlameAnimation.getVerticalFlame(), 4,
-                    new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE), size);*/
-                k++;
-            }
-            if (EasyLevel.getStaticMapAt(i + k, j) != '#') {
-                bombFlame.add(new Flame(FlameAnimation.getBottomFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE)));
-            /*Renderer.playAnimation(FlameAnimation.getBottomFlame(), 4,
-                    new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE), size);*/
+
+            if (EasyLevel.getStaticMapAt(i + 1, j) != '#') {
+                k = 1;
+                while (k < range && (i + k + 1 < GameConstants.NUM_OF_ROWS) && EasyLevel.getStaticMapAt(i + k + 1, j) != '#') {
+                    bombFlame.add(new Flame(FlameAnimation.getVerticalFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE)));
+                    k++;
+                }
+                if (EasyLevel.getStaticMapAt(i + k, j) != '#') {
+                    bombFlame.add(new Flame(FlameAnimation.getBottomFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE)));
+                }
             }
 
+
             // TOP FLAME
-            k = 1;
-            while (k < range && (i - k > 1) && EasyLevel.getStaticMapAt(i - k - 1, j) != '#') {
-                bombFlame.add(new Flame(FlameAnimation.getVerticalFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE)));
-            /*Renderer.playAnimation(FlameAnimation.getVerticalFlame(), 4,
-                    new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE), size);*/
-                k++;
-            }
-            if (EasyLevel.getStaticMapAt(i - k, j) != '#') {
-                bombFlame.add(new Flame(FlameAnimation.getTopFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE)));
-            /*Renderer.playAnimation(FlameAnimation.getTopFlame(), 4,
-                    new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE), size);*/
+
+            if (EasyLevel.getStaticMapAt(i - 1, j) != '#') {
+                k = 1;
+                while (k < range && (i - k > 1) && EasyLevel.getStaticMapAt(i - k - 1, j) != '#') {
+                    bombFlame.add(new Flame(FlameAnimation.getVerticalFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE)));
+                    k++;
+                }
+                if (EasyLevel.getStaticMapAt(i - k, j) != '#') {
+                    bombFlame.add(new Flame(FlameAnimation.getTopFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE)));
+                }
             }
 
             exploding = true;
@@ -143,8 +145,8 @@ public abstract class Bomb extends Entity {
     }
 
     public boolean dead() {
-        //return getState() == STATE.DEAD;
-        return new Date().getTime() - startDate.getTime() > 4000;
+        return getState() == STATE.DEAD;
+        //return new Date().getTime() - startDate.getTime() > 4000;
     }
 
 
