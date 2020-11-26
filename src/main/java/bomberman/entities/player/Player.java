@@ -50,7 +50,7 @@ public class Player extends Sprite {
     }
 
     public boolean checkCollision(Vector2 p) {
-        setBound(new Rectangle2D(p.getX() + 5, p.getY() + 10, size.getX() - 10, size.getY() - 12));
+        setBound(new Rectangle2D(p.getX() + 5, p.getY() + 20, size.getX() - 10, size.getY() - 22));
         for (Entity e : GameLoop.getEntities()) {
             if (!e.isPlayerCollideFriendly() && e != this && collideWith(e)) {
                 System.out.println("Collide with " + e.getName());

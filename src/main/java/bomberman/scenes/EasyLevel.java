@@ -24,10 +24,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class EasyLevel {
 
@@ -124,7 +121,17 @@ public class EasyLevel {
 
 
     public static void removeEntity(Entity entity) {
-        entities.remove(entity);
+        Iterator<Entity> iterator = entities.iterator();
+        while (iterator.hasNext()) {
+            Entity e = iterator.next();
+            if (e == entity) {
+                iterator.remove();
+                break;
+            }
+        }
+        /*entities.remove(entity);
+
+         */
         System.out.println("Removed bomb from entities");
         if (entity instanceof Wall || entity instanceof Brick || entity instanceof Portal || entity instanceof Bomb) {
             int i = entity.getPosition().getY() / GameConstants.TILE_SIZE;
@@ -135,6 +142,7 @@ public class EasyLevel {
                 System.out.println("Removed bomb from bombList");
             }
         }
+
     }
 
     public static void loadMap() {

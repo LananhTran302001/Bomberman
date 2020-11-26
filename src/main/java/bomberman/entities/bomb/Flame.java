@@ -1,5 +1,6 @@
 package bomberman.entities.bomb;
 
+import bomberman.Renderer;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import javafx.scene.image.Image;
@@ -22,7 +23,7 @@ public class Flame extends Entity {
     }
 
     public void draw() {
-
+        Renderer.playAnimation(animation, 5, position, size);
     }
 
     public void update() {

@@ -9,6 +9,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.Iterator;
 import java.util.List;
 
 public class GameLoop {
@@ -57,12 +58,25 @@ public class GameLoop {
 
     public static void update() {
         InputManager.handlePlayerInput();
-        for (Entity entity : entities) {
+        /*for (Entity entity : entities) {
             entity.update();
             if (entity instanceof Bomb) {
                 if (((Bomb) entity).dead()) {
                     EasyLevel.removeEntity(entity);
                 }
+            }
+        }
+
+         */
+        Iterator<Entity> iterator = entities.iterator();
+        while (iterator.hasNext()) {
+            Entity e = iterator.next();
+            if (e instanceof Bomb && ((Bomb)e).dead()) {
+                iterator.remove();
+                System.out.println("Removed");
+                break;
+            } else {
+                e.update();
             }
         }
     }

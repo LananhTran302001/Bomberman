@@ -20,14 +20,14 @@ public class BlackBomb extends Bomb {
 
     public void init() {
         setLayer(2);
-        setRange(2);
+        setRange(4);
     }
 
     public void draw() {
         if (getState() == STATE.ACTIVE) {
             Renderer.playAnimation(BlackBombAnimation.getBlackBombAnimation(), 3, position, size);
         } else if (getState() == STATE.EXPLODING) {
-            Renderer.playAnimation(FlameAnimation.getCenterFlame(), 3, position, size);
+            explode();
         }
     }
 
@@ -35,7 +35,4 @@ public class BlackBomb extends Bomb {
 
     }
 
-    public void explode() {
-
-    }
 }
