@@ -3,6 +3,7 @@ package bomberman;
 import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.bomb.Bomb;
+import bomberman.entities.enermies.Balloom;
 import bomberman.input.InputManager;
 import bomberman.scenes.EasyLevel;
 import javafx.animation.AnimationTimer;
@@ -58,23 +59,21 @@ public class GameLoop {
 
     public static void update() {
         InputManager.handlePlayerInput();
-        /*for (Entity entity : entities) {
-            entity.update();
-            if (entity instanceof Bomb) {
-                if (((Bomb) entity).dead()) {
-                    EasyLevel.removeEntity(entity);
-                }
-            }
-        }
 
-         */
         Iterator<Entity> iterator = entities.iterator();
+
         while (iterator.hasNext()) {
             Entity e = iterator.next();
             if (e instanceof Bomb && ((Bomb)e).dead()) {
+                EasyLevel.removeStaticEntityInMap(e);
                 iterator.remove();
                 System.out.println("Removed");
-                break;
+
+            } else if (e instanceof Balloom && ((Balloom)e).dead()){
+                EasyLevel.removeStaticEntityInMap(e);
+                iterator.remove();
+                System.out.println("Removed");
+
             } else {
                 e.update();
             }

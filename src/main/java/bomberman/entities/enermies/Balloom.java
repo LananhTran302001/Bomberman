@@ -8,6 +8,7 @@ import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
+import bomberman.entities.bomb.Bomb;
 import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Grass;
 import bomberman.scenes.EasyLevel;
@@ -58,9 +59,6 @@ public class Balloom extends Sprite {
         move();
     }
 
-    public void die() {
-        currentAnimation = BalloomAnimation.getDead();
-    }
 
     private boolean checkCollision(Vector2 p) {
         int i = p.getY() / GameConstants.TILE_SIZE;
@@ -70,6 +68,7 @@ public class Balloom extends Sprite {
         }
         return EasyLevel.getStaticMapAt(i, j) != ' ';
     }
+
 
     public void move(int step, Direction direction) {
     }
@@ -93,6 +92,17 @@ public class Balloom extends Sprite {
     }
 
     public boolean isPlayerCollideFriendly() {
+        return false;
+    }
+
+    public boolean dead() {
+        for (Bomb b : EasyLevel.getBombList()) {
+            if (b.hitFlame(this)) {
+                currentAnimation = BalloomAnimation.getDead();
+                return true;
+            }
+        }
+
         return false;
     }
 }

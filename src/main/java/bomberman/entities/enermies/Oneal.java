@@ -22,8 +22,8 @@ public class Oneal extends AISprite {
 
     }
 
-    public void die() {
-
+    public boolean dead() {
+        return false;
     }
 
     public void move(int step, Direction direction) {

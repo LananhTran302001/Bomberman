@@ -38,7 +38,7 @@ public class EasyLevel {
     private static List<Entity> entities = new ArrayList<Entity>();
     private static List<Bomb> bombList = new ArrayList<Bomb>();
 
-    private static char[][] staticMap = new char[30][50];
+    private static char[][] staticMap = new char[30][30];
 
     private static void initScene() {
         //GamesFactory.createGame(20, 20, 26, 45, 2);
@@ -85,6 +85,10 @@ public class EasyLevel {
         return entities;
     }
 
+    public static List<Bomb> getBombList() {
+        return bombList;
+    }
+
     public static char getStaticMapAt(int row, int column) {
         return staticMap[row][column];
     }
@@ -120,29 +124,15 @@ public class EasyLevel {
     }
 
 
-    public static void removeEntity(Entity entity) {
-        Iterator<Entity> iterator = entities.iterator();
-        while (iterator.hasNext()) {
-            Entity e = iterator.next();
-            if (e == entity) {
-                iterator.remove();
-                break;
-            }
+    public static void removeStaticEntityInMap(Entity e) {
+        int i = e.getPosition().getY() / GameConstants.TILE_SIZE;
+        int j = e.getPosition().getX() / GameConstants.TILE_SIZE;
+        staticMap[i][j] = ' ';
+        if (e instanceof Bomb) {
+            bombList.remove(e);
+            System.out.println("Removed bomb from bombList");
         }
-        /*entities.remove(entity);
-
-         */
-        System.out.println("Removed bomb from entities");
-        if (entity instanceof Wall || entity instanceof Brick || entity instanceof Portal || entity instanceof Bomb) {
-            int i = entity.getPosition().getY() / GameConstants.TILE_SIZE;
-            int j = entity.getPosition().getX() / GameConstants.TILE_SIZE;
-            staticMap[i][j] = ' ';
-            if (entity instanceof Bomb) {
-                bombList.remove(entity);
-                System.out.println("Removed bomb from bombList");
-            }
-        }
-
+        System.out.println("Removed " + e.getName() + " from map");
     }
 
     public static void loadMap() {

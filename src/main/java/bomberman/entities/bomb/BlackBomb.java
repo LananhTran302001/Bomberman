@@ -20,7 +20,7 @@ public class BlackBomb extends Bomb {
 
     public void init() {
         setLayer(2);
-        setRange(4);
+        setRange(2);
     }
 
     public void draw() {

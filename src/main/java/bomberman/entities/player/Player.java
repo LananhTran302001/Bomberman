@@ -8,6 +8,8 @@ import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
+import bomberman.entities.bomb.Bomb;
+import bomberman.scenes.EasyLevel;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
@@ -107,7 +109,12 @@ public class Player extends Sprite {
         currentFrames[0] = temp;
     }
 
-    public void die() {
-
+    public boolean dead() {
+        for (Bomb b : EasyLevel.getBombList()) {
+            if (b.hitFlame(this)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
