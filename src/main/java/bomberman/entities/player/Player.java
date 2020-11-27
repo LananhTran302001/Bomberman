@@ -9,12 +9,14 @@ import bomberman.entities.Entity;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
 import bomberman.entities.bomb.Bomb;
-import bomberman.scenes.EasyLevel;
+import bomberman.scenes.GameScene;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
 
 public class Player extends Sprite {
+
+    int deadTime = 50;
 
     private Direction direction = Direction.DOWN;
     private int health;
@@ -36,7 +38,7 @@ public class Player extends Sprite {
     public void init() {
         this.setSize(30, 38);
         health = 100;
-        setLayer(4);
+        setLayer(GameConstants.PLAYER_LAYER);
     }
 
     public void draw() {
@@ -109,12 +111,36 @@ public class Player extends Sprite {
         currentFrames[0] = temp;
     }
 
-    public boolean dead() {
-        for (Bomb b : EasyLevel.getBombList()) {
-            if (b.hitFlame(this)) {
-                return true;
+    public void setKilledAnimation() {
+        currentFrames = new Image[] {PlayerAnimation.getDie()};
+    }
+
+    // check killed => move
+    // check dead => remove
+
+    public boolean killed() {
+        if (alive) {
+            for (Bomb b : GameScene.getBombList()) {
+                if (b.hitFlame(this)) {
+                    setKilledAnimation();
+                    alive = !alive;
+                    return true;
+                }
             }
         }
         return false;
+    }
+
+    public boolean dead() {
+        if (alive) {
+            return false;
+        } else {
+            if (deadTime > 0) {
+                deadTime--;
+                return false;
+            } else {
+                return true;
+            }
+        }
     }
 }

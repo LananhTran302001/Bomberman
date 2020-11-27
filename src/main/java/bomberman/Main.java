@@ -4,7 +4,7 @@ import bomberman.constants.GameConstants;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import bomberman.scenes.EasyLevel;
+import bomberman.scenes.GameScene;
 
 
 public class Main extends Application {
@@ -13,8 +13,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         primaryStage.setTitle(GameConstants.GAME_NAME);
-        EasyLevel.setUpScene();
-        Scene scene = EasyLevel.getScene();
+        GameScene.setUpScene();
+        Scene scene = GameScene.getScene();
         primaryStage.setScene(scene);
         primaryStage.show();
 

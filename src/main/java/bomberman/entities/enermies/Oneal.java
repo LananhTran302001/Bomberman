@@ -1,17 +1,19 @@
 package bomberman.entities.enermies;
 
 import bomberman.animation.OnealAnimation;
-import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
 import bomberman.entities.Perceptive;
 import bomberman.entities.Vector2;
-import bomberman.scenes.EasyLevel;
+import bomberman.scenes.GameScene;
+
+import java.util.Date;
 
 
 public class Oneal extends Enemy implements Perceptive {
 
     private final int radiusView = 4;
     private Vector2 directionVector;
+    private Date timer;
 
     /**
      * constructors.
@@ -46,12 +48,12 @@ public class Oneal extends Enemy implements Perceptive {
         if (directionVector.getY() > 0) {
             i++;
         }
-        return EasyLevel.getStaticMapAt(i, j) != ' ';
+        return GameScene.getStaticMapAt(i, j) != ' ';
     }
 
     public int countProfit(int i, int j) {
         int profit = 0;
-        switch (EasyLevel.getStaticMapAt(i, j)) {
+        switch (GameScene.getStaticMapAt(i, j)) {
             case ' ':
                 profit++;
                 break;
@@ -64,7 +66,7 @@ public class Oneal extends Enemy implements Perceptive {
                 profit--;
         }
 
-        Vector2 playerPosition = EasyLevel.getPlayer().getPosition();
+        Vector2 playerPosition = GameScene.getPlayer().getPosition();
         if (playerPosition.getY() / GameConstants.TILE_SIZE == i
                 && playerPosition.getX() / GameConstants.TILE_SIZE == j) {
             profit += 3;
@@ -80,7 +82,7 @@ public class Oneal extends Enemy implements Perceptive {
         // RIGHT
         int profitRight = 0;
         int i = 1;
-        if (EasyLevel.getStaticMapAt(mapY, mapX + i) != ' ') {
+        if (GameScene.getStaticMapAt(mapY, mapX + i) != ' ') {
             profitRight -= 100;
         }
         while (i < radiusArea && mapX + i < GameConstants.NUM_OF_COLUMNS) {
@@ -91,7 +93,7 @@ public class Oneal extends Enemy implements Perceptive {
         // LEFT
         int profitLeft = 0;
         i = 1;
-        if (EasyLevel.getStaticMapAt(mapY, mapX - i) != ' ') {
+        if (GameScene.getStaticMapAt(mapY, mapX - i) != ' ') {
             profitRight -= 100;
         }
         while (i < radiusArea && mapX - i >= 0) {
@@ -102,7 +104,7 @@ public class Oneal extends Enemy implements Perceptive {
         // UP
         int profitUp = 0;
         i = 1;
-        if (EasyLevel.getStaticMapAt(mapY - i, mapX) != ' ') {
+        if (GameScene.getStaticMapAt(mapY - i, mapX) != ' ') {
             profitRight -= 100;
         }
         while (i < radiusArea && mapY - i >= 0) {
@@ -113,7 +115,7 @@ public class Oneal extends Enemy implements Perceptive {
         // DOWN
         int profitDown = 0;
         i = 1;
-        if (EasyLevel.getStaticMapAt(mapY + i, mapX) != ' ') {
+        if (GameScene.getStaticMapAt(mapY + i, mapX) != ' ') {
             profitRight -= 100;
         }
         while (i < radiusArea && mapY + i < GameConstants.NUM_OF_ROWS) {
@@ -148,13 +150,17 @@ public class Oneal extends Enemy implements Perceptive {
 
 
     public void move() {
-        Vector2 newPosition = new Vector2(position).add(directionVector);
-        if (!checkCollision(newPosition)) {
-            this.setPosition(newPosition);
-        } else {
-            directionVector = findDirection(radiusView);
+        if (!killed()) {
+            Vector2 newPosition = new Vector2(position).add(directionVector);
+            if (!checkCollision(newPosition)) {
+                this.setPosition(newPosition);
+            } else {
+                directionVector = findDirection(radiusView);
+            }
         }
-
     }
 
+    public void setKilledAnimation() {
+        setCurrentAnimation(OnealAnimation.getDead());
+    }
 }

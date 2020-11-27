@@ -67,5 +67,7 @@ public class Vector2 {
         return this;
     }
 
-
+    public boolean equals(Vector2 other) {
+        return (this.x == other.x) && (this.y == other.y);
+    }
 }

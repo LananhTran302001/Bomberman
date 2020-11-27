@@ -6,6 +6,9 @@ import bomberman.constants.GameImages;
 import bomberman.entities.Breakable;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
+import bomberman.entities.bomb.Bomb;
+import bomberman.scenes.GameScene;
+
 
 public class Brick extends Entity implements Breakable {
 
@@ -25,7 +28,7 @@ public class Brick extends Entity implements Breakable {
 
     public void init() {
         setImage(GameImages.BRICK_IMG);
-        setLayer(1);
+        setLayer(GameConstants.OBSTACLE_LAYER);
     }
 
     public void draw() {
@@ -37,6 +40,15 @@ public class Brick extends Entity implements Breakable {
     }
 
     public boolean isPlayerCollideFriendly() {
+        return false;
+    }
+
+    public boolean isBroken() {
+        for (Bomb b : GameScene.getBombList()) {
+            if (b.hitFlame(this)) {
+                return true;
+            }
+        }
         return false;
     }
 }

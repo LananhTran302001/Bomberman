@@ -1,6 +1,7 @@
 package bomberman.entities.tiles;
 
 import bomberman.Renderer;
+import bomberman.constants.GameConstants;
 import bomberman.constants.GameImages;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
@@ -23,7 +24,7 @@ public class Portal extends Entity {
 
     public void init() {
         setImage(GameImages.PORTAL_IMG);
-        setLayer(1);
+        setLayer(GameConstants.OBSTACLE_LAYER);
     }
 
     public void draw() {

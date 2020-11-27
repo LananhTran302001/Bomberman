@@ -1,13 +1,11 @@
 package bomberman.entities.enermies;
 
-import bomberman.Renderer;
 import bomberman.animation.BalloomAnimation;
-import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
 
 import bomberman.entities.Vector2;
 
-import bomberman.scenes.EasyLevel;
+import bomberman.scenes.GameScene;
 
 import java.util.Random;
 
@@ -50,7 +48,9 @@ public class Balloom extends Enemy {
     }
 
     public void update() {
-        move();
+        if (alive) {
+            move();
+        }
     }
 
     private boolean checkCollision(Vector2 p) {
@@ -59,17 +59,18 @@ public class Balloom extends Enemy {
         if (directionVector.getX() > 0) {
             j++;
         }
-        return EasyLevel.getStaticMapAt(i, j) != ' ';
+        return GameScene.getStaticMapAt(i, j) != ' ';
     }
 
 
-
     public void move() {
-        Vector2 newPosition = new Vector2(position).add(directionVector);
-        if (!checkCollision(newPosition)) {
-            this.setPosition(newPosition);
-        } else {
-            changeDirection();
+        if (!killed()) {
+            Vector2 newPosition = new Vector2(position).add(directionVector);
+            if (!checkCollision(newPosition)) {
+                this.setPosition(newPosition);
+            } else {
+                changeDirection();
+            }
         }
     }
 
@@ -82,4 +83,7 @@ public class Balloom extends Enemy {
         }
     }
 
+    public void setKilledAnimation() {
+        setCurrentAnimation(BalloomAnimation.getDead());
+    }
 }

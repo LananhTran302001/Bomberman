@@ -19,7 +19,6 @@ public class BlackBomb extends Bomb {
     }
 
     public void init() {
-        setLayer(2);
         setRange(1);
     }
 

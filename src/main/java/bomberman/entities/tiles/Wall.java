@@ -1,6 +1,7 @@
 package bomberman.entities.tiles;
 
 import bomberman.Renderer;
+import bomberman.constants.GameConstants;
 import bomberman.constants.GameImages;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
@@ -23,7 +24,7 @@ public class Wall extends Entity {
 
     public void init() {
         setImage(GameImages.WALL_IMG);
-        setLayer(1);
+        setLayer(GameConstants.OBSTACLE_LAYER);
     }
 
     public void draw() {

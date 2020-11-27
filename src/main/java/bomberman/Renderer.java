@@ -28,4 +28,5 @@ public class Renderer {
         renderImage(pos, size, frames[index]);
     }
 
+
 }

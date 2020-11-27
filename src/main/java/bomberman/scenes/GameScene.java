@@ -2,7 +2,6 @@ package bomberman.scenes;
 
 import bomberman.GameLoop;
 import bomberman.Renderer;
-import bomberman.builder.GamesFactory;
 import bomberman.constants.GameConstants;
 
 import bomberman.entities.Entity;
@@ -27,7 +26,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class EasyLevel {
+public class GameScene {
 
     private static Scene scene;
     private static Group root;
@@ -88,6 +87,10 @@ public class EasyLevel {
 
     public static List<Bomb> getBombList() {
         return bombList;
+    }
+
+    public static char[][] getStaticMap() {
+        return staticMap;
     }
 
     public static char getStaticMapAt(int row, int column) {
@@ -160,6 +163,7 @@ public class EasyLevel {
                             break;
 
                         case '*':
+                            addEntity(new Grass(position));
                             addEntity(new Brick(position));
                             break;
 

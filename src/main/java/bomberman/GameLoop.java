@@ -3,12 +3,11 @@ package bomberman;
 import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.bomb.Bomb;
-import bomberman.entities.enermies.Balloom;
 import bomberman.entities.enermies.Enemy;
+import bomberman.entities.tiles.Brick;
 import bomberman.input.InputManager;
-import bomberman.scenes.EasyLevel;
+import bomberman.scenes.GameScene;
 import javafx.animation.AnimationTimer;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.Iterator;
@@ -66,12 +65,17 @@ public class GameLoop {
         while (iterator.hasNext()) {
             Entity e = iterator.next();
             if (e instanceof Bomb && ((Bomb)e).dead()) {
-                EasyLevel.removeStaticEntityInMap(e);
+                GameScene.removeStaticEntityInMap(e);
                 iterator.remove();
                 System.out.println("Removed");
 
-            } else if (e instanceof Enemy && ((Enemy)e).dead()){
-                EasyLevel.removeStaticEntityInMap(e);
+            } else if (e instanceof Enemy && ((Enemy)e).dead()) {
+                GameScene.removeStaticEntityInMap(e);
+                iterator.remove();
+                System.out.println("Removed");
+
+            } else if (e instanceof Brick && ((Brick)e).isBroken()) {
+                GameScene.removeStaticEntityInMap(e);
                 iterator.remove();
                 System.out.println("Removed");
 

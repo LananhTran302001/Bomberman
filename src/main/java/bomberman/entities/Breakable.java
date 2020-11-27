@@ -2,9 +2,5 @@ package bomberman.entities;
 
 public interface Breakable {
 
-
-    public enum State {
-        NORMAL,
-        BROKEN
-    }
+    public boolean isBroken();
 }

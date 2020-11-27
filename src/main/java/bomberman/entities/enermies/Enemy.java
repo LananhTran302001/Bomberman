@@ -1,17 +1,21 @@
 package bomberman.entities.enermies;
 import bomberman.Renderer;
 import bomberman.constants.Direction;
+import bomberman.constants.GameConstants;
 import bomberman.entities.Sprite;
 import bomberman.entities.bomb.Bomb;
-import bomberman.scenes.EasyLevel;
+import bomberman.scenes.GameScene;
 import javafx.scene.image.Image;
+
+import java.util.Date;
 
 public abstract class Enemy extends Sprite {
 
     Image[] currentAnimation;
+    private Date deadTime;
 
     public Enemy() {
-        setLayer(3);
+        setLayer(GameConstants.ENEMY_LAYER);
     }
 
     public void setCurrentAnimation(Image[] currentAnimation) {
@@ -19,7 +23,7 @@ public abstract class Enemy extends Sprite {
     }
 
     public void draw() {
-        Renderer.playAnimation(currentAnimation, 2, position, size);
+        Renderer.playAnimation(currentAnimation, 3, position, size);
     }
 
     @Override
@@ -27,14 +31,31 @@ public abstract class Enemy extends Sprite {
         return false;
     }
 
-    public boolean dead() {
-        for (Bomb b : EasyLevel.getBombList()) {
-            if (b.hitFlame(this)) {
-                return true;
+    // check killed => move
+    // check dead => remove
+
+    public boolean killed() {
+        if (alive) {
+            for (Bomb b : GameScene.getBombList()) {
+                if (b.hitFlame(this)) {
+                    setKilledAnimation();
+                    alive = !alive;
+                    deadTime = new Date();
+                    return true;
+                }
             }
         }
 
         return false;
+    }
+
+    public boolean dead() {
+        if (alive) {
+            return false;
+        } else {
+            return new Date().getTime() - deadTime.getTime() > 500;
+        }
+
     }
 
     public void move(int step, Direction direction) {

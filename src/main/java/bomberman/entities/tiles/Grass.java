@@ -1,6 +1,7 @@
 package bomberman.entities.tiles;
 
 import bomberman.Renderer;
+import bomberman.constants.GameConstants;
 import bomberman.constants.GameImages;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
@@ -29,7 +30,7 @@ public class Grass extends Entity {
 
     public void init() {
         setImage(GameImages.GRASS_IMG);
-        setLayer(0);
+        setLayer(GameConstants.GRASS_LAYER);
     }
 
     public void draw() {
