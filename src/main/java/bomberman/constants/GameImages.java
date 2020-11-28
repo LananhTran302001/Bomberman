@@ -1,5 +1,6 @@
 package bomberman.constants;
 
+
 public class GameImages {
 
     public static final String GRASS_IMG = "/image/texture/grass.png";
@@ -11,4 +12,6 @@ public class GameImages {
     public static final String BALLOOM_IMG = "/image/balloom/balloom";
     public static final String ONEAL_IMG = "/image/oneal/oneal";
     public static final String FLAME_IMG = "/image/bomb/explosion";
+    public static final String EXPLOSION_BRICK_IMG = "/image/texture/explosion_brick_";
+    public static final String HEART_IMG = "/image/item/item-heart.gif";
 }

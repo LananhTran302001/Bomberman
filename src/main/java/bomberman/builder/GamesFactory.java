@@ -1,5 +1,7 @@
 package bomberman.builder;
 
+import bomberman.constants.GameConstants;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
@@ -20,6 +22,9 @@ public class GamesFactory {
 
 
     public static void createGame(int row, int column, int wall, int brick, int portal) {
+
+        GameConstants.CANVAS_HEIGHT = row * GameConstants.TILE_SIZE;
+        GameConstants.CANVAS_WIDTH = column * GameConstants.TILE_SIZE;
 
         // Init by a 2d array
         char[][] array = new char[row][column];

@@ -63,26 +63,26 @@ public abstract class Bomb extends Entity {
 
             // RIGHT FLAME
 
-            if (GameScene.getStaticMapAt(i, j + 1) != '#') {
+            if (!isObstacle(i, j + 1)) {
                 k = 1;
-                while (k < range && (j + k + 1 < GameConstants.NUM_OF_COLUMNS) && GameScene.getStaticMapAt(i, j + k + 1) != '#') {
+                while (k < range && (j + k + 1 < GameConstants.NUM_OF_COLUMNS) && !isObstacle(i, j + k + 1)) {
                     bombFlame.add(new Flame(FlameAnimation.getHorizontalFlame(), new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
                     k++;
                 }
-                if (GameScene.getStaticMapAt(i, j + k) != '#') {
+                if (!isObstacle(i, j + k)) {
                     bombFlame.add(new Flame(FlameAnimation.getRightFlame(), new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
                 }
             }
 
             // LEFT FLAME
 
-            if (GameScene.getStaticMapAt(i, j - 1) != '#') {
+            if (!isObstacle(i, j - 1)) {
                 k = 1;
-                while (k < range && (j - k > 1) && GameScene.getStaticMapAt(i, j - k - 1) != '#') {
+                while (k < range && (j - k > 1) && !isObstacle(i, j - k - 1)) {
                     bombFlame.add(new Flame(FlameAnimation.getHorizontalFlame(), new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
                     k++;
                 }
-                if (GameScene.getStaticMapAt(i, j - k) != '#') {
+                if (!isObstacle(i, j - k)) {
                     bombFlame.add(new Flame(FlameAnimation.getLeftFlame(), new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
                 }
             }
@@ -90,13 +90,13 @@ public abstract class Bomb extends Entity {
 
             // BOTTOM FLAME
 
-            if (GameScene.getStaticMapAt(i + 1, j) != '#') {
+            if (!isObstacle(i + 1, j)) {
                 k = 1;
-                while (k < range && (i + k + 1 < GameConstants.NUM_OF_ROWS) && GameScene.getStaticMapAt(i + k + 1, j) != '#') {
+                while (k < range && (i + k + 1 < GameConstants.NUM_OF_ROWS) && !isObstacle(i + k + 1, j)) {
                     bombFlame.add(new Flame(FlameAnimation.getVerticalFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE)));
                     k++;
                 }
-                if (GameScene.getStaticMapAt(i + k, j) != '#') {
+                if (!isObstacle(i + k, j)) {
                     bombFlame.add(new Flame(FlameAnimation.getBottomFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE)));
                 }
             }
@@ -104,13 +104,13 @@ public abstract class Bomb extends Entity {
 
             // TOP FLAME
 
-            if (GameScene.getStaticMapAt(i - 1, j) != '#') {
+            if (!isObstacle(i - 1, j)) {
                 k = 1;
-                while (k < range && (i - k > 1) && GameScene.getStaticMapAt(i - k - 1, j) != '#') {
+                while (k < range && (i - k > 1) && !isObstacle(i - k - 1, j)) {
                     bombFlame.add(new Flame(FlameAnimation.getVerticalFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE)));
                     k++;
                 }
-                if (GameScene.getStaticMapAt(i - k, j) != '#') {
+                if (!isObstacle(i - k, j)) {
                     bombFlame.add(new Flame(FlameAnimation.getTopFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE)));
                 }
             }
@@ -123,6 +123,11 @@ public abstract class Bomb extends Entity {
             }
         }
 
+    }
+
+    private boolean isObstacle(int i, int j) {
+        char c = GameScene.getStaticMapAt(i, j);
+        return c == '#' || c == '*';
     }
 
     public boolean hitFlame(Entity e) {

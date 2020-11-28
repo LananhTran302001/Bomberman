@@ -1,6 +1,7 @@
 package bomberman.entities.bomb;
 
 import bomberman.Renderer;
+import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import javafx.scene.image.Image;
@@ -19,7 +20,7 @@ public class Flame extends Entity {
     }
 
     public void init() {
-        setLayer(2);
+        setLayer(GameConstants.FLAME_LAYER);
     }
 
     public void draw() {

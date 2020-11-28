@@ -2,6 +2,7 @@ package bomberman.scenes;
 
 import bomberman.GameLoop;
 import bomberman.Renderer;
+import bomberman.builder.GamesFactory;
 import bomberman.constants.GameConstants;
 
 import bomberman.entities.Entity;
