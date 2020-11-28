@@ -127,7 +127,7 @@ public abstract class Bomb extends Entity {
 
     public boolean hitFlame(Entity e) {
         for (Flame f : bombFlame) {
-            if (f.collideWith(e)) {
+            if (f.overlap(e)) {
                 return true;
             }
         }

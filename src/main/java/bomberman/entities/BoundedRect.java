@@ -65,6 +65,10 @@ public class BoundedRect {
         return bound.intersects(other.getBound());
     }
 
+    public boolean overlap(BoundedRect other) {
+        return bound.intersects(other.bound);
+    }
+
     public boolean collideWith(int x, int y, int w, int h) {
         return bound.intersects(x, y, w, h);
     }

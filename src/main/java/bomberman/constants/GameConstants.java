@@ -16,8 +16,8 @@ public class GameConstants {
 
     public static final int STEP_LENGTH = 2;
 
-    public static int NUM_OF_COLUMNS = 0;
-    public static int NUM_OF_ROWS = 0;
+    public static int NUM_OF_COLUMNS = 30;
+    public static int NUM_OF_ROWS = 30;
 
     public static int GRASS_LAYER = 0;
     public static int OBSTACLE_LAYER = 1;

@@ -8,7 +8,7 @@ import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Balloom;
-import bomberman.entities.enermies.Oneal;
+import bomberman.entities.enermies.ai.Oneal;
 import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Brick;
 import bomberman.entities.tiles.Grass;

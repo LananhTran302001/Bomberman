@@ -5,6 +5,7 @@ import bomberman.constants.GameConstants;
 import bomberman.entities.Sprite;
 import bomberman.entities.bomb.Bomb;
 import bomberman.scenes.GameScene;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
 import java.util.Date;
@@ -36,6 +37,7 @@ public abstract class Enemy extends Sprite {
 
     public boolean killed() {
         if (alive) {
+            setBound(new Rectangle2D(position.getX() + 14, position.getY() + 14, 3, 3));
             for (Bomb b : GameScene.getBombList()) {
                 if (b.hitFlame(this)) {
                     setKilledAnimation();

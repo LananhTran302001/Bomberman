@@ -19,17 +19,4 @@ public class Distance {
         return point.getY();
     }
 
-    public int getDistance() {
-        return distance;
-    }
-
-    public Distance add(Vector2 v) {
-        point = point.add(v);
-        return this;
-    }
-
-    public Distance add(int n) {
-        distance += n;
-        return this;
-    }
 }

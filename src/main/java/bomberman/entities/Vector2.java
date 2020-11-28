@@ -53,6 +53,12 @@ public class Vector2 {
         return this;
     }
 
+    public static Vector2 add(Vector2 v1, Vector2 v2) {
+        Vector2 result = new Vector2(0, 0);
+        result = result.add(v1).add(v2);
+        return result;
+    }
+
     public Vector2 multiple(int num) {
         this.x *= num;
         this.y *= num;
@@ -67,6 +73,9 @@ public class Vector2 {
         return this;
     }
 
+    public static Vector2 divide(Vector2 v1, int num) {
+        return new Vector2(v1.x / num, v1.y / num);
+    }
     public boolean equals(Vector2 other) {
         return (this.x == other.x) && (this.y == other.y);
     }
