@@ -25,4 +25,5 @@ public class GameConstants {
     public static int ENEMY_LAYER = 3;
     public static int PLAYER_LAYER = 4;
 
+    public static int AI_VIEW_RADIUS = 5;
 }

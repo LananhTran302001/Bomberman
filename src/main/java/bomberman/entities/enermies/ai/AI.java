@@ -8,19 +8,16 @@ import bomberman.entities.player.Player;
 import bomberman.scenes.GameScene;
 
 import java.util.LinkedList;
+import java.util.Random;
 
 public class AI {
 
     Player player;
     Enemy enemy;
-    static final Vector2[] dirVector = new Vector2[] {
-            new Vector2(0, 1),
-            new Vector2(0, -1),
-            new Vector2(-1, 0),
-            new Vector2(1, 0)
-    };
-
+    final int viewRadius = GameConstants.AI_VIEW_RADIUS;
     static final int INF = 10000000;
+    final int[] shiftX = new int[] {0, 0, -1, 1};
+    final int[] shiftY = new int[] {1, -1, 0, 0};
 
     public AI(Enemy enemy, Player player) {
         this.enemy = enemy;
@@ -34,6 +31,11 @@ public class AI {
         int column = GameConstants.NUM_OF_COLUMNS;
         int row = GameConstants.NUM_OF_ROWS;
         boolean[][] checked = new boolean[column][row];
+        for (int i = 0; i < column; i++) {
+            for (int j = 0; j < row; j++) {
+                checked[i][j] = false;
+            }
+        }
 
         LinkedList<Distance> queue = new LinkedList<Distance>();
         queue.add(new Distance(beginPoint, 0));
@@ -43,9 +45,8 @@ public class AI {
             Distance currentDistance = queue.getFirst();
             queue.removeFirst();
 
-            for (Vector2 v : dirVector) {
-                Vector2 nextPoint = Vector2.add(currentDistance.point, v);
-
+            for (int i = 0; i < 4; i++) {
+                Vector2 nextPoint = Vector2.add(currentDistance.point, new Vector2(shiftX[i], shiftY[i]));
                 if (obstacleAt(nextPoint) || checked[nextPoint.getX()][nextPoint.getY()]) {
                     continue;
                 }
@@ -55,7 +56,9 @@ public class AI {
                 }
 
                 checked[nextPoint.getX()][nextPoint.getY()] = true;
-                queue.add(new Distance(nextPoint, currentDistance.distance + 1));
+                if (currentDistance.distance < viewRadius) {
+                    queue.add(new Distance(nextPoint, currentDistance.distance + 1));
+                }
             }
         }
         return INF;
@@ -65,39 +68,36 @@ public class AI {
         if (point.getX() < 0 || point.getX() >= GameConstants.NUM_OF_COLUMNS || point.getY() < 0 || point.getY() >= GameConstants.NUM_OF_ROWS) {
             return true;
         }
-        if (GameScene.getStaticMapAt(point.getY(), point.getX()) != ' ') {
-            return true;
-        }
-        return false;
+        return GameScene.getStaticMapAt(point.getY(), point.getX()) != ' ';
     }
 
     public Vector2 findShortestPath(Vector2 destination) {
         int shortestPath = INF;
-        Vector2 dir = new Vector2(0, 0);
+        Vector2 dir = getRandomDirection();
 
-        for (Vector2 v : dirVector) {
-            Vector2 nextPoint = Vector2.add(getPositionInMap(enemy), v);
+        for (int i = 0; i < 4; i++) {
+            Vector2 nextPoint = Vector2.add(Vector2.getPositionInMap(enemy.getPosition()), new Vector2(shiftX[i], shiftY[i]));
+
+            if (obstacleAt(nextPoint)) {
+                continue;
+            }
+
             int temp = findShortestDistance(nextPoint, destination);
 
             if (shortestPath > temp) {
                 shortestPath = temp;
-                dir = v;
+                dir = new Vector2(shiftX[i], shiftY[i]);
             }
         }
-
         return dir;
     }
 
     public Vector2 followPlayer() {
-        return findShortestPath(getPositionInMap(player));
+        return findShortestPath(Vector2.getPositionInMap(player.getPosition(), player.getSize()));
     }
 
-    public Vector2 getPositionInMap(Entity e) {
-        int x = e.getPosition().getX() + e.getSize().getX() - GameConstants.TILE_SIZE;
-        int y = e.getPosition().getY() + e.getSize().getY() - GameConstants.TILE_SIZE;
-        x = Math.round(x / (float)GameConstants.TILE_SIZE);
-        y = Math.round(y / (float)GameConstants.TILE_SIZE);
-
-        return new Vector2(x, y);
+    public Vector2 getRandomDirection() {
+        int i = Math.abs(new Random().nextInt()) % 4;
+        return new Vector2(shiftX[i], shiftY[i]);
     }
 }

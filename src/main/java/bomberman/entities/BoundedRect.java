@@ -35,6 +35,10 @@ public class BoundedRect {
         this.position = position;
     }
 
+    public void setPosition(int newX, int newY) {
+        this.position = new Vector2(newX, newY);
+    }
+
     public int getWidth() {
         return size.x;
     }

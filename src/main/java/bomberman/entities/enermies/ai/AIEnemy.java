@@ -12,6 +12,7 @@ public abstract class AIEnemy extends Enemy {
     final int NUM_OF_STEPS = 32;
     int steps = NUM_OF_STEPS;
 
+
     public void init() {
         ai = new AI(this, GameScene.getPlayer());
         directionVector = new Vector2(1, 0);
@@ -24,16 +25,15 @@ public abstract class AIEnemy extends Enemy {
         }
     }
 
-    private boolean checkCollision(Vector2 p) {
-        int i = p.getY() / GameConstants.TILE_SIZE;
-        int j = p.getX() / GameConstants.TILE_SIZE;
-        if (directionVector.getX() > 0) {
-            j++;
+    private boolean checkCollision(Vector2 p, Vector2 direction) {
+        Vector2 posInMap = Vector2.getPositionInMap(p);
+        if (direction.getX() > 0) {
+            posInMap.add(new Vector2(1, 0));
         }
-        if (directionVector.getY() > 0) {
-            i++;
+        if (direction.getY() > 0) {
+            posInMap.add(new Vector2(0, 1));
         }
-        return GameScene.getStaticMapAt(i, j) != ' ';
+        return ai.obstacleAt(posInMap);
     }
 
     private void setAnimation(Vector2 directionVector) {
@@ -51,18 +51,26 @@ public abstract class AIEnemy extends Enemy {
     public void move() {
         if (!killed()) {
             if (steps <= 0) {
-                directionVector = ai.followPlayer();
-                steps = NUM_OF_STEPS;
+                if (getPosition().getX() % GameConstants.TILE_SIZE == 0
+                        && getPosition().getY() % GameConstants.TILE_SIZE == 0) {
+                    directionVector = ai.followPlayer();
+                    steps = NUM_OF_STEPS;
+
+                } else {
+                    int roundX = Math.round(getPosition().getX() / (float)GameConstants.TILE_SIZE) * GameConstants.TILE_SIZE;
+                    int roundY = Math.round(getPosition().getY() / (float)GameConstants.TILE_SIZE) * GameConstants.TILE_SIZE;
+                    this.setPosition(roundX, roundY);
+                }
             }
 
-            Vector2 newPosition = new Vector2(position).add(directionVector);
-            if (!checkCollision(newPosition)) {
+            Vector2 newPosition = Vector2.add(this.position, this.directionVector);
+            if (!checkCollision(newPosition, directionVector)) {
                 steps--;
                 setAnimation(directionVector);
                 this.setPosition(newPosition);
+
             } else {
                 steps = 0;
-                //directionVector = ai.followPlayer();
             }
         }
     }
