@@ -13,6 +13,11 @@ public class GameImages {
     public static final String ONEAL_IMG = "/image/oneal/oneal";
     public static final String FLAME_IMG = "/image/bomb/explosion";
     public static final String EXPLOSION_BRICK_IMG = "/image/texture/explosion_brick_";
-    public static final String ITEM_HEART_IMG = "/image/item/item-heart.gif";
-    public static final String ITEM_FIRE_UP_IMG = "/image/item/item-fireup.gif";
+
+    public static final String ITEM_HEART_IMG = "/image/item/item-heart.png";
+    public static final String ITEM_FIRE_UP_IMG = "/image/item/item-fireUp.png";
+    public static final String ITEM_BLOCK_PASS_IMG = "/image/item/item-blockPass.png";
+    public static final String ITEM_SPEED_UP = "/image/item/item-speedUp.png";
+    public static final String ITEM_BOMB_REMOTE = "/image/item/item-remote.png";
+
 }

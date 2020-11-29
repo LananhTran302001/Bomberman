@@ -16,7 +16,8 @@ import java.util.Date;
 
 public class Brick extends Entity implements Breakable {
 
-    private boolean playerCollideFriendly = false;
+    private static boolean playerCollideFriendly = false;
+
     private boolean intact = true;
     private Date brokenTime;
 
@@ -51,7 +52,7 @@ public class Brick extends Entity implements Breakable {
         intact = checkIntactState();
     }
 
-    protected void setPlayerCollideFriendly(boolean ability) {
+    public static void setPlayerCollideFriendly(boolean ability) {
         playerCollideFriendly = ability;
     }
 
@@ -61,7 +62,7 @@ public class Brick extends Entity implements Breakable {
 
     private boolean checkIntactState() {
         if (intact) {
-            this.setBound(new Rectangle2D(position.getX() - 2, position.getY() - 2, size.getX() + 4, size.getY() + 4));
+            this.setBound(new Rectangle2D(position.getX(), position.getY(), size.getX(), size.getY()));
             for (Bomb b : GameScene.getBombList()) {
                 if (b.hitFlame(this)) {
                     brokenTime = new Date();

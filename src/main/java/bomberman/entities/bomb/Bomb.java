@@ -5,6 +5,7 @@ import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import bomberman.scenes.GameScene;
+import javafx.geometry.Rectangle2D;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,8 +55,9 @@ public abstract class Bomb extends Entity {
             int j = position.getX() / GameConstants.TILE_SIZE;
 
             // CENTER FLAME
-
-            bombFlame.add(new Flame(FlameAnimation.getCenterFlame(), position));
+            Flame centerFlame = new Flame(FlameAnimation.getCenterFlame(), position);
+            centerFlame.setBound(new Rectangle2D(position.getX() - 1, position.getY() - 1, size.getX() + 2, size.getY() + 2));
+            bombFlame.add(centerFlame);
 
 
             int k;
@@ -70,7 +72,10 @@ public abstract class Bomb extends Entity {
                     k++;
                 }
                 if (!isObstacle(i, j + k)) {
-                    bombFlame.add(new Flame(FlameAnimation.getRightFlame(), new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
+                    Flame rightFlame = new Flame(FlameAnimation.getRightFlame(), new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE));
+                    rightFlame.setBound(new Rectangle2D(rightFlame.getPosition().getX(), rightFlame.getPosition().getY(),
+                            rightFlame.getSize().getX() + 1, rightFlame.getSize().getY()));
+                    bombFlame.add(rightFlame);
                 }
             }
 
@@ -83,7 +88,10 @@ public abstract class Bomb extends Entity {
                     k++;
                 }
                 if (!isObstacle(i, j - k)) {
-                    bombFlame.add(new Flame(FlameAnimation.getLeftFlame(), new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
+                    Flame leftFlame = new Flame(FlameAnimation.getLeftFlame(), new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE));
+                    leftFlame.setBound(new Rectangle2D(leftFlame.getPosition().getX() - 1, leftFlame.getPosition().getY(),
+                                                        leftFlame.getSize().getX() + 2, leftFlame.getSize().getY()));
+                    bombFlame.add(leftFlame);
                 }
             }
 
@@ -97,7 +105,10 @@ public abstract class Bomb extends Entity {
                     k++;
                 }
                 if (!isObstacle(i + k, j)) {
-                    bombFlame.add(new Flame(FlameAnimation.getBottomFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE)));
+                    Flame bottomFlame = new Flame(FlameAnimation.getBottomFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE));
+                    bottomFlame.setBound(new Rectangle2D(bottomFlame.getPosition().getX(), bottomFlame.getPosition().getY(),
+                            bottomFlame.getSize().getX(), bottomFlame.getSize().getY() + 1));
+                    bombFlame.add(bottomFlame);
                 }
             }
 
@@ -111,7 +122,10 @@ public abstract class Bomb extends Entity {
                     k++;
                 }
                 if (!isObstacle(i - k, j)) {
-                    bombFlame.add(new Flame(FlameAnimation.getTopFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE)));
+                    Flame topFlame = new Flame(FlameAnimation.getTopFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE));
+                    topFlame.setBound(new Rectangle2D(topFlame.getPosition().getX(), topFlame.getPosition().getY() - 1,
+                            topFlame.getSize().getX(), topFlame.getSize().getY() + 2));
+                    bombFlame.add(topFlame);
                 }
             }
 
@@ -127,7 +141,7 @@ public abstract class Bomb extends Entity {
 
     private boolean isObstacle(int i, int j) {
         char c = GameScene.getStaticMapAt(i, j);
-        return c == '#' || c == '*';
+        return c != ' ';
     }
 
     public boolean hitFlame(Entity e) {

@@ -15,8 +15,10 @@ import bomberman.entities.tiles.Brick;
 import bomberman.entities.tiles.Grass;
 import bomberman.entities.tiles.Portal;
 import bomberman.entities.tiles.Wall;
+import bomberman.entities.tiles.items.BlockPass;
 import bomberman.entities.tiles.items.FireUp;
 import bomberman.entities.tiles.items.Heart;
+import bomberman.entities.tiles.items.SpeedUp;
 import bomberman.input.GameEventHandle;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -180,15 +182,25 @@ public class GameScene {
                         addEntity(new Portal(position));
                         break;
 
-                    case 'F':
+                    case '1':
                         addEntity(new Grass(position));
                         addEntity(new FireUp(position));
                         addEntity(new Brick(position));
                         break;
 
-                    case 'H':
+                    case '2':
+                        addEntity(new Grass(position));
+                        addEntity(new BlockPass(position));
+                        break;
+
+                    case '3':
                         addEntity(new Grass(position));
                         addEntity(new Heart(position));
+                        break;
+
+                    case '4':
+                        addEntity(new Grass(position));
+                        addEntity(new SpeedUp(position));
                         break;
 
                     case 'P':

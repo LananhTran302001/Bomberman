@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 
 public class Player extends Sprite {
 
+    private int lives = 3;
     int deadTime = 50;
 
     private Direction direction = Direction.DOWN;

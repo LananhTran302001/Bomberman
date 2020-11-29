@@ -14,7 +14,7 @@ public class GameConstants {
 
     public static final String GAME_NAME = "Bomberman";
 
-    public static final int STEP_LENGTH = 2;
+    public static int STEP_LENGTH = 2;
 
     public static int NUM_OF_COLUMNS = 30;
     public static int NUM_OF_ROWS = 30;
