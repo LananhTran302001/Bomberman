@@ -16,6 +16,7 @@ import java.util.Date;
 
 public class Brick extends Entity implements Breakable {
 
+    private boolean playerCollideFriendly = false;
     private boolean intact = true;
     private Date brokenTime;
 
@@ -50,8 +51,12 @@ public class Brick extends Entity implements Breakable {
         intact = checkIntactState();
     }
 
+    protected void setPlayerCollideFriendly(boolean ability) {
+        playerCollideFriendly = ability;
+    }
+
     public boolean isPlayerCollideFriendly() {
-        return false;
+        return playerCollideFriendly;
     }
 
     private boolean checkIntactState() {

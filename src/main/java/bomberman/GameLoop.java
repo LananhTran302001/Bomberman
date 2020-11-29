@@ -5,6 +5,7 @@ import bomberman.entities.Entity;
 import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Enemy;
 import bomberman.entities.tiles.Brick;
+import bomberman.entities.tiles.items.Item;
 import bomberman.input.InputManager;
 import bomberman.scenes.GameScene;
 import javafx.animation.AnimationTimer;
@@ -75,6 +76,11 @@ public class GameLoop {
                 System.out.println("Removed");
 
             } else if (e instanceof Brick && ((Brick)e).isBroken()) {
+                GameScene.removeStaticEntityInMap(e);
+                iterator.remove();
+                System.out.println("Removed");
+
+            } else if (e instanceof Item && ((Item)e).outOfTime()) {
                 GameScene.removeStaticEntityInMap(e);
                 iterator.remove();
                 System.out.println("Removed");

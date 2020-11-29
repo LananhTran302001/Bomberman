@@ -1,12 +1,12 @@
 package bomberman.entities.bomb;
 
-import bomberman.GameLoop;
 import bomberman.Renderer;
 import bomberman.animation.BlackBombAnimation;
-import bomberman.animation.FlameAnimation;
 import bomberman.entities.Vector2;
 
 public class BlackBomb extends Bomb {
+
+    private static int flameRange = 1;
 
     public BlackBomb(int x, int y) {
         super(x, y);
@@ -18,8 +18,20 @@ public class BlackBomb extends Bomb {
         init();
     }
 
+    public static void setFlameRange(int _flameRange) {
+        if (_flameRange > 0 && _flameRange < 6) {
+            flameRange = _flameRange;
+        } else {
+            flameRange = 1;
+        }
+    }
+
+    public static int getFlameRange() {
+        return flameRange;
+    }
+
     public void init() {
-        setRange(1);
+        setRange(flameRange);
     }
 
     public void draw() {
