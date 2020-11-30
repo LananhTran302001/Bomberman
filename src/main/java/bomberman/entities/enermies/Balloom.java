@@ -47,12 +47,6 @@ public class Balloom extends Enemy {
         }
     }
 
-    public void update() {
-        if (alive) {
-            move();
-        }
-    }
-
     private boolean checkCollision(Vector2 p) {
         int i = p.getY() / GameConstants.TILE_SIZE;
         int j = p.getX() / GameConstants.TILE_SIZE;
@@ -65,7 +59,7 @@ public class Balloom extends Enemy {
 
     public void move() {
         if (!killed()) {
-            Vector2 newPosition = new Vector2(position).add(directionVector);
+            Vector2 newPosition = Vector2.add(position, directionVector);
             if (!checkCollision(newPosition)) {
                 this.setPosition(newPosition);
             } else {
@@ -75,7 +69,7 @@ public class Balloom extends Enemy {
     }
 
     private void changeDirection() {
-        directionVector = directionVector.multiple(-1);
+        directionVector.multiple(-1);
         if (directionVector.getX() > 0) {
             currentAnimation = BalloomAnimation.getMoveRight();
         } else {

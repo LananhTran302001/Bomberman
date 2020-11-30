@@ -4,6 +4,7 @@ import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Enemy;
+import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Brick;
 import bomberman.entities.tiles.items.Item;
 import bomberman.input.InputManager;
@@ -84,6 +85,10 @@ public class GameLoop {
                 GameScene.removeStaticEntityInMap(e);
                 iterator.remove();
                 System.out.println("Removed");
+
+            } else if (e instanceof Player && ((Player)e).dead()) {
+                iterator.remove();
+                System.out.println("You LOSE");
 
             } else {
                 e.update();

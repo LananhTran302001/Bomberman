@@ -19,12 +19,6 @@ public abstract class AIEnemy extends Enemy {
         setRightAnimation();
     }
 
-    public void update() {
-        if (alive) {
-            move();
-        }
-    }
-
     private boolean checkCollision(Vector2 p, Vector2 direction) {
         Vector2 posInMap = Vector2.getPositionInMap(p);
         if (direction.getX() > 0) {

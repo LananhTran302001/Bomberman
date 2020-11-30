@@ -27,14 +27,29 @@ public abstract class Enemy extends Sprite {
         Renderer.playAnimation(currentAnimation, 3, position, size);
     }
 
+    public void update() {
+        if (alive) {
+            move();
+
+            if (playerColliding()) {
+                GameScene.getPlayer().shock();
+            }
+        }
+    }
+
     @Override
     public boolean isPlayerCollideFriendly() {
         return false;
     }
 
+    private boolean playerColliding() {
+        this.setBound(new Rectangle2D(position.getX() + 2, position.getY() + 2, size.getX() - 4, size.getY() - 4));
+        return collideWith(GameScene.getPlayer());
+    }
+
     // check killed => move
     // check dead => remove
-
+    // called by subclass move method
     public boolean killed() {
         if (alive) {
             setBound(new Rectangle2D(position.getX() + 14, position.getY() + 14, 3, 3));
@@ -62,4 +77,6 @@ public abstract class Enemy extends Sprite {
 
     public void move(int step, Direction direction) {
     }
+
+    public abstract void move();
 }

@@ -33,6 +33,26 @@ public class PlayerAnimation {
             new Image(GameImages.PLAYER_IMG + "_up_01.png")
     };
 
+    private static Image[] shock = new Image[] {
+            new Image(GameImages.PLAYER_IMG + "_shock_00.png"),
+            new Image(GameImages.PLAYER_IMG + "_shock_01.png"),
+            new Image(GameImages.PLAYER_IMG + "_shock_02.png"),
+            new Image(GameImages.PLAYER_IMG + "_shock_03.png"),
+            new Image(GameImages.PLAYER_IMG + "_shock_04.png"),
+    };
+
+    private static Image[] dead = new Image[] {
+            new Image(GameImages.PLAYER_IMG + "_dead_00.png"),
+            new Image(GameImages.PLAYER_IMG + "_dead_01.png"),
+            new Image(GameImages.PLAYER_IMG + "_dead_02.png"),
+            new Image(GameImages.PLAYER_IMG + "_dead_03.png"),
+            new Image(GameImages.PLAYER_IMG + "_dead_04.png"),
+            new Image(GameImages.PLAYER_IMG + "_dead_05.png"),
+            new Image(GameImages.PLAYER_IMG + "_dead_06.png"),
+            new Image(GameImages.PLAYER_IMG + "_dead_07.png"),
+            new Image(GameImages.PLAYER_IMG + "_dead_08.png"),
+    };
+
     public static Image[] getMoveRight() {
         return moveRight;
     }
@@ -49,8 +69,11 @@ public class PlayerAnimation {
         return moveUp;
     }
 
-    public static Image getDie() {
-        return new Image(GameImages.PLAYER_IMG + "_died.png");
+    public static Image[] getShock() {
+        return shock;
     }
 
+    public static Image[] getDead() {
+        return dead;
+    }
 }

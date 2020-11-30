@@ -8,19 +8,22 @@ import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
-import bomberman.entities.bomb.Bomb;
+import bomberman.entities.bomb.Flame;
+import bomberman.entities.enermies.Enemy;
 import bomberman.scenes.GameScene;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+
+import java.util.Date;
 
 
 public class Player extends Sprite {
 
     private int lives = 3;
-    int deadTime = 50;
+    private Date deadTime;
+    private Date lastHitTime;
 
     private Direction direction = Direction.DOWN;
-    private int health;
     private Image[] currentFrames = PlayerAnimation.getMoveDown();
 
     public Player(Vector2 position) {
@@ -37,10 +40,13 @@ public class Player extends Sprite {
     }
 
     public void init() {
+        lives = 3;
+        alive = true;
         this.setSize(30, 38);
-        health = 100;
         setLayer(GameConstants.PLAYER_LAYER);
+        lastHitTime = new Date();
     }
+
 
     public void draw() {
         if (currentFrames.length > 1) {
@@ -51,13 +57,36 @@ public class Player extends Sprite {
     }
 
     public void update() {
-
     }
 
-    public boolean checkCollision(Vector2 p) {
-        setBound(new Rectangle2D(p.getX() + 5, p.getY() + 20, size.getX() - 10, size.getY() - 22));
+    private void die() {
+        alive = false;
+        deadTime = new Date();
+        currentFrames = PlayerAnimation.getDead();
+    }
+
+    public void shock() {
+        if (lives > 1) {
+            if (new Date().getTime() - lastHitTime.getTime() > 1000) {
+                lives--;
+                setKilledAnimation();
+                lastHitTime = new Date();
+            }
+
+        } else {
+            die();
+        }
+    }
+
+    public boolean isPlayerCollideFriendly() {
+        return true;
+    }
+
+    public boolean checkCollision(Vector2 _p, Vector2 _direction) {
+        setBound(new Rectangle2D(_p.getX() + 5, _p.getY() + 20, size.getX() - 10, size.getY() - 22));
         for (Entity e : GameLoop.getEntities()) {
             if (!e.isPlayerCollideFriendly() && e != this && collideWith(e)) {
+                // easier to take items than using map method
                 System.out.println("Collide with " + e.getName());
                 return true;
             }
@@ -65,15 +94,11 @@ public class Player extends Sprite {
         return false;
     }
 
-    public boolean isPlayerCollideFriendly() {
-        return true;
-    }
 
-
-    public void move(int step, Direction direction) {
+    public void move(int _step, Direction _direction) {
         Vector2 directionVector = new Vector2();
 
-        switch (direction) {
+        switch (_direction) {
             case UP:
                 directionVector = new Vector2(0, -1);
                 currentFrames = PlayerAnimation.getMoveUp();
@@ -95,15 +120,12 @@ public class Player extends Sprite {
                 break;
         }
 
+        Vector2 newPosition = Vector2.add(position, Vector2.multiple(directionVector,_step * GameConstants.STEP_LENGTH));
 
-        Vector2 newPosition = new Vector2(position).add(directionVector.multiple(step * GameConstants.STEP_LENGTH));
-        if (!checkCollision(newPosition)) {
+        if (!checkCollision(newPosition, directionVector)) {
             this.setPosition(newPosition);
         }
-    }
 
-    public void move(Direction d) {
-        move(1, d);
     }
 
     public void stopAnimation() {
@@ -113,35 +135,31 @@ public class Player extends Sprite {
     }
 
     public void setKilledAnimation() {
-        currentFrames = new Image[] {PlayerAnimation.getDie()};
+        currentFrames = PlayerAnimation.getShock();
     }
+
 
     // check killed => move
     // check dead => remove
-
     public boolean killed() {
-        if (alive) {
-            for (Bomb b : GameScene.getBombList()) {
-                if (b.hitFlame(this)) {
-                    setKilledAnimation();
-                    alive = !alive;
-                    return true;
-                }
+        /*setBound(new Rectangle2D(getPosition().getX() + 5, getPosition().getY() + 5,
+                size.getX() - 10, size.getY() - 10));
+
+        for (Entity e : GameLoop.getEntities()) {
+            if (((e instanceof Enemy) || (e instanceof Flame)) && collideWith(e)) {
+                return true;
             }
         }
-        return false;
+        return false;*/
+        alive = lives > 0;
+        return alive;
     }
 
     public boolean dead() {
         if (alive) {
             return false;
         } else {
-            if (deadTime > 0) {
-                deadTime--;
-                return false;
-            } else {
-                return true;
-            }
+            return new Date().getTime() - deadTime.getTime() > 1000;
         }
     }
 }

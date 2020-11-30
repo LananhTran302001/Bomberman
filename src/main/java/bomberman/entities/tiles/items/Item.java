@@ -25,14 +25,14 @@ public abstract class Item extends Entity {
     }
 
     public void update() {
-        alive = checkCollision();
+        alive = checkPlayerCollision();
     }
 
     public boolean isPlayerCollideFriendly() {
         return true;
     }
 
-    public boolean checkCollision() {
+    public boolean checkPlayerCollision() {
         if (alive) {
             this.setBound(new Rectangle2D(position.getX() + 2, position.getY() + 2, size.getX() - 4, size.getY() - 4));
             if (collideWith(GameScene.getPlayer())) {

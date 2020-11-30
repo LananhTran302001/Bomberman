@@ -51,12 +51,11 @@ public class Vector2 {
         return (this.x == other.getX()) && (this.y == other.getY());
     }
 
-    public Vector2 add(Vector2 other) {
+    public void add(Vector2 other) {
         if (other != null) {
             this.x += other.getX();
             this.y += other.getY();
         }
-        return this;
     }
 
     public static Vector2 add(Vector2 v1, Vector2 v2) {
@@ -65,18 +64,22 @@ public class Vector2 {
         return new Vector2(addX, addY);
     }
 
-    public Vector2 multiple(int num) {
+    public void multiple(int num) {
         this.x *= num;
         this.y *= num;
-        return this;
     }
 
-    public Vector2 multiple(Vector2 other) {
+    public void multiple(Vector2 other) {
         if (other != null) {
             this.x *= other.getX();
             this.y *= other.getY();
         }
-        return this;
+    }
+
+    public static Vector2 multiple(Vector2 v, int num) {
+        int mulX = v.getX() * num;
+        int mulY = v.getY() * num;
+        return new Vector2(mulX, mulY);
     }
 
     public static Vector2 getPositionInMap(Vector2 realPosition, Vector2 realSize) {
