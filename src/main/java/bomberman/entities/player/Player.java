@@ -1,17 +1,13 @@
 package bomberman.entities.player;
 
-import bomberman.GameLoop;
 import bomberman.Renderer;
 import bomberman.animation.PlayerAnimation;
 import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
-import bomberman.entities.Entity;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
-import bomberman.entities.bomb.Flame;
-import bomberman.entities.enermies.Enemy;
 import bomberman.scenes.GameScene;
-import javafx.geometry.Rectangle2D;
+
 import javafx.scene.image.Image;
 
 import java.util.Date;
@@ -20,11 +16,15 @@ import java.util.Date;
 public class Player extends Sprite {
 
     private int lives = 3;
-    private Date deadTime;
-    private Date lastHitTime;
 
-    private Direction direction = Direction.DOWN;
-    private Image[] currentFrames = PlayerAnimation.getMoveDown();
+    private Date lastHitTime;
+    private Date deadTime;
+
+    private Image[] currentFrames = new Image[] {
+            PlayerAnimation.getMoveDown()[0],
+    };
+
+    private static boolean canWalkOnBrick = false;
 
     public Player(Vector2 position) {
         this.setPosition(position);
@@ -39,12 +39,22 @@ public class Player extends Sprite {
         return "Player";
     }
 
+    private void setCurrentFrames(Image[] images) {
+        int n = images.length;
+        this.currentFrames = new Image[n];
+        currentFrames = images;
+    }
+
+    private void setCurrentFrames(Image image) {
+        currentFrames = new Image[1];
+        currentFrames[0] = image;
+    }
+
     public void init() {
         lives = 3;
         alive = true;
         this.setSize(30, 38);
         setLayer(GameConstants.PLAYER_LAYER);
-        lastHitTime = new Date();
     }
 
 
@@ -60,21 +70,35 @@ public class Player extends Sprite {
     }
 
     private void die() {
+        lives = 0;
         alive = false;
         deadTime = new Date();
-        currentFrames = PlayerAnimation.getDead();
+        setDeadAnimation();
+        this.setPosition(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
+        draw();
+    }
+
+    public boolean lagging() {
+        if (lastHitTime == null) {
+            return false;
+        }
+        return new Date().getTime() - lastHitTime.getTime() < GameConstants.PLAYER_LAG_TIME;
     }
 
     public void shock() {
-        if (lives > 1) {
-            if (new Date().getTime() - lastHitTime.getTime() > 1000) {
+        if (!lagging()) {
+
+            if (lives > 1) {
                 lives--;
                 setKilledAnimation();
                 lastHitTime = new Date();
+                this.setPosition(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
+                draw();
+
+            } else {
+                die();
             }
 
-        } else {
-            die();
         }
     }
 
@@ -82,18 +106,51 @@ public class Player extends Sprite {
         return true;
     }
 
-    public boolean checkCollision(Vector2 _p, Vector2 _direction) {
-        setBound(new Rectangle2D(_p.getX() + 5, _p.getY() + 20, size.getX() - 10, size.getY() - 22));
-        for (Entity e : GameLoop.getEntities()) {
-            if (!e.isPlayerCollideFriendly() && e != this && collideWith(e)) {
-                // easier to take items than using map method
-                System.out.println("Collide with " + e.getName());
-                return true;
-            }
-        }
-        return false;
+    public static void setCanWalkOnBrick(boolean _canWalkOnBrick) {
+        canWalkOnBrick = _canWalkOnBrick;
     }
 
+    private boolean barrierTile(Vector2 posInMap) {
+        if (posInMap == null) {
+            return true;
+        }
+        char c = GameScene.getStaticMapAt(posInMap.getY(), posInMap.getX());
+        if (canWalkOnBrick && c == '*') {
+            return false;
+        }
+        return c != ' ' && c != 'B';
+
+    }
+
+    public boolean checkCollision(Vector2 _p, Vector2 _dir) {
+
+        if (_p == null || _dir == null) {
+            return true;
+        }
+
+        if (_dir.getX() < 0) {
+            // Go Left
+            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(6, 35))))
+                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(6, 20))));
+
+
+        } else if (_dir.getX() > 0) {
+            // Go Right
+            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(28, 20))))
+                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(28, 35))));
+
+        } else if (_dir.getY() < 0) {
+            // Go Up
+            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(20, 10))))
+                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(6, 10))));
+
+        } else {
+            // Go Down
+            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(6, 35))))
+                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(20, 35))));
+        }
+
+    }
 
     public void move(int _step, Direction _direction) {
         Vector2 directionVector = new Vector2();
@@ -129,37 +186,29 @@ public class Player extends Sprite {
     }
 
     public void stopAnimation() {
-        Image temp = currentFrames[0];
-        currentFrames = new Image[1];
-        currentFrames[0] = temp;
+        setCurrentFrames(currentFrames[0]);
     }
 
     public void setKilledAnimation() {
-        currentFrames = PlayerAnimation.getShock();
+        setCurrentFrames(PlayerAnimation.getShock());
     }
 
+    public void setDeadAnimation() {
+        setCurrentFrames(PlayerAnimation.getDead());
+    }
 
     // check killed => move
     // check dead => remove
     public boolean killed() {
-        /*setBound(new Rectangle2D(getPosition().getX() + 5, getPosition().getY() + 5,
-                size.getX() - 10, size.getY() - 10));
-
-        for (Entity e : GameLoop.getEntities()) {
-            if (((e instanceof Enemy) || (e instanceof Flame)) && collideWith(e)) {
-                return true;
-            }
-        }
-        return false;*/
         alive = lives > 0;
-        return alive;
+        return !alive;
     }
 
     public boolean dead() {
         if (alive) {
             return false;
         } else {
-            return new Date().getTime() - deadTime.getTime() > 1000;
+            return new Date().getTime() - deadTime.getTime() > 2000;
         }
     }
 }

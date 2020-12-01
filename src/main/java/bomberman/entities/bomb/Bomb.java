@@ -155,9 +155,9 @@ public abstract class Bomb extends Entity {
 
     public STATE getState() {
         long lifeTime = new Date().getTime() - startDate.getTime();
-        if (lifeTime > 3000) {
+        if (lifeTime > GameConstants.BOMB_EXPLODING_TIME + GameConstants.BOMB_WAITING_TIME) {
             return STATE.DEAD;
-        } else if (lifeTime > 2000) {
+        } else if (lifeTime > GameConstants.BOMB_WAITING_TIME) {
             return STATE.EXPLODING;
         } else {
             return STATE.ACTIVE;

@@ -2,6 +2,7 @@ package bomberman.entities.tiles.items;
 
 import bomberman.constants.GameImages;
 import bomberman.entities.Vector2;
+import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Brick;
 
 public class BlockPass extends Item {
@@ -28,10 +29,12 @@ public class BlockPass extends Item {
 
     void doPower() {
         Brick.setPlayerCollideFriendly(true);
+        Player.setCanWalkOnBrick(true);
     }
 
     void stopPower() {
         Brick.setPlayerCollideFriendly(false);
+        Player.setCanWalkOnBrick(false);
     }
 
 }

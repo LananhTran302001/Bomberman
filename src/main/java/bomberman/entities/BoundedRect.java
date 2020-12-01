@@ -66,10 +66,16 @@ public class BoundedRect {
     }
 
     public boolean collideWith(BoundedRect other) {
+        if (other == null) {
+            return false;
+        }
         return bound.intersects(other.getBound());
     }
 
     public boolean overlap(BoundedRect other) {
+        if (other == null) {
+            return false;
+        }
         return bound.intersects(other.bound);
     }
 

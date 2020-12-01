@@ -89,6 +89,7 @@ public class GameLoop {
             } else if (e instanceof Player && ((Player)e).dead()) {
                 iterator.remove();
                 System.out.println("You LOSE");
+                GameScene.gameOver();
 
             } else {
                 e.update();

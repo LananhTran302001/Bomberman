@@ -3,8 +3,6 @@ package bomberman.entities.enermies.ai;
 import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
-import bomberman.entities.enermies.Enemy;
-import bomberman.entities.player.Player;
 import bomberman.scenes.GameScene;
 
 import java.util.LinkedList;
@@ -12,16 +10,16 @@ import java.util.Random;
 
 public class AI {
 
-    Player player;
-    Enemy enemy;
+    Entity target;
+    Entity follower;
     final int viewRadius = GameConstants.AI_VIEW_RADIUS;
     static final int INF = 10000000;
     final int[] shiftX = new int[] {0, 0, -1, 1};
     final int[] shiftY = new int[] {1, -1, 0, 0};
 
-    public AI(Enemy enemy, Player player) {
-        this.enemy = enemy;
-        this.player = player;
+    public AI(Entity follower, Entity target) {
+        this.follower = follower;
+        this.target = target;
     }
 
     public int findShortestDistance(Vector2 beginPoint, Vector2 endPoint) {
@@ -76,7 +74,7 @@ public class AI {
         Vector2 dir = getRandomDirection();
 
         for (int i = 0; i < 4; i++) {
-            Vector2 nextPoint = Vector2.add(Vector2.getPositionInMap(enemy.getPosition()), new Vector2(shiftX[i], shiftY[i]));
+            Vector2 nextPoint = Vector2.add(Vector2.getPositionInMap(follower.getPosition()), new Vector2(shiftX[i], shiftY[i]));
 
             if (obstacleAt(nextPoint)) {
                 continue;
@@ -93,7 +91,7 @@ public class AI {
     }
 
     public Vector2 followPlayer() {
-        return findShortestPath(Vector2.getPositionInMap(player.getPosition(), player.getSize()));
+        return findShortestPath(Vector2.getPositionInMap(target.getPosition(), target.getSize()));
     }
 
     public Vector2 getRandomDirection() {

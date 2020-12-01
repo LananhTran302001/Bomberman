@@ -12,7 +12,6 @@ public abstract class Item extends Entity {
 
     private boolean alive = true;
     private Date startPowerTime;
-    private final int POWER_TIME = 15000;
 
     public Item() {
         setLayer(GameConstants.ITEM_LAYER);
@@ -34,8 +33,9 @@ public abstract class Item extends Entity {
 
     public boolean checkPlayerCollision() {
         if (alive) {
-            this.setBound(new Rectangle2D(position.getX() + 2, position.getY() + 2, size.getX() - 4, size.getY() - 4));
+            this.setBound(new Rectangle2D(position.getX() + 10, position.getY() + 10, size.getX() - 20, size.getY() - 20));
             if (collideWith(GameScene.getPlayer())) {
+                System.out.println("Item collected!");
                 startPowerTime = new Date();
                 doPower();
                 return false;
@@ -47,7 +47,7 @@ public abstract class Item extends Entity {
 
     public boolean outOfTime() {
         if (!alive) {
-            if (new Date().getTime() - startPowerTime.getTime() > POWER_TIME) {
+            if (new Date().getTime() - startPowerTime.getTime() > GameConstants.ITEM_POWER_TIME) {
                 stopPower();
                 return true;
             }

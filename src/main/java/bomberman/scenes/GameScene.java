@@ -15,10 +15,7 @@ import bomberman.entities.tiles.Brick;
 import bomberman.entities.tiles.Grass;
 import bomberman.entities.tiles.Portal;
 import bomberman.entities.tiles.Wall;
-import bomberman.entities.tiles.items.BlockPass;
-import bomberman.entities.tiles.items.FireUp;
-import bomberman.entities.tiles.items.Heart;
-import bomberman.entities.tiles.items.SpeedUp;
+import bomberman.entities.tiles.items.*;
 import bomberman.input.GameEventHandle;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -123,6 +120,9 @@ public class GameScene {
 
 
     public static void removeStaticEntityInMap(Entity e) {
+        if (e == null) {
+            return;
+        }
         int i = e.getPosition().getY() / GameConstants.TILE_SIZE;
         int j = e.getPosition().getX() / GameConstants.TILE_SIZE;
 
@@ -130,6 +130,7 @@ public class GameScene {
             // in case there is no item under this tile
             staticMap[i][j] = ' ';
         }
+
 
         if (e instanceof Bomb) {
             bombList.remove(e);
@@ -186,21 +187,27 @@ public class GameScene {
                         addEntity(new Grass(position));
                         addEntity(new FireUp(position));
                         addEntity(new Brick(position));
+                        map[i][j] = '*';
                         break;
 
                     case '2':
                         addEntity(new Grass(position));
                         addEntity(new BlockPass(position));
+                        addEntity(new Brick(position));
+                        map[i][j] = '*';
                         break;
 
                     case '3':
                         addEntity(new Grass(position));
                         addEntity(new Heart(position));
+                        addEntity(new Brick(position));
+                        map[i][j] = '*';
                         break;
 
                     case '4':
                         addEntity(new Grass(position));
                         addEntity(new SpeedUp(position));
+                        map[i][j] = ' ';
                         break;
 
                     case 'P':
@@ -209,9 +216,14 @@ public class GameScene {
                             player = new Player(position);
                             addEntity(player);
                         }
+                        map[i][j] = ' ';
                         break;
                 }
             }
         }
+    }
+
+    public static void gameOver() {
+        player.setPosition(0, 0);
     }
 }

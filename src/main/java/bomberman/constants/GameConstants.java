@@ -1,6 +1,8 @@
 package bomberman.constants;
 
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 public class GameConstants {
 
 
@@ -28,4 +30,11 @@ public class GameConstants {
     public static int PLAYER_LAYER = 5;
 
     public static int AI_VIEW_RADIUS = 5;
+
+    public static int PLAYER_LAG_TIME = 2000; // = 1s
+    public static int ITEM_POWER_TIME = 10000; // = 10s
+
+    public static int BOMB_WAITING_TIME = 2000; // 2s before exploding
+    public static int BOMB_EXPLODING_TIME = 1000; // 1s exploding then dead
+
 }
