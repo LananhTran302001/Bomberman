@@ -2,10 +2,12 @@ package bomberman.entities.bomb;
 
 import bomberman.animation.FlameAnimation;
 import bomberman.constants.GameConstants;
+import bomberman.constants.GameSounds;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import bomberman.scenes.GameScene;
-import javafx.geometry.Rectangle2D;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +17,7 @@ public abstract class Bomb extends Entity {
 
     Date startDate;
     int range;
+    MediaPlayer explosionSound = new MediaPlayer(new Media(GameSounds.EXPLOSION));
     private boolean exploding = false;
     private List<Flame> bombFlame = new ArrayList<Flame>();
 
@@ -28,6 +31,7 @@ public abstract class Bomb extends Entity {
         super(position);
         setLayer(GameConstants.BOMB_LAYER);
         startDate = new Date();
+        explosionSound.setVolume(0.05);
     }
 
     public Bomb(int x, int y) {
@@ -120,6 +124,7 @@ public abstract class Bomb extends Entity {
             }
 
             exploding = true;
+            explosionSound.play();
 
         } else {
             for (Flame f : bombFlame) {
@@ -157,6 +162,7 @@ public abstract class Bomb extends Entity {
     public STATE getState() {
         long lifeTime = new Date().getTime() - startDate.getTime();
         if (lifeTime > GameConstants.BOMB_EXPLODING_TIME + GameConstants.BOMB_WAITING_TIME) {
+            explosionSound.stop();
             return STATE.DEAD;
         } else if (lifeTime > GameConstants.BOMB_WAITING_TIME) {
             return STATE.EXPLODING;

@@ -14,6 +14,8 @@ public class GameConstants {
     public static int SCENE_WIDTH = 640;
     public static int SCENE_HEIGHT = 640;
 
+    public static int MENU_HEIGHT = 15;
+
     public static final String GAME_NAME = "Bomberman";
 
     public static int STEP_LENGTH = 2;
@@ -35,7 +37,7 @@ public class GameConstants {
     public static int PLAYER_LAG_TIME = 2000; // = 1s
     public static int ITEM_POWER_TIME = 10000; // = 10s
 
-    public static int BOMB_WAITING_TIME = 1000; // 2s before exploding
+    public static int BOMB_WAITING_TIME = 1500; // 2s before exploding
     public static int BOMB_EXPLODING_TIME = 1000; // 1s exploding then dead
 
     public static int MESSAGE_TIME = 1500; // 5s before disappear, after enemy removed

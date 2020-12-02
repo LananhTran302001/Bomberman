@@ -11,7 +11,6 @@ import bomberman.scenes.GameScene;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 
-import javax.swing.text.PlainDocument;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,6 +21,8 @@ public class GameLoop {
     private static double deltaGameTime;
     private final static long startNanoTime = System.nanoTime();
     private static boolean runGame = true;
+    private static boolean mute = false;
+
 
     private static List<Entity> entities;
 

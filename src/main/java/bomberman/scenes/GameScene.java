@@ -2,10 +2,10 @@ package bomberman.scenes;
 
 import bomberman.GameLoop;
 import bomberman.Renderer;
+
 import bomberman.constants.GameConstants;
 
 import bomberman.entities.Entity;
-
 import bomberman.entities.Vector2;
 import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Balloom;
@@ -16,11 +16,16 @@ import bomberman.entities.tiles.Grass;
 import bomberman.entities.tiles.Portal;
 import bomberman.entities.tiles.Wall;
 import bomberman.entities.tiles.items.*;
+
+import bomberman.gui.Menu;
 import bomberman.input.GameEventHandle;
+
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.*;
 
@@ -28,6 +33,7 @@ public class GameScene {
 
     private static Scene scene;
     private static Group root;
+    private static BorderPane gameScreen;
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
     private static Player player;
@@ -35,7 +41,6 @@ public class GameScene {
 
     private static List<Entity> entities = new ArrayList<Entity>();
     private static List<Bomb> bombList = new ArrayList<Bomb>();
-
     private static char[][] staticMap;
 
     private static void initScene() {
@@ -45,8 +50,11 @@ public class GameScene {
         root = new Group();
         scene = new Scene(root, GameConstants.SCENE_WIDTH, GameConstants.SCENE_HEIGHT);
         canvas = new Canvas(GameConstants.CANVAS_WIDTH, GameConstants.CANVAS_HEIGHT);
+        gameScreen = new BorderPane();
+        gameScreen.setTop(new Menu().getMenuBar());
+        gameScreen.setCenter(canvas);
 
-        root.getChildren().add(canvas);
+        root.getChildren().add(gameScreen);
         graphicsContext = canvas.getGraphicsContext2D();
         Renderer.init(graphicsContext);
         GameLoop.start(graphicsContext, entities);
@@ -237,6 +245,13 @@ public class GameScene {
                 }
             }
         }
+    }
+
+
+    private void clear() {
+        entities.clear();
+        bombList.clear();
+        player = null;
     }
 
     public static void gameOver() {
