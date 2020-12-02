@@ -2,10 +2,10 @@ package bomberman.scenes;
 
 import bomberman.GameLoop;
 import bomberman.Renderer;
-import bomberman.builder.GamesFactory;
 import bomberman.constants.GameConstants;
 
 import bomberman.entities.Entity;
+
 import bomberman.entities.Vector2;
 import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Balloom;
@@ -40,7 +40,7 @@ public class GameScene {
 
     private static void initScene() {
         //GamesFactory.createGame(20, 20, 26, 45, 2);
-        staticMap = MapLoader.getMapFromFile("src/main/resources/data/map.txt");
+        staticMap = MapLoader.getMapFromFile("src/main/resources/data/map_02.txt");
 
         root = new Group();
         scene = new Scene(root, GameConstants.SCENE_WIDTH, GameConstants.SCENE_HEIGHT);
@@ -118,6 +118,23 @@ public class GameScene {
         }
     }
 
+    public static void addLast(Entity e) {
+        if (!entities.contains(e)) {
+            int n = entities.size();
+            entities.add(n, e);
+        }
+    }
+
+    public static int getIndex(Entity e) {
+        return entities.indexOf(e);
+    }
+
+    public static void replace(Entity oldEntity, Entity newEntity) {
+        int index = entities.indexOf(oldEntity);
+        if (index >= 0 && index < entities.size()) {
+            entities.set(index, newEntity);
+        }
+    }
 
     public static void removeStaticEntityInMap(Entity e) {
         if (e == null) {
@@ -126,13 +143,12 @@ public class GameScene {
         int i = e.getPosition().getY() / GameConstants.TILE_SIZE;
         int j = e.getPosition().getX() / GameConstants.TILE_SIZE;
 
-        if (!(e instanceof Brick) || staticMap[i][j] == '*') {
+        if ((e instanceof Brick) && (staticMap[i][j] == '*' )) {
             // in case there is no item under this tile
             staticMap[i][j] = ' ';
-        }
 
-
-        if (e instanceof Bomb) {
+        } else if (e instanceof Bomb) {
+            staticMap[i][j] = ' ';
             bombList.remove(e);
             System.out.println("Removed bomb from bombList");
         }
@@ -213,7 +229,7 @@ public class GameScene {
                     case 'P':
                         addEntity(new Grass(position));
                         if (player == null) {
-                            player = new Player(position);
+                            player = new Player(Vector2.add(position, new Vector2(0, -10)));
                             addEntity(player);
                         }
                         map[i][j] = ' ';
@@ -225,5 +241,9 @@ public class GameScene {
 
     public static void gameOver() {
         player.setPosition(0, 0);
+    }
+
+    public static void setNewLevel() {
+
     }
 }

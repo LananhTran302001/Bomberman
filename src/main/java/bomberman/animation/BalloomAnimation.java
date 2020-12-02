@@ -16,6 +16,8 @@ public class BalloomAnimation {
     };
     private static Image[] dead = new Image[] {
             new Image(GameImages.BALLOOM_IMG + "_dead.png"),
+            new Image(GameImages.BALLOOM_IMG + "_dead.png"),
+            new Image(GameImages.BALLOOM_IMG + "_dead.png"),
             new Image(GameImages.BALLOOM_IMG + "_dead_01.png"),
             new Image(GameImages.BALLOOM_IMG + "_dead_02.png"),
             new Image(GameImages.BALLOOM_IMG + "_dead_03.png")

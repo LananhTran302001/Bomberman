@@ -12,6 +12,7 @@ import java.util.Date;
 
 public abstract class Enemy extends Sprite {
 
+    int eValue;
     Image[] currentAnimation;
     private Date deadTime;
 
@@ -19,12 +20,21 @@ public abstract class Enemy extends Sprite {
         setLayer(GameConstants.ENEMY_LAYER);
     }
 
+    public int getEValue() {
+        System.out.println("value of " + getName() + " is " + eValue);
+        return eValue;
+    }
+
+    public void setEValue(int _eValue) {
+        this.eValue = _eValue;
+    }
+
     public void setCurrentAnimation(Image[] currentAnimation) {
         this.currentAnimation = currentAnimation;
     }
 
     public void draw() {
-        Renderer.playAnimation(currentAnimation, 3, position, size);
+        Renderer.playAnimation(currentAnimation, 2, position, size);
     }
 
     public void update() {
@@ -43,7 +53,7 @@ public abstract class Enemy extends Sprite {
     }
 
     private boolean playerColliding() {
-        this.setBound(new Rectangle2D(position.getX() + 2, position.getY() + 2, size.getX() - 4, size.getY() - 4));
+        this.setBound(new Rectangle2D(position.getX() + 5, position.getY() + 5, size.getX() - 10, size.getY() - 10));
         return collideWith(GameScene.getPlayer());
     }
 
@@ -58,6 +68,7 @@ public abstract class Enemy extends Sprite {
                     setKilledAnimation();
                     alive = !alive;
                     deadTime = new Date();
+
                     return true;
                 }
             }
@@ -70,9 +81,15 @@ public abstract class Enemy extends Sprite {
         if (alive) {
             return false;
         } else {
-            return new Date().getTime() - deadTime.getTime() > 500;
+
+            return new Date().getTime() - deadTime.getTime() > GameConstants.ENEMY_DEAD_TIME;
         }
 
+    }
+
+    @Override
+    public boolean notUsed() {
+        return dead();
     }
 
     public void move(int step, Direction direction) {

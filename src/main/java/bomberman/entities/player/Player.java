@@ -57,10 +57,13 @@ public class Player extends Sprite {
         setLayer(GameConstants.PLAYER_LAYER);
     }
 
+    public void setToBeginPosition() {
+        setPosition(new Vector2(32, 20));
+    }
 
     public void draw() {
         if (currentFrames.length > 1) {
-            Renderer.playAnimation(currentFrames, 4, position, size);
+            Renderer.playAnimation(currentFrames, 6, position, size);
         } else {
             Renderer.renderImage(position, size, currentFrames[0]);
         }
@@ -74,7 +77,6 @@ public class Player extends Sprite {
         alive = false;
         deadTime = new Date();
         setDeadAnimation();
-        this.setPosition(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
         draw();
     }
 
@@ -82,23 +84,37 @@ public class Player extends Sprite {
         if (lastHitTime == null) {
             return false;
         }
-        return new Date().getTime() - lastHitTime.getTime() < GameConstants.PLAYER_LAG_TIME;
+
+        long lagTime = GameConstants.PLAYER_LAG_TIME - (new Date().getTime() - lastHitTime.getTime());
+        if (lagTime > 0) {
+            return true;
+
+        } else if (lagTime == 0) {
+            setPosition(new Vector2(32, 20));
+        }
+        return false;
     }
 
     public void shock() {
-        if (!lagging()) {
+        if (alive) {
+            if (!lagging()) {
 
-            if (lives > 1) {
-                lives--;
-                setKilledAnimation();
-                lastHitTime = new Date();
-                this.setPosition(GameConstants.TILE_SIZE, GameConstants.TILE_SIZE);
-                draw();
+                if (lives > 1) {
+                    lives--;
+                    setKilledAnimation();
+                    lastHitTime = new Date();
+                    draw();
 
-            } else {
-                die();
+                } else {
+                    die();
+                }
             }
+        }
+    }
 
+    public void addLives() {
+        if (lives < 3 && lives > 0) {
+            lives++;
         }
     }
 
@@ -153,6 +169,10 @@ public class Player extends Sprite {
     }
 
     public void move(int _step, Direction _direction) {
+        if (_direction == null) {
+            return;
+        }
+
         Vector2 directionVector = new Vector2();
 
         switch (_direction) {
@@ -208,7 +228,12 @@ public class Player extends Sprite {
         if (alive) {
             return false;
         } else {
-            return new Date().getTime() - deadTime.getTime() > 2000;
+            return new Date().getTime() - deadTime.getTime() > GameConstants.PLAYER_DEAD_TIME;
         }
+    }
+
+    @Override
+    public boolean notUsed() {
+        return dead();
     }
 }

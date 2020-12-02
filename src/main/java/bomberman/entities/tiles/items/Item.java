@@ -55,6 +55,11 @@ public abstract class Item extends Entity {
         return false;
     }
 
+    @Override
+    public boolean notUsed() {
+        return outOfTime();
+    }
+
     abstract void doPower();
     abstract void stopPower();
 

@@ -44,4 +44,8 @@ public class Grass extends Entity {
     public boolean isPlayerCollideFriendly() {
         return true;
     }
+
+    public boolean notUsed() {
+        return false;
+    }
 }

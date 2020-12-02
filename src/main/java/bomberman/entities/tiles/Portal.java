@@ -38,4 +38,8 @@ public class Portal extends Entity {
     public boolean isPlayerCollideFriendly() {
         return false;
     }
+
+    public boolean notUsed() {
+        return false;
+    }
 }

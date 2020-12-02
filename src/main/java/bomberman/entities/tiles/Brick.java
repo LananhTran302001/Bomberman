@@ -64,7 +64,7 @@ public class Brick extends Entity implements Breakable {
         if (intact) {
             this.setBound(new Rectangle2D(position.getX(), position.getY(), size.getX(), size.getY()));
             for (Bomb b : GameScene.getBombList()) {
-                if (b.hitFlame(this)) {
+                if (b.tileInBombRange(this.getPosition())) {
                     brokenTime = new Date();
                     return false;
                 }
@@ -80,5 +80,10 @@ public class Brick extends Entity implements Breakable {
         } else {
             return new Date().getTime() - brokenTime.getTime() > 1000;
         }
+    }
+
+    @Override
+    public boolean notUsed() {
+        return isBroken();
     }
 }

@@ -20,6 +20,7 @@ public class Balloom extends Enemy {
     public Balloom(Vector2 position) {
         this.setPosition(position);
         row = position.getY() / GameConstants.TILE_SIZE;
+        setEValue(50);
         init();
     }
 

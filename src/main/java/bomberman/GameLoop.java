@@ -2,16 +2,16 @@ package bomberman;
 
 import bomberman.constants.GameConstants;
 import bomberman.entities.Entity;
-import bomberman.entities.bomb.Bomb;
+import bomberman.entities.Vector2;
 import bomberman.entities.enermies.Enemy;
+import bomberman.entities.enermies.Message;
 import bomberman.entities.player.Player;
-import bomberman.entities.tiles.Brick;
-import bomberman.entities.tiles.items.Item;
 import bomberman.input.InputManager;
 import bomberman.scenes.GameScene;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 
+import javax.swing.text.PlainDocument;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,6 +21,7 @@ public class GameLoop {
     private static double currentGameTime;
     private static double deltaGameTime;
     private final static long startNanoTime = System.nanoTime();
+    private static boolean runGame = true;
 
     private static List<Entity> entities;
 
@@ -41,14 +42,16 @@ public class GameLoop {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                oldGameTime = currentGameTime;
-                currentGameTime = (now - startNanoTime) / 1000000000.0;
-                deltaGameTime = currentGameTime - oldGameTime;
+                if (runGame) {
+                    oldGameTime = currentGameTime;
+                    currentGameTime = (now - startNanoTime) / 1000000000.0;
+                    deltaGameTime = currentGameTime - oldGameTime;
 
-                gc.clearRect(0, 0, GameConstants.CANVAS_WIDTH, GameConstants.CANVAS_HEIGHT);
+                    gc.clearRect(0, 0, GameConstants.CANVAS_WIDTH, GameConstants.CANVAS_HEIGHT);
 
-                update();
-                render();
+                    update();
+                    render();
+                }
             }
         };
         timer.start();
@@ -66,30 +69,25 @@ public class GameLoop {
 
         while (iterator.hasNext()) {
             Entity e = iterator.next();
-            if (e instanceof Bomb && ((Bomb)e).dead()) {
-                GameScene.removeStaticEntityInMap(e);
-                iterator.remove();
-                System.out.println("Removed");
 
-            } else if (e instanceof Enemy && ((Enemy)e).dead()) {
-                GameScene.removeStaticEntityInMap(e);
-                iterator.remove();
-                System.out.println("Removed");
+            if (e.notUsed()) {
 
-            } else if (e instanceof Brick && ((Brick)e).isBroken()) {
-                GameScene.removeStaticEntityInMap(e);
-                iterator.remove();
-                System.out.println("Removed");
+                if (e instanceof Enemy) {
+                    Vector2 p = e.getPosition();
+                    p.add(new Vector2(GameConstants.TILE_SIZE / 2, GameConstants.TILE_SIZE / 2));
+                    int point = ((Enemy) e).getEValue();
+                    GameScene.replace(e, new Message(p, "+" + point));
 
-            } else if (e instanceof Item && ((Item)e).outOfTime()) {
-                GameScene.removeStaticEntityInMap(e);
-                iterator.remove();
-                System.out.println("Removed");
+                } else if (e instanceof Player){
+                    GameScene.getPlayer().setPosition(0, 0);
+                    iterator.remove();
 
-            } else if (e instanceof Player && ((Player)e).dead()) {
-                iterator.remove();
-                System.out.println("You LOSE");
-                GameScene.gameOver();
+                } else {
+                    GameScene.removeStaticEntityInMap(e);
+                    iterator.remove();
+                }
+
+                System.out.println("Removed");
 
             } else {
                 e.update();
@@ -101,6 +99,14 @@ public class GameLoop {
         for (Entity entity : entities) {
             entity.draw();
         }
+    }
+
+    public static void pauseGame() {
+        runGame = false;
+    }
+
+    public static void playGame() {
+        runGame = true;
     }
 
 }

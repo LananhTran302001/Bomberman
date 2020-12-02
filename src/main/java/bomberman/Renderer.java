@@ -3,8 +3,11 @@ package bomberman;
 import bomberman.constants.GameConstants;
 import bomberman.entities.Vector2;
 
+import bomberman.entities.enermies.Message;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 
 public class Renderer {
@@ -28,5 +31,12 @@ public class Renderer {
         renderImage(pos, size, frames[index]);
     }
 
+    public static void renderString(Message message) {
+        if (message != null) {
+            gc.setFill(message.getColor());
+            gc.setFont(Font.font("Arial", message.getTextSize()));
+            gc.fillText(message.getMessage(), message.getPosition().getX(), message.getPosition().getY());
+        }
+    }
 
 }

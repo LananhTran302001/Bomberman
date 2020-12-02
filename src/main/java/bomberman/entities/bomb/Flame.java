@@ -38,9 +38,17 @@ public class Flame extends Entity {
         return false;
     }
 
+    public boolean notUsed() {
+        return false;
+    }
+
+    public boolean unUsed() {
+        return false;
+    }
+
     public void checkPlayerCollision() {
         if (!isPlayerCollideFriendly()) {
-            this.setBound(new Rectangle2D(position.getX() + 10, position.getY() + 10, size.getX() - 20, size.getY() - 20));
+            this.setBound(new Rectangle2D(position.getX() + 2, position.getY() + 2, size.getX() - 4, size.getY() - 4));
             if (collideWith(GameScene.getPlayer())) {
                 GameScene.getPlayer().shock();
             }

@@ -11,6 +11,7 @@ public class Oneal extends AIEnemy {
      */
     public Oneal(Vector2 position) {
         this.setPosition(position);
+        setEValue(100);
         init();
     }
 

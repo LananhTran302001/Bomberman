@@ -44,6 +44,10 @@ public abstract class Bomb extends Entity {
         range = a;
     }
 
+    public int getRange() {
+        return range;
+    }
+
     @Override
     public boolean isPlayerCollideFriendly() {
         return true;
@@ -55,9 +59,7 @@ public abstract class Bomb extends Entity {
             int j = position.getX() / GameConstants.TILE_SIZE;
 
             // CENTER FLAME
-            Flame centerFlame = new Flame(FlameAnimation.getCenterFlame(), position);
-            centerFlame.setBound(new Rectangle2D(position.getX() - 1, position.getY() - 1, size.getX() + 2, size.getY() + 2));
-            bombFlame.add(centerFlame);
+            bombFlame.add(new Flame(FlameAnimation.getCenterFlame(), position));
 
 
             int k;
@@ -72,10 +74,7 @@ public abstract class Bomb extends Entity {
                     k++;
                 }
                 if (!isObstacle(i, j + k)) {
-                    Flame rightFlame = new Flame(FlameAnimation.getRightFlame(), new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE));
-                    rightFlame.setBound(new Rectangle2D(rightFlame.getPosition().getX(), rightFlame.getPosition().getY(),
-                            rightFlame.getSize().getX() + 1, rightFlame.getSize().getY()));
-                    bombFlame.add(rightFlame);
+                    bombFlame.add(new Flame(FlameAnimation.getRightFlame(), new Vector2((j + k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
                 }
             }
 
@@ -88,10 +87,7 @@ public abstract class Bomb extends Entity {
                     k++;
                 }
                 if (!isObstacle(i, j - k)) {
-                    Flame leftFlame = new Flame(FlameAnimation.getLeftFlame(), new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE));
-                    leftFlame.setBound(new Rectangle2D(leftFlame.getPosition().getX() - 1, leftFlame.getPosition().getY(),
-                                                        leftFlame.getSize().getX() + 2, leftFlame.getSize().getY()));
-                    bombFlame.add(leftFlame);
+                    bombFlame.add(new Flame(FlameAnimation.getLeftFlame(), new Vector2((j - k) * GameConstants.TILE_SIZE, i * GameConstants.TILE_SIZE)));
                 }
             }
 
@@ -105,10 +101,7 @@ public abstract class Bomb extends Entity {
                     k++;
                 }
                 if (!isObstacle(i + k, j)) {
-                    Flame bottomFlame = new Flame(FlameAnimation.getBottomFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE));
-                    bottomFlame.setBound(new Rectangle2D(bottomFlame.getPosition().getX(), bottomFlame.getPosition().getY(),
-                            bottomFlame.getSize().getX(), bottomFlame.getSize().getY() + 1));
-                    bombFlame.add(bottomFlame);
+                    bombFlame.add(new Flame(FlameAnimation.getBottomFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i + k) * GameConstants.TILE_SIZE)));
                 }
             }
 
@@ -122,10 +115,7 @@ public abstract class Bomb extends Entity {
                     k++;
                 }
                 if (!isObstacle(i - k, j)) {
-                    Flame topFlame = new Flame(FlameAnimation.getTopFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE));
-                    topFlame.setBound(new Rectangle2D(topFlame.getPosition().getX(), topFlame.getPosition().getY() - 1,
-                            topFlame.getSize().getX(), topFlame.getSize().getY() + 2));
-                    bombFlame.add(topFlame);
+                    bombFlame.add(new Flame(FlameAnimation.getTopFlame(), new Vector2(j * GameConstants.TILE_SIZE, (i - k) * GameConstants.TILE_SIZE)));
                 }
             }
 
@@ -153,6 +143,17 @@ public abstract class Bomb extends Entity {
         return false;
     }
 
+    public boolean tileInBombRange(Vector2 realPosition) {
+        if (exploding) {
+            Vector2 bPos = Vector2.getPositionInMap(getPosition());
+            Vector2 ePos = Vector2.getPositionInMap(realPosition);
+            if (ePos.getX() == bPos.getX() || ePos.getY() == bPos.getY()) {
+                return Math.abs(ePos.getX() - bPos.getX()) + Math.abs(ePos.getY() - bPos.getY()) <= range;
+            }
+        }
+        return false;
+    }
+
     public STATE getState() {
         long lifeTime = new Date().getTime() - startDate.getTime();
         if (lifeTime > GameConstants.BOMB_EXPLODING_TIME + GameConstants.BOMB_WAITING_TIME) {
@@ -168,5 +169,8 @@ public abstract class Bomb extends Entity {
         return getState() == STATE.DEAD;
     }
 
-
+    @Override
+    public boolean notUsed() {
+        return dead();
+    }
 }
