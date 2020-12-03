@@ -4,12 +4,15 @@ import bomberman.Renderer;
 import bomberman.animation.BrickAnimation;
 import bomberman.constants.GameConstants;
 import bomberman.constants.GameImages;
+import bomberman.constants.GameSounds;
 import bomberman.entities.Breakable;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import bomberman.entities.bomb.Bomb;
 import bomberman.scenes.GameScene;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.Date;
 
@@ -20,6 +23,8 @@ public class Brick extends Entity implements Breakable {
 
     private boolean intact = true;
     private Date brokenTime;
+
+    private static final MediaPlayer breakSound = new MediaPlayer(new Media(GameSounds.BREAK));
 
     public Brick(int x, int y) {
         super(x, y);
@@ -66,6 +71,7 @@ public class Brick extends Entity implements Breakable {
             for (Bomb b : GameScene.getBombList()) {
                 if (b.tileInBombRange(this.getPosition())) {
                     brokenTime = new Date();
+                    GameSounds.playSound(breakSound);
                     return false;
                 }
             }

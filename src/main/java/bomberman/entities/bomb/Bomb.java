@@ -18,6 +18,7 @@ public abstract class Bomb extends Entity {
     Date startDate;
     int range;
     MediaPlayer explosionSound = new MediaPlayer(new Media(GameSounds.EXPLOSION));
+    MediaPlayer plantedSound = new MediaPlayer(new Media(GameSounds.PLANT_BOMB));
     private boolean exploding = false;
     private List<Flame> bombFlame = new ArrayList<Flame>();
 
@@ -31,13 +32,11 @@ public abstract class Bomb extends Entity {
         super(position);
         setLayer(GameConstants.BOMB_LAYER);
         startDate = new Date();
-        explosionSound.setVolume(0.05);
+        GameSounds.playSound(plantedSound);
     }
 
     public Bomb(int x, int y) {
-        super(x, y);
-        setLayer(GameConstants.BOMB_LAYER);
-        startDate = new Date();
+        this(new Vector2(x, y));
     }
 
     public String getName() {
@@ -124,7 +123,8 @@ public abstract class Bomb extends Entity {
             }
 
             exploding = true;
-            explosionSound.play();
+            plantedSound.stop();
+            GameSounds.playSound(explosionSound);
 
         } else {
             for (Flame f : bombFlame) {

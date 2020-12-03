@@ -2,9 +2,12 @@ package bomberman.entities.tiles.items;
 
 import bomberman.Renderer;
 import bomberman.constants.GameConstants;
+import bomberman.constants.GameSounds;
 import bomberman.entities.Entity;
 import bomberman.scenes.GameScene;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.Date;
 
@@ -12,6 +15,7 @@ public abstract class Item extends Entity {
 
     private boolean alive = true;
     private Date startPowerTime;
+    MediaPlayer pickedSound = new MediaPlayer(new Media(GameSounds.PICK_ITEM));
 
     public Item() {
         setLayer(GameConstants.ITEM_LAYER);
@@ -37,6 +41,7 @@ public abstract class Item extends Entity {
             if (collideWith(GameScene.getPlayer())) {
                 System.out.println("Item collected!");
                 startPowerTime = new Date();
+                GameSounds.playSound(pickedSound);
                 doPower();
                 return false;
             }

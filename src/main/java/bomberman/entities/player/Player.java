@@ -4,11 +4,14 @@ import bomberman.Renderer;
 import bomberman.animation.PlayerAnimation;
 import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
+import bomberman.constants.GameSounds;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
 import bomberman.scenes.GameScene;
 
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.Date;
 
@@ -25,6 +28,8 @@ public class Player extends Sprite {
     };
 
     private static boolean canWalkOnBrick = false;
+    MediaPlayer shockSound = new MediaPlayer(new Media(GameSounds.PLAYER_SHOCK));
+    MediaPlayer deadSound = new MediaPlayer(new Media(GameSounds.PLAYER_DEAD));
 
     public Player(Vector2 position) {
         this.setPosition(position);
@@ -76,6 +81,7 @@ public class Player extends Sprite {
         lives = 0;
         alive = false;
         deadTime = new Date();
+        GameSounds.playSound(deadSound);
         setDeadAnimation();
         draw();
     }
@@ -103,6 +109,7 @@ public class Player extends Sprite {
                     lives--;
                     setKilledAnimation();
                     lastHitTime = new Date();
+                    GameSounds.playSound(shockSound);
                     draw();
 
                 } else {
@@ -157,13 +164,13 @@ public class Player extends Sprite {
 
         } else if (_dir.getY() < 0) {
             // Go Up
-            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(20, 10))))
+            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(25, 10))))
                     || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(6, 10))));
 
         } else {
             // Go Down
             return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(6, 35))))
-                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(20, 35))));
+                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(25, 35))));
         }
 
     }

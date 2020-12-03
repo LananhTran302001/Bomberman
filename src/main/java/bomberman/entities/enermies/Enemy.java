@@ -2,11 +2,14 @@ package bomberman.entities.enermies;
 import bomberman.Renderer;
 import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
+import bomberman.constants.GameSounds;
 import bomberman.entities.Sprite;
 import bomberman.entities.bomb.Bomb;
 import bomberman.scenes.GameScene;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.util.Date;
 
@@ -14,6 +17,7 @@ public abstract class Enemy extends Sprite {
 
     int eValue;
     Image[] currentAnimation;
+    MediaPlayer deadSound = new MediaPlayer(new Media(GameSounds.ENEMY_DEAD));
     private Date deadTime;
 
     public Enemy() {
@@ -68,6 +72,7 @@ public abstract class Enemy extends Sprite {
                     setKilledAnimation();
                     alive = !alive;
                     deadTime = new Date();
+                    GameSounds.playSound(deadSound);
 
                     return true;
                 }
