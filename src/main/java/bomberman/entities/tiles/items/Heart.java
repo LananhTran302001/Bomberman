@@ -3,6 +3,7 @@ package bomberman.entities.tiles.items;
 import bomberman.constants.GameConstants;
 import bomberman.constants.GameImages;
 import bomberman.entities.Vector2;
+import bomberman.scenes.GameScene;
 
 public class Heart extends Item {
     public Heart() {
@@ -26,7 +27,7 @@ public class Heart extends Item {
 
 
     void doPower() {
-
+        GameScene.getPlayer().addLives();
     }
 
     void stopPower() {

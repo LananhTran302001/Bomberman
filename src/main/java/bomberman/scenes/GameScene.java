@@ -5,10 +5,12 @@ import bomberman.Renderer;
 
 import bomberman.constants.GameConstants;
 
+import bomberman.constants.GameSounds;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Balloom;
+import bomberman.entities.enermies.Enemy;
 import bomberman.entities.enermies.ai.Oneal;
 import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Brick;
@@ -18,6 +20,7 @@ import bomberman.entities.tiles.Wall;
 import bomberman.entities.tiles.items.*;
 
 import bomberman.gui.Menu;
+import bomberman.gui.Sound;
 import bomberman.input.GameEventHandle;
 
 import javafx.scene.Group;
@@ -25,7 +28,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.media.MediaPlayer;
 
 import java.util.*;
 
@@ -36,16 +38,20 @@ public class GameScene {
     private static BorderPane gameScreen;
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
+
     private static Player player;
     private static boolean started = false;
+    private static int level = 1;
 
     private static List<Entity> entities = new ArrayList<Entity>();
     private static List<Bomb> bombList = new ArrayList<Bomb>();
     private static char[][] staticMap;
 
-    private static void initScene() {
-        //GamesFactory.createGame(20, 20, 26, 45, 2);
-        staticMap = MapLoader.getMapFromFile("src/main/resources/data/map_02.txt");
+    private static final Sound gameOverSound = new Sound(GameSounds.GAME_OVER);
+
+    private static void initScene(int _level) {
+        clear();
+        staticMap = MapLoader.getMapFromFile("src/main/resources/data/map" + level + ".txt");
 
         root = new Group();
         scene = new Scene(root, GameConstants.SCENE_WIDTH, GameConstants.SCENE_HEIGHT);
@@ -65,17 +71,40 @@ public class GameScene {
         GameEventHandle.attachEventHandle(scene);
     }
 
-
-    public static void setUpScene() {
-        if (!started) {
-            initScene();
-            started = true;
+    public static void setUpScene(int _level) {
+        if (_level > 0 && _level < 3) {
+            level = _level;
+            initScene(level);
         }
         for (Entity e : entities) {
             e.draw();
         }
     }
 
+    public static void startScene() {
+        level = 1;
+        setUpScene(level);
+    }
+
+    public static void setNewLevel() {
+        if (level < 2) {
+            clear();
+            setUpScene(level + 1);
+        }
+    }
+
+    private static void clear() {
+        entities.clear();
+        bombList.clear();
+        player = null;
+        staticMap = null;
+        gameOverSound.stop();
+    }
+
+
+    /**
+     * SETTERS AND GETTERS.
+     */
     public static GraphicsContext getGraphicsContext() {
         return graphicsContext;
     }
@@ -104,12 +133,22 @@ public class GameScene {
         return staticMap[row][column];
     }
 
+    public static int getLevel() {
+        return level;
+    }
+
+    /**
+     * Compare to set layer.
+     */
     static Comparator<Entity> layerCompare = new Comparator<Entity>() {
         public int compare(Entity o1, Entity o2) {
             return o1.getLayer() - o2.getLayer();
         }
     };
 
+    /**
+     * add entity to game.
+     */
     public static void addEntity(Entity entity) {
         if (!entities.contains(entity)) {
             entities.add(entity);
@@ -123,13 +162,6 @@ public class GameScene {
             }
 
             Collections.sort(entities, layerCompare);
-        }
-    }
-
-    public static void addLast(Entity e) {
-        if (!entities.contains(e)) {
-            int n = entities.size();
-            entities.add(n, e);
         }
     }
 
@@ -151,7 +183,7 @@ public class GameScene {
         int i = e.getPosition().getY() / GameConstants.TILE_SIZE;
         int j = e.getPosition().getX() / GameConstants.TILE_SIZE;
 
-        if ((e instanceof Brick) && (staticMap[i][j] == '*' )) {
+        if ((e instanceof Brick) && (staticMap[i][j] == '*')) {
             // in case there is no item under this tile
             staticMap[i][j] = ' ';
 
@@ -164,12 +196,27 @@ public class GameScene {
         System.out.println("Removed " + e.getName() + " from map");
     }
 
+    public static boolean killedAllEnemies() {
+        for (Entity e : entities) {
+            if (e instanceof Enemy) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void gameOver() {
+        gameOverSound.play();
+    }
+
+
 
     public static void loadMap(char[][] map) {
         if (map == null) {
             System.out.println("Map game is empty");
             return;
         }
+
         int row = GameConstants.NUM_OF_ROWS;
         int column = GameConstants.NUM_OF_COLUMNS;
 
@@ -247,18 +294,4 @@ public class GameScene {
         }
     }
 
-
-    private void clear() {
-        entities.clear();
-        bombList.clear();
-        player = null;
-    }
-
-    public static void gameOver() {
-        player.setPosition(0, 0);
-    }
-
-    public static void setNewLevel() {
-
-    }
 }

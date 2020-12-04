@@ -7,11 +7,10 @@ import bomberman.constants.GameConstants;
 import bomberman.constants.GameSounds;
 import bomberman.entities.Sprite;
 import bomberman.entities.Vector2;
+import bomberman.gui.Sound;
 import bomberman.scenes.GameScene;
 
 import javafx.scene.image.Image;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 import java.util.Date;
 
@@ -28,8 +27,9 @@ public class Player extends Sprite {
     };
 
     private static boolean canWalkOnBrick = false;
-    MediaPlayer shockSound = new MediaPlayer(new Media(GameSounds.PLAYER_SHOCK));
-    MediaPlayer deadSound = new MediaPlayer(new Media(GameSounds.PLAYER_DEAD));
+    Sound shockSound = new Sound(GameSounds.PLAYER_SHOCK);
+    Sound deadSound = new Sound(GameSounds.PLAYER_DEAD);
+    Sound stepSound = new Sound(GameSounds.PLAYER_STEP, true);
 
     public Player(Vector2 position) {
         this.setPosition(position);
@@ -81,9 +81,12 @@ public class Player extends Sprite {
         lives = 0;
         alive = false;
         deadTime = new Date();
-        GameSounds.playSound(deadSound);
         setDeadAnimation();
+        stepSound.stop();
+        shockSound.stop();
+        deadSound.play();
         draw();
+
     }
 
     public boolean lagging() {
@@ -109,7 +112,7 @@ public class Player extends Sprite {
                     lives--;
                     setKilledAnimation();
                     lastHitTime = new Date();
-                    GameSounds.playSound(shockSound);
+                    shockSound.play();
                     draw();
 
                 } else {
@@ -207,13 +210,17 @@ public class Player extends Sprite {
         Vector2 newPosition = Vector2.add(position, Vector2.multiple(directionVector,_step * GameConstants.STEP_LENGTH));
 
         if (!checkCollision(newPosition, directionVector)) {
+            if (!stepSound.isPlaying()) {
+                stepSound.play();
+            }
             this.setPosition(newPosition);
         }
 
     }
 
-    public void stopAnimation() {
+    public void stop() {
         setCurrentFrames(currentFrames[0]);
+        stepSound.stop();
     }
 
     public void setKilledAnimation() {

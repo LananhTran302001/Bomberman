@@ -4,10 +4,10 @@ import bomberman.Renderer;
 import bomberman.constants.GameConstants;
 import bomberman.constants.GameSounds;
 import bomberman.entities.Entity;
+import bomberman.entities.Vector2;
+import bomberman.gui.Sound;
 import bomberman.scenes.GameScene;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 import java.util.Date;
 
@@ -15,7 +15,7 @@ public abstract class Item extends Entity {
 
     private boolean alive = true;
     private Date startPowerTime;
-    MediaPlayer pickedSound = new MediaPlayer(new Media(GameSounds.PICK_ITEM));
+    Sound pickedSound = new Sound(GameSounds.PICK_ITEM);
 
     public Item() {
         setLayer(GameConstants.ITEM_LAYER);
@@ -38,10 +38,12 @@ public abstract class Item extends Entity {
     public boolean checkPlayerCollision() {
         if (alive) {
             this.setBound(new Rectangle2D(position.getX() + 10, position.getY() + 10, size.getX() - 20, size.getY() - 20));
-            if (collideWith(GameScene.getPlayer())) {
+            int i = getPosition().getY() / GameConstants.TILE_SIZE;
+            int j = getPosition().getX() / GameConstants.TILE_SIZE;
+            if ((GameScene.getStaticMapAt(i, j) == ' ') && collideWith(GameScene.getPlayer())) {
                 System.out.println("Item collected!");
                 startPowerTime = new Date();
-                GameSounds.playSound(pickedSound);
+                pickedSound.play();
                 doPower();
                 return false;
             }

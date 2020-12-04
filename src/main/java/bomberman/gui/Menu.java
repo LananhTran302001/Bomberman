@@ -5,24 +5,29 @@ import bomberman.constants.GameConstants;
 import bomberman.constants.GameSounds;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 
 public class Menu {
     HBox menuBar = new HBox(10);
+
     Button playButton = new Button("Play");
     Button pauseButton = new Button("Pause");
-    Button soundButton = new Button("Sound");
-    MediaPlayer pauseSound = new MediaPlayer(new Media(GameSounds.PAUSE));
+    ToggleButton soundButton = new ToggleButton("Sound");
+
+
+
+    Sound pauseSound = new Sound(GameSounds.PAUSE);
 
     public Menu() {
         playButton.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 playButton.setDisable(true);
                 pauseButton.setDisable(false);
+                pauseSound.stop();
                 GameLoop.playGame();
             }
         });
@@ -32,7 +37,7 @@ public class Menu {
             public void handle(MouseEvent event) {
                 playButton.setDisable(false);
                 pauseButton.setDisable(true);
-                GameSounds.playSound(pauseSound);
+                pauseSound.play();
                 GameLoop.pauseGame();
             }
         });
@@ -40,12 +45,17 @@ public class Menu {
 
         soundButton.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-
+                if (soundButton.isSelected()) {
+                    Sound.turnOnSound();
+                } else {
+                    Sound.turnOffSound();
+                }
             }
         });
+        soundButton.setFocusTraversable(false);
 
-        menuBar.getChildren().addAll(playButton, pauseButton);
-        menuBar.setPrefHeight(GameConstants.MENU_HEIGHT);
+        menuBar.getChildren().addAll(new Label("BOMBERMAN"), playButton, pauseButton, soundButton);
+        menuBar.setPrefHeight(GameConstants.MENU_HEIGHT + 5);
     }
 
     public HBox getMenuBar() {

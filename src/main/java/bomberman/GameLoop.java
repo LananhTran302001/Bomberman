@@ -1,11 +1,13 @@
 package bomberman;
 
 import bomberman.constants.GameConstants;
+import bomberman.constants.GameSounds;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import bomberman.entities.enermies.Enemy;
 import bomberman.entities.enermies.Message;
 import bomberman.entities.player.Player;
+import bomberman.gui.Sound;
 import bomberman.input.InputManager;
 import bomberman.scenes.GameScene;
 import javafx.animation.AnimationTimer;
@@ -25,6 +27,7 @@ public class GameLoop {
 
 
     private static List<Entity> entities;
+    private static Sound stageSound = new Sound(GameSounds.STAGE_1, true);
 
     /**
      * @return currentTime by second.
@@ -39,6 +42,8 @@ public class GameLoop {
 
     public static void start(final GraphicsContext gc, List<Entity> e) {
         entities = e;
+        setStageSound(GameScene.getLevel());
+        stageSound.play();
 
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -58,6 +63,13 @@ public class GameLoop {
         timer.start();
     }
 
+    private static void setStageSound(int level) {
+        if (level == 1) {
+            stageSound = new Sound(GameSounds.STAGE_1, true);
+        } else if (level == 2) {
+            stageSound = new Sound(GameSounds.STAGE_2, true);
+        }
+    }
 
     public static List<Entity> getEntities() {
         return entities;
@@ -82,6 +94,7 @@ public class GameLoop {
                 } else if (e instanceof Player){
                     GameScene.getPlayer().setPosition(0, 0);
                     iterator.remove();
+                    GameScene.gameOver();
 
                 } else {
                     GameScene.removeStaticEntityInMap(e);

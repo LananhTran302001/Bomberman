@@ -38,7 +38,7 @@ public class BlackBomb extends Bomb {
         if (getState() == STATE.ACTIVE) {
             Renderer.playAnimation(BlackBombAnimation.getBlackBombAnimation(), 3, position, size);
         } else if (getState() == STATE.EXPLODING) {
-            explode();
+            drawFlames();
         }
     }
 

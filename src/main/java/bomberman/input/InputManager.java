@@ -13,11 +13,12 @@ import java.util.List;
 public class InputManager {
 
     public static void handlePlayerInput() {
-        List keyboardInput = GameEventHandle.getInputList();
-        Player player = GameScene.getPlayer();
 
+        Player player = GameScene.getPlayer();
         if (!player.killed()) {
             if (!player.lagging()) {
+                List keyboardInput = GameEventHandle.getInputList();
+
                 if (keyboardInput.contains(KeyCode.UP) || keyboardInput.contains(KeyCode.W)) {
                     player.move(1, Direction.UP);
                 }
@@ -37,7 +38,7 @@ public class InputManager {
                     GameScene.addEntity(new BlackBomb(bombPosition));
                 }
                 if (keyboardInput.size() < 1) {
-                    player.stopAnimation();
+                    player.stop();
                 }
             }
         }

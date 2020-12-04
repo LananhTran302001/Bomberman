@@ -5,6 +5,8 @@ import bomberman.constants.GameConstants;
 import bomberman.constants.GameImages;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
+import bomberman.scenes.GameScene;
+
 
 public class Portal extends Entity {
 
@@ -32,8 +34,12 @@ public class Portal extends Entity {
     }
 
     public void update() {
+        if (collideWith(GameScene.getPlayer()) && GameScene.killedAllEnemies()) {
 
+            GameScene.setNewLevel();
+        }
     }
+
 
     public boolean isPlayerCollideFriendly() {
         return false;

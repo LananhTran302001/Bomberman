@@ -1,6 +1,7 @@
 package bomberman.builder;
 
 import bomberman.constants.GameConstants;
+import bomberman.scenes.GameScene;
 
 import java.io.FileWriter;
 import java.io.IOException;
