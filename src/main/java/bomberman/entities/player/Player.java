@@ -60,6 +60,9 @@ public class Player extends Sprite {
         alive = true;
         this.setSize(30, 38);
         setLayer(GameConstants.PLAYER_LAYER);
+        shockSound.stop();
+        deadSound.stop();
+        stepSound.stop();
     }
 
     public void setToBeginPosition() {
@@ -144,7 +147,7 @@ public class Player extends Sprite {
         if (canWalkOnBrick && c == '*') {
             return false;
         }
-        return c != ' ' && c != 'B';
+        return c != ' ' && c != 'B' && c != 'x';
 
     }
 

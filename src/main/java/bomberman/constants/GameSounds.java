@@ -26,6 +26,8 @@ public class GameSounds {
     public static final String GAME_OVER = new File("src/main/resources/sound/GameOver.mp3").toURI().toString();
     public static final String STAGE_1 = new File("src/main/resources/sound/Stage_01.mp3").toURI().toString();
     public static final String STAGE_2 = new File("src/main/resources/sound/Stage_02.mp3").toURI().toString();
+    public static final String STAGE_3 = new File("src/main/resources/sound/Stage_03.mp3").toURI().toString();
+    public static final String STAGE_4 = new File("src/main/resources/sound/Stage_04.mp3").toURI().toString();
 
 
 }

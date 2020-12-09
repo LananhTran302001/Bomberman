@@ -8,6 +8,7 @@ import bomberman.entities.enermies.Enemy;
 import bomberman.entities.enermies.Message;
 import bomberman.entities.player.Player;
 import bomberman.gui.Sound;
+import bomberman.input.GameEventHandle;
 import bomberman.input.InputManager;
 import bomberman.scenes.GameScene;
 import javafx.animation.AnimationTimer;
@@ -18,13 +19,14 @@ import java.util.List;
 
 public class GameLoop {
 
+    private static AnimationTimer timer;
+    private static boolean started = false;
     private static double oldGameTime;
     private static double currentGameTime;
     private static double deltaGameTime;
     private final static long startNanoTime = System.nanoTime();
     private static boolean runGame = true;
     private static boolean mute = false;
-
 
     private static List<Entity> entities;
     private static Sound stageSound = new Sound(GameSounds.STAGE_1, true);
@@ -41,33 +43,59 @@ public class GameLoop {
     }
 
     public static void start(final GraphicsContext gc, List<Entity> e) {
-        entities = e;
-        setStageSound(GameScene.getLevel());
-        stageSound.play();
+        if (!started) {
+            entities = e;
+            setStageSound(GameScene.getLevel());
+            stageSound.play();
 
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                if (runGame) {
-                    oldGameTime = currentGameTime;
-                    currentGameTime = (now - startNanoTime) / 1000000000.0;
-                    deltaGameTime = currentGameTime - oldGameTime;
+            timer = new AnimationTimer() {
+                @Override
+                public void handle(long now) {
+                    if (runGame) {
+                        oldGameTime = currentGameTime;
+                        currentGameTime = (now - startNanoTime) / 1000000000.0;
+                        deltaGameTime = currentGameTime - oldGameTime;
 
-                    gc.clearRect(0, 0, GameConstants.CANVAS_WIDTH, GameConstants.CANVAS_HEIGHT);
+                        gc.clearRect(0, 0, GameConstants.CANVAS_WIDTH, GameConstants.CANVAS_HEIGHT);
 
-                    update();
-                    render();
+                        render();
+                        update();
+                    }
                 }
-            }
-        };
-        timer.start();
+            };
+            started = true;
+            timer.start();
+        } else {
+            stageSound.stop();
+            entities = e;
+            setStageSound(GameScene.getLevel());
+            stageSound.play();
+        }
+    }
+
+    public static void clear() {
+        entities.clear();
+        stageSound.stop();
+        GameEventHandle.clear();
     }
 
     private static void setStageSound(int level) {
-        if (level == 1) {
-            stageSound = new Sound(GameSounds.STAGE_1, true);
-        } else if (level == 2) {
-            stageSound = new Sound(GameSounds.STAGE_2, true);
+        switch (level) {
+            case 1:
+                stageSound = new Sound(GameSounds.STAGE_1, true);
+                break;
+
+            case 2:
+                stageSound = new Sound(GameSounds.STAGE_2, true);
+                break;
+
+            case 3:
+                stageSound = new Sound(GameSounds.STAGE_3, true);
+                break;
+
+            case 4:
+                stageSound = new Sound(GameSounds.STAGE_4, true);
+                break;
         }
     }
 
@@ -94,6 +122,7 @@ public class GameLoop {
                 } else if (e instanceof Player){
                     GameScene.getPlayer().setPosition(0, 0);
                     iterator.remove();
+                    stageSound.stop();
                     GameScene.gameOver();
 
                 } else {
@@ -104,6 +133,7 @@ public class GameLoop {
                 System.out.println("Removed");
 
             } else {
+
                 e.update();
             }
         }
@@ -115,12 +145,15 @@ public class GameLoop {
         }
     }
 
+
     public static void pauseGame() {
         runGame = false;
+        stageSound.pause();
     }
 
     public static void playGame() {
         runGame = true;
+        stageSound.play();
     }
 
 }

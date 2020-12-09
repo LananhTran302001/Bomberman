@@ -39,9 +39,9 @@ public class GameScene {
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
 
-    private static Player player;
+    private static Player player = new Player(new Vector2(0, 0));
     private static boolean started = false;
-    private static int level = 1;
+    private static int level = 0;
 
     private static List<Entity> entities = new ArrayList<Entity>();
     private static List<Bomb> bombList = new ArrayList<Bomb>();
@@ -50,7 +50,6 @@ public class GameScene {
     private static final Sound gameOverSound = new Sound(GameSounds.GAME_OVER);
 
     private static void initScene(int _level) {
-        clear();
         staticMap = MapLoader.getMapFromFile("src/main/resources/data/map" + level + ".txt");
 
         root = new Group();
@@ -63,42 +62,44 @@ public class GameScene {
         root.getChildren().add(gameScreen);
         graphicsContext = canvas.getGraphicsContext2D();
         Renderer.init(graphicsContext);
-        GameLoop.start(graphicsContext, entities);
 
         loadMap(staticMap);
-
+        GameLoop.start(graphicsContext, entities);
         started = true;
         GameEventHandle.attachEventHandle(scene);
-    }
-
-    public static void setUpScene(int _level) {
-        if (_level > 0 && _level < 3) {
-            level = _level;
-            initScene(level);
-        }
-        for (Entity e : entities) {
-            e.draw();
-        }
-    }
-
-    public static void startScene() {
-        level = 1;
-        setUpScene(level);
-    }
-
-    public static void setNewLevel() {
-        if (level < 2) {
-            clear();
-            setUpScene(level + 1);
-        }
     }
 
     private static void clear() {
         entities.clear();
         bombList.clear();
-        player = null;
         staticMap = null;
         gameOverSound.stop();
+        GameLoop.clear();
+    }
+
+    private static void setUpScene(int _level) {
+        if (!started) {
+            level = _level;
+            initScene(_level);
+            return;
+        }
+        clear();
+        level = _level;
+        staticMap = MapLoader.getMapFromFile("src/main/resources/data/map" + level + ".txt");
+        loadMap(staticMap);
+        GameLoop.start(graphicsContext, entities);
+    }
+
+
+
+    public static void replayGame() {
+        setUpScene(1);
+    }
+
+    public static void setNewLevel() {
+        if (level < 4) {
+            setUpScene(level + 1);
+        }
     }
 
 
@@ -152,7 +153,7 @@ public class GameScene {
     public static void addEntity(Entity entity) {
         if (!entities.contains(entity)) {
             entities.add(entity);
-            System.out.println("Add entity");
+            System.out.println("Add entity " + entity.getName());
 
             if (entity instanceof Bomb) {
                 int i = entity.getPosition().getY() / GameConstants.TILE_SIZE;
@@ -206,6 +207,7 @@ public class GameScene {
     }
 
     public static void gameOver() {
+        player.stop();
         gameOverSound.play();
     }
 
@@ -283,10 +285,13 @@ public class GameScene {
 
                     case 'P':
                         addEntity(new Grass(position));
-                        if (player == null) {
-                            player = new Player(Vector2.add(position, new Vector2(0, -10)));
+
+                        player.setPosition(position);
+                        if (!entities.contains(player))  {
                             addEntity(player);
                         }
+
+                        player.stop();
                         map[i][j] = ' ';
                         break;
                 }
