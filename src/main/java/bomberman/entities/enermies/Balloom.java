@@ -7,8 +7,6 @@ import bomberman.entities.Vector2;
 
 import bomberman.scenes.GameScene;
 
-import java.util.Random;
-
 public class Balloom extends Enemy {
 
     private Vector2 directionVector;
@@ -36,45 +34,33 @@ public class Balloom extends Enemy {
     }
 
     public void init() {
-        int randomNum = new Random().nextInt() % 2;
-        if (randomNum == 0) {
-            // init right direction
-            directionVector = new Vector2(1, 0);
+        changeDirection();
+    }
+
+    public boolean obstacleAt(Vector2 point) {
+        if (point.getX() < 0 || point.getX() >= GameConstants.NUM_OF_COLUMNS || point.getY() < 0 || point.getY() >= GameConstants.NUM_OF_ROWS) {
+            return true;
+        }
+        return GameScene.getStaticMapAt(point.getY(), point.getX()) != ' ';
+    }
+
+    private void changeDirection() {
+        directionVector = getRandomDirection();
+        if (directionVector.getX() > 0 || directionVector.getY() > 0) {
             setCurrentAnimation(BalloomAnimation.getMoveRight());
         } else {
-            // init left direction
-            directionVector = new Vector2(-1, 0);
             setCurrentAnimation(BalloomAnimation.getMoveLeft());
         }
     }
 
-    private boolean checkCollision(Vector2 p) {
-        int i = p.getY() / GameConstants.TILE_SIZE;
-        int j = p.getX() / GameConstants.TILE_SIZE;
-        if (directionVector.getX() > 0) {
-            j++;
-        }
-        return GameScene.getStaticMapAt(i, j) != ' ';
-    }
-
-
     public void move() {
         if (!killed()) {
             Vector2 newPosition = Vector2.add(position, directionVector);
-            if (!checkCollision(newPosition)) {
+            if (!checkCollision(newPosition, directionVector)) {
                 this.setPosition(newPosition);
             } else {
                 changeDirection();
             }
-        }
-    }
-
-    private void changeDirection() {
-        directionVector.multiple(-1);
-        if (directionVector.getX() > 0) {
-            currentAnimation = BalloomAnimation.getMoveRight();
-        } else {
-            currentAnimation = BalloomAnimation.getMoveLeft();
         }
     }
 

@@ -7,10 +7,10 @@ public class GameConstants {
     public static final int TILE_SIZE = 32;
 
     public static int CANVAS_WIDTH = 1000;
-    public static int CANVAS_HEIGHT = 640;
+    public static int CANVAS_HEIGHT = 500;
 
     public static int SCENE_WIDTH = 1000;
-    public static int SCENE_HEIGHT = 640;
+    public static int SCENE_HEIGHT = 500;
 
     public static int MENU_HEIGHT = 15;
 

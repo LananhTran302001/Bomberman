@@ -63,7 +63,6 @@ public abstract class Bomb extends Entity {
     }
 
     public void explode() {
-        System.out.println("exploding");
         int i = position.getY() / GameConstants.TILE_SIZE;
         int j = position.getX() / GameConstants.TILE_SIZE;
 

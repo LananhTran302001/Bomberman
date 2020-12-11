@@ -79,6 +79,11 @@ public class GameLoop {
         GameEventHandle.clear();
     }
 
+    public static void end() {
+        stageSound.stop();
+        GameEventHandle.clear();
+    }
+
     private static void setStageSound(int level) {
         switch (level) {
             case 1:
@@ -122,7 +127,7 @@ public class GameLoop {
                 } else if (e instanceof Player){
                     GameScene.getPlayer().setPosition(0, 0);
                     iterator.remove();
-                    stageSound.stop();
+                    end();
                     GameScene.gameOver();
 
                 } else {

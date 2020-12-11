@@ -1,9 +1,11 @@
 package bomberman.entities.enermies;
 import bomberman.Renderer;
+import bomberman.animation.BalloomAnimation;
 import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
 import bomberman.constants.GameSounds;
 import bomberman.entities.Sprite;
+import bomberman.entities.Vector2;
 import bomberman.entities.bomb.Bomb;
 import bomberman.gui.Sound;
 import bomberman.scenes.GameScene;
@@ -11,6 +13,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 
 import java.util.Date;
+import java.util.Random;
 
 public abstract class Enemy extends Sprite {
 
@@ -60,6 +63,24 @@ public abstract class Enemy extends Sprite {
         return collideWith(GameScene.getPlayer());
     }
 
+    protected Vector2 getRandomDirection() {
+        int[] dirX = new int[] {0, 0, -1, 1};
+        int[] dirY = new int[] {-1, 1, 0, 0};
+        int choice = Math.abs(new Random().nextInt() % 4);
+        return new Vector2(dirX[choice], dirY[choice]);
+    }
+
+    public boolean checkCollision(Vector2 p, Vector2 direction) {
+        Vector2 posInMap = Vector2.getPositionInMap(p);
+        if (direction.getX() > 0) {
+            posInMap.add(new Vector2(1, 0));
+        }
+        if (direction.getY() > 0) {
+            posInMap.add(new Vector2(0, 1));
+        }
+        return obstacleAt(posInMap);
+    }
+
     // check killed => move
     // check dead => remove
     // called by subclass move method
@@ -99,5 +120,6 @@ public abstract class Enemy extends Sprite {
     public void move(int step, Direction direction) {
     }
 
+    public abstract boolean obstacleAt(Vector2 point);
     public abstract void move();
 }

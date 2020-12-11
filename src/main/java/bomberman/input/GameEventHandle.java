@@ -41,7 +41,6 @@ class KeyPressHandle implements EventHandler<KeyEvent> {
         KeyCode c = event.getCode();
         if (!GameEventHandle.inputKeys.contains(c)) {
             GameEventHandle.inputKeys.add(c);
-            System.out.println("Pressing " + c);
         }
     }
 }
@@ -52,7 +51,6 @@ class KeyReleaseHandle implements EventHandler<KeyEvent> {
         KeyCode c = event.getCode();
         if (GameEventHandle.inputKeys.contains(c)) {
             GameEventHandle.inputKeys.remove(c);
-            System.out.println("Release " + c);
         }
     }
 

@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 
 public class Flame extends Entity {
 
+    private static boolean killable = true;
     private Image[] animation;
 
     public Flame(Image[] flameAnimation, Vector2 position) {
@@ -47,11 +48,17 @@ public class Flame extends Entity {
     }
 
     public void checkPlayerCollision() {
-        if (!isPlayerCollideFriendly()) {
-            this.setBound(new Rectangle2D(position.getX() + 2, position.getY() + 2, size.getX() - 4, size.getY() - 4));
-            if (collideWith(GameScene.getPlayer())) {
-                GameScene.getPlayer().shock();
+        if (killable) {
+            if (!isPlayerCollideFriendly()) {
+                this.setBound(new Rectangle2D(position.getX() + 2, position.getY() + 2, size.getX() - 4, size.getY() - 4));
+                if (collideWith(GameScene.getPlayer())) {
+                    GameScene.getPlayer().shock();
+                }
             }
         }
+    }
+
+    public static void setKillable(boolean b) {
+        killable = b;
     }
 }

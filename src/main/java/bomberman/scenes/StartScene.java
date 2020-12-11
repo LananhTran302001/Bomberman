@@ -29,7 +29,8 @@ public class StartScene {
     private Scene scene;
     private Group root;
     private Label gameName = new Label(GameConstants.GAME_NAME);
-    private Label level;
+    private Label level = new Label();
+    private Label loadText = new Label();
     private VBox background = new VBox(50);
     private Button playButton = new Button("Play");
     private Button exitButton = new Button("Exit");
@@ -40,6 +41,9 @@ public class StartScene {
     }
 
     public StartScene() {
+
+        GameLoop.end();
+
         root = new Group();
         scene = new Scene(root, GameConstants.SCENE_WIDTH, GameConstants.SCENE_HEIGHT);
         root.getChildren().addAll(background);
@@ -61,6 +65,7 @@ public class StartScene {
                     GameScene.setNewLevel();
                     GameLoop.playGame();
                     stage.setScene(GameScene.getScene());
+                    loadText.setText("loading..");
                     loading = true;
                 }
             }
@@ -80,11 +85,15 @@ public class StartScene {
         gameName.setPrefSize(200, 30);
         gameName.setAlignment(Pos.CENTER);
 
-        level = new Label("LEVEL " + (GameScene.getLevel() + 1));
+        level.setText("LEVEL " + (GameScene.getLevel() + 1));
         level.setTextFill(Color.WHITE);
         level.setFont(Font.font(20));
         level.setAlignment(Pos.TOP_CENTER);
-        background.getChildren().addAll(gameName, level, buttons);
+
+        loadText.setTextFill(Color.WHITE);
+        loadText.setFont(Font.font(16));
+        loadText.setAlignment(Pos.TOP_CENTER);
+        background.getChildren().addAll(gameName, level, buttons, loadText);
 
         Sound.stopAll();
         levelStartSound.play();

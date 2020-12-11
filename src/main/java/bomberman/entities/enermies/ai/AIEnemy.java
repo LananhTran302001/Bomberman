@@ -19,16 +19,6 @@ public abstract class AIEnemy extends Enemy {
         setRightAnimation();
     }
 
-    private boolean checkCollision(Vector2 p, Vector2 direction) {
-        Vector2 posInMap = Vector2.getPositionInMap(p);
-        if (direction.getX() > 0) {
-            posInMap.add(new Vector2(1, 0));
-        }
-        if (direction.getY() > 0) {
-            posInMap.add(new Vector2(0, 1));
-        }
-        return ai.obstacleAt(posInMap);
-    }
 
     private void setAnimation(Vector2 directionVector) {
         if (directionVector.getY() < 0) {

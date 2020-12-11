@@ -17,7 +17,8 @@ public class GameImages {
     public static final String ITEM_HEART_IMG = "/image/item/item-heart.png";
     public static final String ITEM_FIRE_UP_IMG = "/image/item/item-fireUp.png";
     public static final String ITEM_BLOCK_PASS_IMG = "/image/item/item-blockPass.png";
-    public static final String ITEM_SPEED_UP = "/image/item/item-speedUp.png";
+    public static final String ITEM_SPEED_UP_IMG = "/image/item/item-speedUp.png";
+    public static final String ITEM_FIRE_SUIT_IMG = "/image/item/item-fireSuit.png";
     public static final String ITEM_BOMB_REMOTE = "/image/item/item-remote.png";
 
 }

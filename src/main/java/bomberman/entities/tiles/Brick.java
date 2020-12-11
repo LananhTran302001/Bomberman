@@ -23,7 +23,7 @@ public class Brick extends Entity implements Breakable {
     private boolean intact = true;
     private Date brokenTime;
 
-    private Sound breakSound = new Sound(GameSounds.BREAK);
+    private final Sound breakSound = new Sound(GameSounds.BREAK);
 
     public Brick(int x, int y) {
         super(x, y);

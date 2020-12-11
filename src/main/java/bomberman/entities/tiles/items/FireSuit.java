@@ -1,35 +1,36 @@
 package bomberman.entities.tiles.items;
 
-import bomberman.constants.GameConstants;
 import bomberman.constants.GameImages;
 import bomberman.entities.Vector2;
+import bomberman.entities.bomb.Flame;
 
-public class SpeedUp extends Item {
+public class FireSuit extends Item {
 
-    public SpeedUp() {
+    public FireSuit()  {
         super();
         init();
     }
 
-    public SpeedUp(Vector2 position) {
+    public FireSuit(Vector2 position) {
         super();
         setPosition(position);
         init();
     }
 
     public String getName() {
-        return "Item Speed up";
+        return "Item Fire-suit";
     }
 
     public void init() {
-        setImage(GameImages.ITEM_SPEED_UP_IMG);
+        setImage(GameImages.ITEM_FIRE_SUIT_IMG);
     }
 
     void doPower() {
-        GameConstants.STEP_LENGTH = 5;
+        Flame.setKillable(false);
     }
 
     void stopPower() {
-        GameConstants.STEP_LENGTH = 2;
+        Flame.setKillable(true);
     }
+
 }

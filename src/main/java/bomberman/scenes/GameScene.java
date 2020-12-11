@@ -153,7 +153,6 @@ public class GameScene {
     public static void addEntity(Entity entity) {
         if (!entities.contains(entity)) {
             entities.add(entity);
-            System.out.println("Add entity " + entity.getName());
 
             if (entity instanceof Bomb) {
                 int i = entity.getPosition().getY() / GameConstants.TILE_SIZE;
@@ -191,10 +190,8 @@ public class GameScene {
         } else if (e instanceof Bomb) {
             staticMap[i][j] = ' ';
             bombList.remove(e);
-            System.out.println("Removed bomb from bombList");
         }
 
-        System.out.println("Removed " + e.getName() + " from map");
     }
 
     public static boolean killedAllEnemies() {
@@ -283,12 +280,19 @@ public class GameScene {
                         map[i][j] = ' ';
                         break;
 
+                    case '5':
+                        addEntity(new Grass(position));
+                        addEntity(new FireSuit(position));
+                        map[i][j] = ' ';
+                        break;
+
                     case 'P':
                         addEntity(new Grass(position));
 
                         player.setPosition(position);
                         if (!entities.contains(player))  {
                             addEntity(player);
+                            player.init();
                         }
 
                         player.stop();
