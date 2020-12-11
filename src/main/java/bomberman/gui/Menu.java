@@ -54,7 +54,7 @@ public class Menu {
         });
         soundButton.setFocusTraversable(false);
 
-        menuBar.getChildren().addAll(new Label("BOMBERMAN"), playButton, pauseButton, soundButton);
+        menuBar.getChildren().addAll(new Label("\tBOMBERMAN"), playButton, pauseButton, soundButton);
         menuBar.setPrefHeight(GameConstants.MENU_HEIGHT + 5);
     }
 

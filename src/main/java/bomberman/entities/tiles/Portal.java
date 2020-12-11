@@ -7,12 +7,15 @@ import bomberman.constants.GameImages;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import bomberman.gui.Sound;
+import bomberman.input.GameEventHandle;
 import bomberman.scenes.GameScene;
 import bomberman.scenes.StartScene;
 import javafx.geometry.Rectangle2D;
 
 
 public class Portal extends Entity {
+
+    private boolean loading = false;
 
     public Portal() {
         super();
@@ -39,9 +42,10 @@ public class Portal extends Entity {
     }
 
     public void update() {
-        if (collideWith(GameScene.getPlayer()) && GameScene.killedAllEnemies()) {
-            GameLoop.pauseGame();
+        if (collideWith(GameScene.getPlayer()) && GameScene.killedAllEnemies() && !loading) {
+            GameEventHandle.clear();
             new StartScene().show();
+            loading = true;
         }
     }
 

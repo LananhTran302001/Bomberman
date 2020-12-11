@@ -47,6 +47,13 @@ public class Vector2 {
         this.y = y;
     }
 
+    /**
+     * return x * x + y * y
+     */
+    public int getPowLength() {
+        return x * x + y * y;
+    }
+
     public boolean equals(Vector2 other) {
         return (this.x == other.getX()) && (this.y == other.getY());
     }

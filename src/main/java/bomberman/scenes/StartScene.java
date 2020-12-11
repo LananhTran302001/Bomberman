@@ -30,7 +30,6 @@ public class StartScene {
     private Group root;
     private Label gameName = new Label(GameConstants.GAME_NAME);
     private Label level = new Label();
-    private Label loadText = new Label();
     private VBox background = new VBox(50);
     private Button playButton = new Button("Play");
     private Button exitButton = new Button("Exit");
@@ -41,9 +40,6 @@ public class StartScene {
     }
 
     public StartScene() {
-
-        GameLoop.end();
-
         root = new Group();
         scene = new Scene(root, GameConstants.SCENE_WIDTH, GameConstants.SCENE_HEIGHT);
         root.getChildren().addAll(background);
@@ -53,7 +49,7 @@ public class StartScene {
         background.setStyle("-fx-background-color: #111111");
         background.setAlignment(Pos.CENTER);
 
-        HBox buttons = new HBox(50);
+        HBox buttons = new HBox(30);
         buttons.setAlignment(Pos.BOTTOM_CENTER);
         buttons.getChildren().addAll(playButton, exitButton);
 
@@ -63,9 +59,7 @@ public class StartScene {
                 if (!loading) {
                     levelStartSound.stop();
                     GameScene.setNewLevel();
-                    GameLoop.playGame();
                     stage.setScene(GameScene.getScene());
-                    loadText.setText("loading..");
                     loading = true;
                 }
             }
@@ -90,10 +84,7 @@ public class StartScene {
         level.setFont(Font.font(20));
         level.setAlignment(Pos.TOP_CENTER);
 
-        loadText.setTextFill(Color.WHITE);
-        loadText.setFont(Font.font(16));
-        loadText.setAlignment(Pos.TOP_CENTER);
-        background.getChildren().addAll(gameName, level, buttons, loadText);
+        background.getChildren().addAll(gameName, level, buttons);
 
         Sound.stopAll();
         levelStartSound.play();

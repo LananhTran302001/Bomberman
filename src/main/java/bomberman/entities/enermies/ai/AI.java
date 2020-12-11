@@ -84,7 +84,11 @@ public class AI {
 
             if (shortestPath > temp) {
                 shortestPath = temp;
-                dir = new Vector2(shiftX[i], shiftY[i]);
+                if (temp < viewRadius) {
+                    dir = new Vector2(2 * shiftX[i], 2 * shiftY[i]);
+                } else {
+                    dir = new Vector2(shiftX[i], shiftY[i]);
+                }
             }
         }
         return dir;

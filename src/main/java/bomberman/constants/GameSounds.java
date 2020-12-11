@@ -15,7 +15,7 @@ public class GameSounds {
 
     public static final String PLAYER_SHOCK = new File("src/main/resources/sound/sick_1.mp3").toURI().toString();
     public static final String PLAYER_DEAD = new File("src/main/resources/sound/bomber_death.mp3").toURI().toString();
-    public static final String PLAYER_STEP = new File("src/main/resources/sound/step_03.mp3").toURI().toString();
+    public static final String PLAYER_STEP = new File("src/main/resources/sound/step_02.mp3").toURI().toString();
 
     public static final String ENEMY_DEAD = new File("src/main/resources/sound/bomber_punch.mp3").toURI().toString();
 

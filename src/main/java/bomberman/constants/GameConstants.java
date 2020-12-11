@@ -30,7 +30,7 @@ public class GameConstants {
     public static int PLAYER_LAYER = 5;
     public static int MESSAGE_LAYER = 6;
 
-    public static int AI_VIEW_RADIUS = 5;
+    public static int AI_VIEW_RADIUS = 6;
 
     public static int PLAYER_LAG_TIME = 2000; // = 1s
     public static int ITEM_POWER_TIME = 10000; // = 10s

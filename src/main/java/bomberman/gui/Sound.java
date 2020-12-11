@@ -1,5 +1,6 @@
 package bomberman.gui;
 
+import bomberman.GameLoop;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
@@ -50,6 +51,7 @@ public class Sound {
 
     public static void turnOnSound() {
         mute = false;
+        GameLoop.getStageSound().play();
     }
 
     public static void turnOffSound() {

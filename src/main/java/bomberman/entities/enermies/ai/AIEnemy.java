@@ -32,13 +32,28 @@ public abstract class AIEnemy extends Enemy {
         }
     }
 
+    protected boolean checkCollision(Vector2 _p, Vector2 _dir) {
+        Vector2 posInMap = Vector2.getPositionInMap(_p);
+        if (_dir.getX() > 0) {
+            posInMap.add(new Vector2(1, 0));
+        }
+        if (_dir.getY() > 0) {
+            posInMap.add(new Vector2(0, 1));
+        }
+        return ai.obstacleAt(posInMap);
+    }
+
     public void move() {
         if (!killed()) {
             if (steps <= 0) {
                 if (getPosition().getX() % GameConstants.TILE_SIZE == 0
                         && getPosition().getY() % GameConstants.TILE_SIZE == 0) {
                     directionVector = ai.followPlayer();
-                    steps = NUM_OF_STEPS;
+                    if (directionVector.getPowLength() == 4) {
+                        steps = NUM_OF_STEPS / 2;
+                    } else {
+                        steps = NUM_OF_STEPS;
+                    }
 
                 } else {
                     int roundX = Math.round(getPosition().getX() / (float)GameConstants.TILE_SIZE) * GameConstants.TILE_SIZE;
@@ -47,12 +62,11 @@ public abstract class AIEnemy extends Enemy {
                 }
             }
 
-            Vector2 newPosition = Vector2.add(this.position, this.directionVector);
+            Vector2 newPosition = Vector2.add(this.position, directionVector);
             if (!checkCollision(newPosition, directionVector)) {
                 steps--;
                 setAnimation(directionVector);
                 this.setPosition(newPosition);
-
             } else {
                 steps = 0;
             }

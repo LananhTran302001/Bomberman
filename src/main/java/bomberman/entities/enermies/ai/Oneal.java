@@ -32,6 +32,7 @@ public class Oneal extends AIEnemy {
         return GameScene.getStaticMapAt(point.getY(), point.getX()) != ' ';
     }
 
+
     public void setKilledAnimation() {
         setCurrentAnimation(OnealAnimation.getDead());
     }

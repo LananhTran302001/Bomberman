@@ -26,7 +26,7 @@ public class SpeedUp extends Item {
     }
 
     void doPower() {
-        GameConstants.STEP_LENGTH = 5;
+        GameConstants.STEP_LENGTH = 4;
     }
 
     void stopPower() {

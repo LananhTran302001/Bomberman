@@ -1,6 +1,5 @@
 package bomberman.entities.enermies;
 import bomberman.Renderer;
-import bomberman.animation.BalloomAnimation;
 import bomberman.constants.Direction;
 import bomberman.constants.GameConstants;
 import bomberman.constants.GameSounds;
@@ -70,15 +69,34 @@ public abstract class Enemy extends Sprite {
         return new Vector2(dirX[choice], dirY[choice]);
     }
 
-    public boolean checkCollision(Vector2 p, Vector2 direction) {
-        Vector2 posInMap = Vector2.getPositionInMap(p);
-        if (direction.getX() > 0) {
-            posInMap.add(new Vector2(1, 0));
+
+    protected boolean checkCollision(Vector2 _p, Vector2 _dir) {
+        if (_p == null || _dir == null) {
+            return true;
         }
-        if (direction.getY() > 0) {
-            posInMap.add(new Vector2(0, 1));
+
+        if (_dir.getX() < 0) {
+            // Go Left
+            return obstacleAt(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(1, 1))))
+                    || obstacleAt(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(1, 31))));
+
+
+        } else if (_dir.getX() > 0) {
+            // Go Right
+            return obstacleAt(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(1, 0))))
+                    || obstacleAt(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(31, 31))));
+
+        } else if (_dir.getY() < 0) {
+            // Go Up
+            return obstacleAt(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(31, 1))))
+                    || obstacleAt(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(1, 1))));
+
+        } else {
+            // Go Down
+            return obstacleAt(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(1, 31))))
+                    || obstacleAt(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(31, 31))));
         }
-        return obstacleAt(posInMap);
+
     }
 
     // check killed => move

@@ -4,9 +4,12 @@ import bomberman.constants.GameConstants;
 import bomberman.constants.GameSounds;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
+import bomberman.entities.bomb.BlackBomb;
+import bomberman.entities.bomb.Flame;
 import bomberman.entities.enermies.Enemy;
 import bomberman.entities.enermies.Message;
 import bomberman.entities.player.Player;
+import bomberman.entities.tiles.Brick;
 import bomberman.gui.Sound;
 import bomberman.input.GameEventHandle;
 import bomberman.input.InputManager;
@@ -42,11 +45,15 @@ public class GameLoop {
         return deltaGameTime;
     }
 
+    public static Sound getStageSound() {
+        return stageSound;
+    }
+
     public static void start(final GraphicsContext gc, List<Entity> e) {
         if (!started) {
             entities = e;
             setStageSound(GameScene.getLevel());
-            stageSound.play();
+            playGame();
 
             timer = new AnimationTimer() {
                 @Override
@@ -77,11 +84,20 @@ public class GameLoop {
         entities.clear();
         stageSound.stop();
         GameEventHandle.clear();
+
+        Brick.setPlayerCollideFriendly(false);
+        Player.setCanWalkOnBrick(false);
+
+        Flame.setKillable(true);
+
+        BlackBomb.setFlameRange(1);
+
+        GameConstants.STEP_LENGTH = 2;
     }
 
     public static void end() {
-        stageSound.stop();
         GameEventHandle.clear();
+        stageSound.stop();
     }
 
     private static void setStageSound(int level) {
@@ -135,7 +151,6 @@ public class GameLoop {
                     iterator.remove();
                 }
 
-                System.out.println("Removed");
 
             } else {
 

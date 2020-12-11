@@ -8,9 +8,11 @@ import bomberman.constants.GameConstants;
 import bomberman.constants.GameSounds;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
+import bomberman.entities.bomb.BlackBomb;
 import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Balloom;
 import bomberman.entities.enermies.Enemy;
+import bomberman.entities.enermies.Kondoria;
 import bomberman.entities.enermies.ai.Oneal;
 import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Brick;
@@ -97,7 +99,7 @@ public class GameScene {
     }
 
     public static void setNewLevel() {
-        if (level < 4) {
+        if (level < 5) {
             setUpScene(level + 1);
         }
     }
@@ -246,6 +248,12 @@ public class GameScene {
                     case 'O':
                         addEntity(new Grass(position));
                         addEntity(new Oneal(position));
+                        map[i][j] = ' ';
+                        break;
+
+                    case 'K' :
+                        addEntity(new Grass(position));
+                        addEntity(new Kondoria(position));
                         map[i][j] = ' ';
                         break;
 

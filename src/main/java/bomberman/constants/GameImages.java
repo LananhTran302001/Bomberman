@@ -11,6 +11,8 @@ public class GameImages {
     public static final String PLAYER_IMG = "/image/player/player";
     public static final String BALLOOM_IMG = "/image/balloom/balloom";
     public static final String ONEAL_IMG = "/image/oneal/oneal";
+    public static final String KONDORIA_IMG = "/image/kondoria/kondoria";
+
     public static final String FLAME_IMG = "/image/bomb/explosion";
     public static final String EXPLOSION_BRICK_IMG = "/image/texture/explosion_brick_";
 
