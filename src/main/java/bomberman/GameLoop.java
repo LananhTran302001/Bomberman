@@ -10,6 +10,7 @@ import bomberman.entities.enermies.Enemy;
 import bomberman.entities.enermies.Message;
 import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Brick;
+import bomberman.gui.InfoPresent;
 import bomberman.gui.Sound;
 import bomberman.input.GameEventHandle;
 import bomberman.input.InputManager;
@@ -31,6 +32,7 @@ public class GameLoop {
     private static boolean runGame = true;
     private static boolean mute = false;
 
+    private static InfoPresent infoPresent;
     private static List<Entity> entities;
     private static Sound stageSound = new Sound(GameSounds.STAGE_1, true);
 
@@ -53,6 +55,7 @@ public class GameLoop {
         if (!started) {
             entities = e;
             setStageSound(GameScene.getLevel());
+            infoPresent = GameScene.getInfoPresent();
             playGame();
 
             timer = new AnimationTimer() {
@@ -138,6 +141,7 @@ public class GameLoop {
                     Vector2 p = e.getPosition();
                     p.add(new Vector2(GameConstants.TILE_SIZE / 2, GameConstants.TILE_SIZE / 2));
                     int point = ((Enemy) e).getEValue();
+                    infoPresent.addPoints(point);
                     GameScene.replace(e, new Message(p, "+" + point));
 
                 } else if (e instanceof Player){
@@ -157,6 +161,8 @@ public class GameLoop {
                 e.update();
             }
         }
+
+        infoPresent.update();
     }
 
     public static void render() {

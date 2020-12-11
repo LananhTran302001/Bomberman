@@ -34,8 +34,10 @@ public class InputManager {
 
                 if (keyboardInput.contains(KeyCode.SPACE)) {
                     Vector2 bombPosition = Vector2.getPositionInMap(player.getPosition(), player.getSize());
-                    bombPosition.multiple(GameConstants.TILE_SIZE);
-                    GameScene.addEntity(new BlackBomb(bombPosition));
+                    if (GameScene.getStaticMapAt(bombPosition.getY(), bombPosition.getX()) != 'B') {
+                        bombPosition.multiple(GameConstants.TILE_SIZE);
+                        GameScene.addEntity(new BlackBomb(bombPosition));
+                    }
                 }
                 if (keyboardInput.size() < 1) {
                     player.stop();

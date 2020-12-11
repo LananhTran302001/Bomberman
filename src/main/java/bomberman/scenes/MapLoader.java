@@ -28,7 +28,7 @@ public class MapLoader {
 
             GameConstants.CANVAS_WIDTH = GameConstants.NUM_OF_COLUMNS * GameConstants.TILE_SIZE;
             GameConstants.CANVAS_HEIGHT = GameConstants.NUM_OF_ROWS * GameConstants.TILE_SIZE;
-            GameConstants.SCENE_WIDTH = GameConstants.CANVAS_WIDTH;
+            GameConstants.SCENE_WIDTH = GameConstants.CANVAS_WIDTH + GameConstants.INFO_PRESENT_WIDTH;
             GameConstants.SCENE_HEIGHT = GameConstants.CANVAS_HEIGHT + GameConstants.MENU_HEIGHT + 7;
 
             System.out.println(GameConstants.NUM_OF_ROWS + " and " + GameConstants.NUM_OF_COLUMNS);/////////

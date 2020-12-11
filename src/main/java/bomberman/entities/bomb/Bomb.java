@@ -152,16 +152,17 @@ public abstract class Bomb extends Entity {
     }
 
     public boolean tileInBombRange(Vector2 realPosition) {
-
         Vector2 bPos = Vector2.getPositionInMap(getPosition());
         Vector2 ePos = Vector2.getPositionInMap(realPosition);
         if (ePos.getX() == bPos.getX() || ePos.getY() == bPos.getY()) {
-            for (Flame f : bombFlame) {
-                Vector2 fPos = Vector2.getPositionInMap(f.getPosition());
-                int disX = Math.abs(fPos.getX() - ePos.getX());
-                int disY = Math.abs(fPos.getY() - ePos.getY());
-                if (disX + disY <= 1) {
-                    return true;
+            if (Math.abs(ePos.getX() - bPos.getX()) + Math.abs(ePos.getY() - bPos.getY()) <= range) {
+                for (Flame f : bombFlame) {
+                    Vector2 fPos = Vector2.getPositionInMap(f.getPosition());
+                    int disX = Math.abs(fPos.getX() - ePos.getX());
+                    int disY = Math.abs(fPos.getY() - ePos.getY());
+                    if (disX + disY <= 1) {
+                        return true;
+                    }
                 }
             }
         }

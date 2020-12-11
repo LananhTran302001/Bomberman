@@ -1,5 +1,6 @@
 package bomberman.entities.tiles.items;
 
+import bomberman.GameLoop;
 import bomberman.Renderer;
 import bomberman.constants.GameConstants;
 import bomberman.constants.GameSounds;
@@ -41,10 +42,10 @@ public abstract class Item extends Entity {
             int i = getPosition().getY() / GameConstants.TILE_SIZE;
             int j = getPosition().getX() / GameConstants.TILE_SIZE;
             if ((GameScene.getStaticMapAt(i, j) == ' ') && collideWith(GameScene.getPlayer())) {
-                System.out.println("Item collected!");
                 startPowerTime = new Date();
                 pickedSound.play();
                 doPower();
+                GameScene.getInfoPresent().addNewItem(this);
                 return false;
             }
             return true;
@@ -60,6 +61,13 @@ public abstract class Item extends Entity {
             }
         }
         return false;
+    }
+
+    /**
+     * getTimePassed (ms).
+     */
+    public int getTimePassed() {
+        return (int)(new Date().getTime() - startPowerTime.getTime());
     }
 
     @Override

@@ -131,6 +131,10 @@ public class Player extends Sprite {
         }
     }
 
+    public int getLives() {
+        return lives;
+    }
+
     public boolean isPlayerCollideFriendly() {
         return true;
     }

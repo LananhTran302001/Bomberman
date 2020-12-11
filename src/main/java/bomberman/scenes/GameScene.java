@@ -8,7 +8,6 @@ import bomberman.constants.GameConstants;
 import bomberman.constants.GameSounds;
 import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
-import bomberman.entities.bomb.BlackBomb;
 import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Balloom;
 import bomberman.entities.enermies.Enemy;
@@ -21,6 +20,7 @@ import bomberman.entities.tiles.Portal;
 import bomberman.entities.tiles.Wall;
 import bomberman.entities.tiles.items.*;
 
+import bomberman.gui.InfoPresent;
 import bomberman.gui.Menu;
 import bomberman.gui.Sound;
 import bomberman.input.GameEventHandle;
@@ -40,6 +40,7 @@ public class GameScene {
     private static BorderPane gameScreen;
     private static Canvas canvas;
     private static GraphicsContext graphicsContext;
+    private static InfoPresent infoPresent;
 
     private static Player player = new Player(new Vector2(0, 0));
     private static boolean started = false;
@@ -57,9 +58,12 @@ public class GameScene {
         root = new Group();
         scene = new Scene(root, GameConstants.SCENE_WIDTH, GameConstants.SCENE_HEIGHT);
         canvas = new Canvas(GameConstants.CANVAS_WIDTH, GameConstants.CANVAS_HEIGHT);
+        infoPresent = new InfoPresent();
+
         gameScreen = new BorderPane();
         gameScreen.setTop(new Menu().getMenuBar());
         gameScreen.setCenter(canvas);
+        gameScreen.setRight(infoPresent.getView());
 
         root.getChildren().add(gameScreen);
         graphicsContext = canvas.getGraphicsContext2D();
@@ -89,6 +93,7 @@ public class GameScene {
         level = _level;
         staticMap = MapLoader.getMapFromFile("src/main/resources/data/map" + level + ".txt");
         loadMap(staticMap);
+        infoPresent.setLevel(level);
         GameLoop.start(graphicsContext, entities);
     }
 
@@ -138,6 +143,10 @@ public class GameScene {
 
     public static int getLevel() {
         return level;
+    }
+
+    public static InfoPresent getInfoPresent() {
+        return infoPresent;
     }
 
     /**

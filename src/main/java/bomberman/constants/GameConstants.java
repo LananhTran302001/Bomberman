@@ -9,10 +9,11 @@ public class GameConstants {
     public static int CANVAS_WIDTH = 1000;
     public static int CANVAS_HEIGHT = 500;
 
-    public static int SCENE_WIDTH = 1000;
+    public static int SCENE_WIDTH = 1200;
     public static int SCENE_HEIGHT = 500;
 
     public static int MENU_HEIGHT = 15;
+    public static int INFO_PRESENT_WIDTH = 200;
 
     public static final String GAME_NAME = "Bomberman";
 
