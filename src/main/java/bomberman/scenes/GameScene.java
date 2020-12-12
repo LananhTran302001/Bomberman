@@ -12,6 +12,7 @@ import bomberman.entities.bomb.Bomb;
 import bomberman.entities.enermies.Balloom;
 import bomberman.entities.enermies.Enemy;
 import bomberman.entities.enermies.Kondoria;
+import bomberman.entities.enermies.ai.Minvo;
 import bomberman.entities.enermies.ai.Oneal;
 import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Brick;
@@ -50,8 +51,6 @@ public class GameScene {
     private static List<Bomb> bombList = new ArrayList<Bomb>();
     private static char[][] staticMap;
 
-    private static final Sound gameOverSound = new Sound(GameSounds.GAME_OVER);
-
     private static void initScene(int _level) {
         staticMap = MapLoader.getMapFromFile("src/main/resources/data/map" + level + ".txt");
 
@@ -79,7 +78,6 @@ public class GameScene {
         entities.clear();
         bombList.clear();
         staticMap = null;
-        gameOverSound.stop();
         GameLoop.clear();
     }
 
@@ -100,6 +98,7 @@ public class GameScene {
 
 
     public static void replayGame() {
+        infoPresent.reset();
         setUpScene(1);
     }
 
@@ -216,7 +215,6 @@ public class GameScene {
 
     public static void gameOver() {
         player.stop();
-        gameOverSound.play();
     }
 
 
@@ -263,6 +261,12 @@ public class GameScene {
                     case 'K' :
                         addEntity(new Grass(position));
                         addEntity(new Kondoria(position));
+                        map[i][j] = ' ';
+                        break;
+
+                    case 'V':
+                        addEntity(new Grass(position));
+                        addEntity(new Minvo(position));
                         map[i][j] = ' ';
                         break;
 

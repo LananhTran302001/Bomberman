@@ -41,7 +41,7 @@ public class GameConstants {
 
     public static int MESSAGE_TIME = 1500; // 5s before disappear, after enemy removed
 
-    public static int ENEMY_DEAD_TIME = 1500;
+    public static int ENEMY_DEAD_TIME = 1200;
     public static int PLAYER_DEAD_TIME = 1500;
 
 }

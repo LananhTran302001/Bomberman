@@ -13,19 +13,26 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-public class VictoryScene extends StaticScene {
+public class GameOverScene extends StaticScene {
 
-    private Label winText = new Label();
+    private Label gameOverText = new Label();
+    private Label pointText = new Label();
     private Button playAgainBtn = new Button("Play again");
     private Button exitButton = new Button("Exit");
     private boolean loading = false;
-    private final Sound victorySound = new Sound(GameSounds.VICTORY);
+    private final Sound loseSound = new Sound(GameSounds.GAME_OVER);
 
-    public VictoryScene() {
-        winText.setText("YOU WIN!");
-        winText.setTextFill(Color.WHITE);
-        winText.setFont(Font.font(20));
-        winText.setAlignment(Pos.TOP_CENTER);
+    public GameOverScene() {
+        gameOverText.setText("YOU LOSE!");
+        gameOverText.setTextFill(Color.WHITE);
+        gameOverText.setFont(Font.font(20));
+        gameOverText.setAlignment(Pos.TOP_CENTER);
+
+
+        pointText.setText("SCORES: " + GameLoop.getPoint());
+        pointText.setTextFill(Color.WHITE);
+        pointText.setFont(Font.font(16));
+        pointText.setAlignment(Pos.TOP_CENTER);
 
         HBox buttons = new HBox(30);
         buttons.setAlignment(Pos.BOTTOM_CENTER);
@@ -35,7 +42,7 @@ public class VictoryScene extends StaticScene {
         playAgainBtn.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
                 if (!loading) {
-                    victorySound.stop();
+                    loseSound.stop();
                     GameScene.replayGame();
                     stage.setScene(GameScene.getScene());
                     loading = true;
@@ -46,16 +53,16 @@ public class VictoryScene extends StaticScene {
 
         exitButton.setOnMousePressed(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
-                victorySound.stop();
+                loseSound.stop();
                 stage.close();
             }
         });
         exitButton.setCursor(Cursor.HAND);
 
-        background.getChildren().addAll(winText, buttons);
+        background.getChildren().addAll(gameOverText, pointText, buttons);
 
         Sound.stopAll();
-        victorySound.play();
-    }
+        loseSound.play();
 
+    }
 }

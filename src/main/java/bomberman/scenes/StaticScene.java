@@ -6,20 +6,16 @@ import bomberman.gui.Sound;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public abstract class StaticScene {
 
-    private static Stage stage;
+    static Stage stage;
 
     private Scene scene;
     private Group root;
 
-    Label gameName = new Label(GameConstants.GAME_NAME);
     VBox background = new VBox(50);
 
     public StaticScene() {
@@ -42,9 +38,12 @@ public abstract class StaticScene {
         stage.setScene(scene);
     }
 
+    public Scene getScene() {
+        return scene;
+    }
+
     public VBox getContainer() {
         return background;
     }
 
-    public abstract void addElements();
 }

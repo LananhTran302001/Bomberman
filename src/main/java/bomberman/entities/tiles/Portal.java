@@ -10,6 +10,7 @@ import bomberman.gui.Sound;
 import bomberman.input.GameEventHandle;
 import bomberman.scenes.GameScene;
 import bomberman.scenes.StartScene;
+import bomberman.scenes.VictoryScene;
 import javafx.geometry.Rectangle2D;
 
 
@@ -44,7 +45,11 @@ public class Portal extends Entity {
     public void update() {
         if (collideWith(GameScene.getPlayer()) && GameScene.killedAllEnemies() && !loading) {
             GameEventHandle.clear();
-            new StartScene().show();
+            if (GameScene.getLevel() >= 5) {
+                new VictoryScene().show();
+            } else {
+                new StartScene().show();
+            }
             loading = true;
         }
     }

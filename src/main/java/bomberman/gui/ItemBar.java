@@ -46,4 +46,9 @@ public class ItemBar {
             }
         }
     }
+
+    public void reset() {
+        bar.setProgress(0);
+        startTime = null;
+    }
 }

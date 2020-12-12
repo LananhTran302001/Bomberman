@@ -1,6 +1,5 @@
 package bomberman.scenes;
 
-import bomberman.GameLoop;
 import bomberman.constants.GameConstants;
 import bomberman.constants.GameSounds;
 
@@ -9,46 +8,25 @@ import bomberman.gui.Sound;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Group;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 
-public class StartScene {
-
-    private static Stage stage;
+public class StartScene extends StaticScene{
 
     private boolean loading = false;
-    private Scene scene;
-    private Group root;
     private Label gameName = new Label(GameConstants.GAME_NAME);
     private Label level = new Label();
-    private VBox background = new VBox(50);
     private Button playButton = new Button("Play");
     private Button exitButton = new Button("Exit");
     private final Sound levelStartSound = new Sound(GameSounds.LEVEL_START);
 
-    public static void setStage(Stage s) {
-        stage = s;
-    }
-
     public StartScene() {
-        root = new Group();
-        scene = new Scene(root, GameConstants.SCENE_WIDTH, GameConstants.SCENE_HEIGHT);
-        root.getChildren().addAll(background);
-
-        background.setPrefWidth(GameConstants.SCENE_WIDTH);
-        background.setPrefHeight(GameConstants.SCENE_HEIGHT);
-        background.setStyle("-fx-background-color: #111111");
-        background.setAlignment(Pos.CENTER);
-
+        super();
         HBox buttons = new HBox(30);
         buttons.setAlignment(Pos.BOTTOM_CENTER);
         buttons.getChildren().addAll(playButton, exitButton);
@@ -88,13 +66,5 @@ public class StartScene {
 
         Sound.stopAll();
         levelStartSound.play();
-    }
-
-    public Scene getScene() {
-        return scene;
-    }
-
-    public void show() {
-        stage.setScene(scene);
     }
 }

@@ -38,6 +38,18 @@ public class InfoPresent {
         playerPoints.setText("Points: " + points);
     }
 
+    public void reset() {
+        points = 0;
+        blockPassBar.reset();
+        fireUpBar.reset();
+        fireSuitBar.reset();
+        speedUpBar.reset();
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
     public void update() {
         blockPassBar.update();
         fireUpBar.update();

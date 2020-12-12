@@ -48,8 +48,10 @@ public class PlayerAnimation {
             new Image(GameImages.PLAYER_IMG + "_dead_03.png"),
             new Image(GameImages.PLAYER_IMG + "_dead_04.png"),
             new Image(GameImages.PLAYER_IMG + "_dead_05.png"),
+            new Image(GameImages.PLAYER_IMG + "_dead_05.png"),
             new Image(GameImages.PLAYER_IMG + "_dead_06.png"),
             new Image(GameImages.PLAYER_IMG + "_dead_07.png"),
+            new Image(GameImages.PLAYER_IMG + "_dead_06.png"),
             new Image(GameImages.PLAYER_IMG + "_dead_08.png"),
     };
 

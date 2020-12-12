@@ -8,6 +8,14 @@ import bomberman.scenes.GameScene;
 
 public class Minvo extends AIEnemy {
 
+    /**
+     * constructors.
+     */
+    public Minvo(Vector2 position) {
+        this.setPosition(position);
+        setEValue(100);
+        init();
+    }
 
     public String getName() {
         return "Minvo";
@@ -29,9 +37,10 @@ public class Minvo extends AIEnemy {
         setCurrentAnimation(MinvoAnimation.getMoveRight());
     }
 
-    public boolean inBombRange() {
+    public boolean inBombRange(Vector2 point) {
+        Vector2 realPoint = Vector2.multiple(point, GameConstants.TILE_SIZE);
         for (Bomb b : GameScene.getBombList()) {
-            if (b.tileInBombRange(this.getPosition())) {
+            if (b.tileInBombRange(realPoint)) {
                 return true;
             }
         }
@@ -42,7 +51,7 @@ public class Minvo extends AIEnemy {
         if (point.getX() < 0 || point.getX() >= GameConstants.NUM_OF_COLUMNS || point.getY() < 0 || point.getY() >= GameConstants.NUM_OF_ROWS) {
             return true;
         }
-        if (inBombRange()) {
+        if (inBombRange(point)) {
             return true;
         }
         return GameScene.getStaticMapAt(point.getY(), point.getX()) != ' ';

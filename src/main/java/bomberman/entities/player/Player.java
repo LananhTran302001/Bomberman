@@ -163,8 +163,8 @@ public class Player extends Sprite {
 
         if (_dir.getX() < 0) {
             // Go Left
-            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(6, 35))))
-                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(6, 20))));
+            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(5, 35))))
+                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(5, 20))));
 
 
         } else if (_dir.getX() > 0) {
@@ -174,13 +174,13 @@ public class Player extends Sprite {
 
         } else if (_dir.getY() < 0) {
             // Go Up
-            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(25, 10))))
-                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(6, 10))));
+            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(28, 10))))
+                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(5, 10))));
 
         } else {
             // Go Down
-            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(6, 35))))
-                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(25, 35))));
+            return barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(5, 35))))
+                    || barrierTile(Vector2.getPositionInMap(Vector2.add(_p, new Vector2(28, 35))));
         }
 
     }

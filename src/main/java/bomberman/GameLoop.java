@@ -14,6 +14,7 @@ import bomberman.gui.InfoPresent;
 import bomberman.gui.Sound;
 import bomberman.input.GameEventHandle;
 import bomberman.input.InputManager;
+import bomberman.scenes.GameOverScene;
 import bomberman.scenes.GameScene;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
@@ -149,6 +150,7 @@ public class GameLoop {
                     iterator.remove();
                     end();
                     GameScene.gameOver();
+                    new GameOverScene().show();
 
                 } else {
                     GameScene.removeStaticEntityInMap(e);
@@ -163,6 +165,10 @@ public class GameLoop {
         }
 
         infoPresent.update();
+    }
+
+    public static int getPoint() {
+        return infoPresent.getPoints();
     }
 
     public static void render() {
