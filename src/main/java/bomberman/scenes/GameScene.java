@@ -298,13 +298,15 @@ public class GameScene {
                     case '4':
                         addEntity(new Grass(position));
                         addEntity(new SpeedUp(position));
-                        map[i][j] = ' ';
+                        addEntity(new Brick(position));
+                        map[i][j] = '*';
                         break;
 
                     case '5':
                         addEntity(new Grass(position));
                         addEntity(new FireSuit(position));
-                        map[i][j] = ' ';
+                        addEntity(new Brick(position));
+                        map[i][j] = '*';
                         break;
 
                     case 'P':

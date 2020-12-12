@@ -6,8 +6,10 @@ import bomberman.entities.Entity;
 import bomberman.entities.Vector2;
 import bomberman.entities.bomb.BlackBomb;
 import bomberman.entities.bomb.Flame;
+import bomberman.entities.enermies.Balloom;
 import bomberman.entities.enermies.Enemy;
 import bomberman.entities.enermies.Message;
+import bomberman.entities.enermies.ai.Minvo;
 import bomberman.entities.player.Player;
 import bomberman.entities.tiles.Brick;
 import bomberman.gui.InfoPresent;
@@ -139,11 +141,15 @@ public class GameLoop {
             if (e.notUsed()) {
 
                 if (e instanceof Enemy) {
-                    Vector2 p = e.getPosition();
-                    p.add(new Vector2(GameConstants.TILE_SIZE / 2, GameConstants.TILE_SIZE / 2));
-                    int point = ((Enemy) e).getEValue();
-                    infoPresent.addPoints(point);
-                    GameScene.replace(e, new Message(p, "+" + point));
+                    if (e instanceof Minvo) {
+                        GameScene.replace(e, new Balloom(e.getPosition()));
+                    } else {
+                        Vector2 p = e.getPosition();
+                        p.add(new Vector2(GameConstants.TILE_SIZE / 2, GameConstants.TILE_SIZE / 2));
+                        int point = ((Enemy) e).getEValue();
+                        infoPresent.addPoints(point);
+                        GameScene.replace(e, new Message(p, "+" + point));
+                    }
 
                 } else if (e instanceof Player){
                     GameScene.getPlayer().setPosition(0, 0);

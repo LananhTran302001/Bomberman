@@ -34,6 +34,7 @@ public abstract class Bomb extends Entity {
         setLayer(GameConstants.BOMB_LAYER);
         startState = new Date();
         plantedSound.play();
+
     }
 
     public Bomb(int x, int y) {

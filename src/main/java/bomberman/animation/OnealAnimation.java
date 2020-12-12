@@ -18,6 +18,8 @@ public class OnealAnimation {
             new Image(GameImages.ONEAL_IMG + "_dead.png"),
             new Image(GameImages.ONEAL_IMG + "_dead_01.png"),
             new Image(GameImages.ONEAL_IMG + "_dead_02.png"),
+            new Image(GameImages.ONEAL_IMG + "_dead_02.png"),
+            new Image(GameImages.ONEAL_IMG + "_dead_03.png"),
             new Image(GameImages.ONEAL_IMG + "_dead_03.png")
     };
 
